@@ -15,29 +15,6 @@ public class BonoStrategy implements SnakeStrategy
     {
         Direction newDirection = null;
 
-        // List<Coordinate> coordinates = snake.getBodyItems();
-        // Coordinate coordinate = snake.getHeadCoordinate();
-        // String name = snake.getName();
-        // Coordinate coordinate = snake.getTailCoordinate();
-        // int length = snake.length();
-        // boolean occupies = snake.occupies(nextCoordinate);
-
-        // Coordinate coordinate = arena.generateRandomFreeCoordinate();
-        // List<Food> foods = arena.getFood();
-        // Coordinate coordinate = arena.getMaxCoordinate();
-        // List<Snake> snakes = arena.getSnakes();
-        // boolean isFood = arena.isFood(nextCoordinate);
-        // boolean isOccupied = arena.isOccupied(nextCoordinate);
-        // Coordinate coordinate = arena.nextCoordinate(coordinate, direction);
-
-        // int x = coordinate.getX();
-        // int y = coordinate.getY();
-        // int distance = coordinate.minDistance(otherCoordinate,
-        // maxCoordinate);
-        // Coordinate coordinate = coordinate.nextCoordinate(direction);
-        // int distance = coordinate.standardDistance(otherCoordinate);
-        // Coordinate coordinate = coordinate.truncLimits(maxCoordinates);
-
         List<Food> foods = arena.getFood();
         Food food = foods.get(0);
         Coordinate foodCoordinate = food.getCoordinate();
@@ -62,6 +39,7 @@ public class BonoStrategy implements SnakeStrategy
             }
         }
 
+        // @todo do the job!
         System.out.println("Think again how many tries needed!");
         System.exit(0);
         int numOfTries = 0;

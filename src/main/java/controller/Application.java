@@ -4,7 +4,7 @@ import model.ModifiableArena;
 import model.ModifiableSnake;
 import model.strategy.BonoStrategy;
 import model.strategy.DefaultStrategy;
-import model.strategy.bono.UltimateKillerBonoStrategy;
+import model.strategy.bono.UltimateBonoStrategy;
 
 public class Application
 {
@@ -18,11 +18,11 @@ public class Application
         ModifiableSnake snake1 = new ModifiableSnake(arena, new BonoStrategy(),
                 "Bono One");
         ModifiableSnake snake2 = new ModifiableSnake(arena,
-                new UltimateKillerBonoStrategy(), "Ultimate Bono One");
+                new UltimateBonoStrategy(), "Ultimate Bono One");
         ModifiableSnake snake3 = new ModifiableSnake(arena,
                 new DefaultStrategy(), "Default One");
         ModifiableSnake snake4 = new ModifiableSnake(arena,
-                new UltimateKillerBonoStrategy(), "Ultimate Bono Two");
+                new UltimateBonoStrategy(), "Ultimate Bono Two");
 
         // arena.addSnake(snake1);
         arena.addSnake(snake2);

@@ -13,7 +13,7 @@ import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
 
-public class UltimateKillerBonoStrategy implements SnakeStrategy
+public class UltimateBonoStrategy implements SnakeStrategy
 {
     private Snake snake;
     private Arena arena;

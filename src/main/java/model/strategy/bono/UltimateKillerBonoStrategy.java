@@ -89,26 +89,6 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
                                     // hogy mekkora távval szerepel, és
                                     // mindig a legKÖZELEBBIT megtartani.
                                 }
-
-                                // System.out.println("actualCoordinate: "
-                                // + actualCoordinate);
-                                //
-                                // System.out.println(
-                                // "actualDirection: " + actualDirection);
-                                //
-                                // System.out.println("blocking Coordinate: "
-                                // + nextCoordinateToInvestigate);
-                                //
-                                // System.out.println(
-                                // "blockingDistance: " + distance);
-                                //
-                                // System.out.println("blockingLength: "
-                                // + blockingTailLength);
-                                //
-                                // System.out.println("blockingSnake: "
-                                // + blockingSnake.getName() + ", length: "
-                                // + blockingSnake.length() + ", "
-                                // + blockingSnake);
                             }
                         }
                     }

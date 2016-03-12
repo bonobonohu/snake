@@ -2,7 +2,6 @@ package model.strategy.bono;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -32,8 +31,7 @@ public class UltimateBonoStrategy implements SnakeStrategy
         Coordinate foodCoordinate = arena.getFood().get(0).getCoordinate();
         Coordinate maxCoordinate = arena.getMaxCoordinate();
 
-        Map<Direction, Integer> blockingDirections = new HashMap<>();
-        Map<Coordinate, Map<Direction, Integer>> blockingCoordinates = new HashMap<>();
+        DirectionData blockingDirectionsData = new DirectionData();
 
         Map<Integer, DirectionsContainer<Direction>> distancesToFood = new TreeMap<>();
         DirectionsContainer<Direction> allValidDirections = new DirectionsContainer<>();
@@ -67,13 +65,20 @@ public class UltimateBonoStrategy implements SnakeStrategy
                                     maxCoordinate);
 
                             if (isBlockingRisk(distance, blockingTailLength)) {
-                                if (blockingDirections
-                                        .containsKey(actualDirection)) {
-                                    int storedDistance = blockingDirections
-                                            .get(actualDirection);
+                                if (blockingDirectionsData
+                                        .hasDistance(actualDirection)) {
+                                    int storedDistance = blockingDirectionsData
+                                            .getDistance(actualDirection);
                                     if (distance < storedDistance) {
-                                        blockingDirections.put(actualDirection,
-                                                distance);
+                                        if (blockingDirectionsData
+                                                .hasCoordinate(
+                                                        actualDirection)) {
+                                            blockingDirectionsData.getDistance(
+                                                    actualDirection);
+                                        }
+                                        blockingDirectionsData.putData(
+                                                actualDirection, distance,
+                                                coordinateToInvestigate);
 
                                         // ha konkrétan az adott koordináta már
                                         // szerepel valahol, akkor megnézni,
@@ -81,8 +86,9 @@ public class UltimateBonoStrategy implements SnakeStrategy
                                         // mindig a legKÖZELEBBIT megtartani.
                                     }
                                 } else {
-                                    blockingDirections.put(actualDirection,
-                                            distance);
+                                    blockingDirectionsData.putData(
+                                            actualDirection, distance,
+                                            coordinateToInvestigate);
 
                                     // ha konkrétan az adott koordináta már
                                     // szerepel valahol, akkor megnézni,
@@ -129,14 +135,14 @@ public class UltimateBonoStrategy implements SnakeStrategy
             System.out.println(
                     "Equivalent Best Directions: " + equivalentBestDirections);
 
-            if (blockingDirections.size() > 0) {
-                System.out
-                        .println("Blocking Directions: " + blockingDirections);
+            if (blockingDirectionsData.size() > 0) {
+                System.out.println(
+                        "Blocking Directions: " + blockingDirectionsData);
 
                 DirectionsContainer<Direction> freeEquivalentBestDirections = equivalentBestDirections
                         .getAsNewObject();
                 freeEquivalentBestDirections
-                        .removeAll(blockingDirections.keySet());
+                        .removeAll(blockingDirectionsData.getDirections());
 
                 if (freeEquivalentBestDirections.size() > 0) {
                     newDirection = freeEquivalentBestDirections
@@ -148,7 +154,8 @@ public class UltimateBonoStrategy implements SnakeStrategy
                 } else {
                     DirectionsContainer<Direction> freeValidDirections = allValidDirections
                             .getAsNewObject();
-                    freeValidDirections.removeAll(blockingDirections.keySet());
+                    freeValidDirections
+                            .removeAll(blockingDirectionsData.getDirections());
 
                     if (freeValidDirections.size() > 0) {
                         newDirection = freeValidDirections.getRandomElement();
@@ -160,7 +167,7 @@ public class UltimateBonoStrategy implements SnakeStrategy
                         Map<Integer, DirectionsContainer<Direction>> orderedBlockings = new TreeMap<>(
                                 Collections.reverseOrder());
 
-                        for (Map.Entry<Direction, Integer> entry : blockingDirections
+                        for (Map.Entry<Direction, Integer> entry : blockingDirectionsData
                                 .entrySet()) {
                             if (orderedBlockings
                                     .containsKey(entry.getValue())) {

@@ -17,18 +17,88 @@ public class DirectionData
     public void putData(Direction direction, int distance,
             Coordinate coordinate)
     {
-        putDistance(direction, distance);
-        putCoordinate(direction, coordinate);
-        putDistanceToCoordinate(coordinate, distance);
-        putDirectionToCoordinate(coordinate, direction);
+        if (directionHasDistance(direction)) {
+            int storedDistanceToDirection = getDistanceByDirection(direction);
+            if (distance < storedDistanceToDirection) {
+                if (coordinateHasDirection(coordinate)) {
+                    int storedDistanceToCoordinate = getDistanceByCoordinate(
+                            coordinate);
+
+                    if (distance <= storedDistanceToCoordinate) {
+                        removeDataByCoordinate(coordinate);
+
+                        putDistanceToDirection(direction, distance);
+                        putCoordinateToDirection(direction, coordinate);
+                        putDistanceToCoordinate(coordinate, distance);
+                        putDirectionToCoordinate(coordinate, direction);
+                    }
+                } else {
+                    putDistanceToDirection(direction, distance);
+                    putCoordinateToDirection(direction, coordinate);
+                    putDistanceToCoordinate(coordinate, distance);
+                    putDirectionToCoordinate(coordinate, direction);
+                }
+            }
+        } else {
+            if (coordinateHasDirection(coordinate)) {
+                int storedDistanceToCoordinate = getDistanceByCoordinate(
+                        coordinate);
+
+                if (distance <= storedDistanceToCoordinate) {
+                    removeDataByCoordinate(coordinate);
+
+                    putDistanceToDirection(direction, distance);
+                    putCoordinateToDirection(direction, coordinate);
+                    putDistanceToCoordinate(coordinate, distance);
+                    putDirectionToCoordinate(coordinate, direction);
+                }
+            } else {
+                putDistanceToDirection(direction, distance);
+                putCoordinateToDirection(direction, coordinate);
+                putDistanceToCoordinate(coordinate, distance);
+                putDirectionToCoordinate(coordinate, direction);
+            }
+        }
     }
 
-    private void putDistance(Direction direction, int distance)
+    private void removeDataByCoordinate(Coordinate coordinate)
+    {
+        Direction directionToCoordinate = getDirectionByCoordinate(coordinate);
+
+        removeFromDistanceToDirection(directionToCoordinate);
+        removeFromCoordinateToDirection(directionToCoordinate);
+        removeFromDistanceToCoordinate(coordinate);
+        removeFromDirectionToCoordinate(coordinate);
+
+    }
+
+    private void removeFromDistanceToDirection(Direction direction)
+    {
+        distanceToDirection.remove(direction);
+    }
+
+    private void removeFromCoordinateToDirection(Direction direction)
+    {
+        coordinateToDirection.remove(direction);
+    }
+
+    private void removeFromDistanceToCoordinate(Coordinate coordinate)
+    {
+        distanceToCoordinate.remove(coordinate);
+    }
+
+    private void removeFromDirectionToCoordinate(Coordinate coordinate)
+    {
+        directionToCoordinate.remove(coordinate);
+    }
+
+    private void putDistanceToDirection(Direction direction, int distance)
     {
         distanceToDirection.put(direction, distance);
     }
 
-    private void putCoordinate(Direction direction, Coordinate coordinate)
+    private void putCoordinateToDirection(Direction direction,
+            Coordinate coordinate)
     {
         coordinateToDirection.put(direction, coordinate);
     }
@@ -44,14 +114,19 @@ public class DirectionData
         directionToCoordinate.put(coordinate, direction);
     }
 
-    public int getDistance(Direction direction)
+    private int getDistanceByDirection(Direction direction)
     {
         return distanceToDirection.get(direction);
     }
 
-    public Coordinate getCoordinate(Direction direction)
+    private int getDistanceByCoordinate(Coordinate coordinate)
     {
-        return coordinateToDirection.get(direction);
+        return distanceToCoordinate.get(coordinate);
+    }
+
+    private Direction getDirectionByCoordinate(Coordinate coordinate)
+    {
+        return directionToCoordinate.get(coordinate);
     }
 
     public Set<Direction> getDirections()
@@ -59,14 +134,14 @@ public class DirectionData
         return distanceToDirection.keySet();
     }
 
-    public boolean hasDistance(Direction direction)
+    private boolean directionHasDistance(Direction direction)
     {
         return distanceToDirection.containsKey(direction);
     }
 
-    public boolean hasCoordinate(Direction direction)
+    private boolean coordinateHasDirection(Coordinate coordinate)
     {
-        return coordinateToDirection.containsKey(direction);
+        return coordinateToDirection.containsValue(coordinate);
     }
 
     public int size()
@@ -74,8 +149,14 @@ public class DirectionData
         return distanceToDirection.size();
     }
 
-    public Set<Map.Entry<Direction, Integer>> entrySet()
+    public Set<Map.Entry<Direction, Integer>> getDistanceToDirectionsEntrySet()
     {
         return distanceToDirection.entrySet();
+    }
+
+    public String toString()
+    {
+        return "DirectionData [distanceToDirection=" + distanceToDirection
+                + ", coordinateToDirection=" + coordinateToDirection + "]";
     }
 }

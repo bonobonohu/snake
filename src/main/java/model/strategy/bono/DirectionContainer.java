@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class DirectionsContainer<E> extends HashSet<E>
+public class DirectionContainer<E> extends HashSet<E>
 {
 
     /**
@@ -29,9 +29,9 @@ public class DirectionsContainer<E> extends HashSet<E>
         return returnElement;
     }
 
-    public DirectionsContainer<E> getAsNewObject()
+    public DirectionContainer<E> getAsNewObject()
     {
-        DirectionsContainer<E> newDirectionsContainer = new DirectionsContainer<>();
+        DirectionContainer<E> newDirectionsContainer = new DirectionContainer<>();
 
         newDirectionsContainer.addAll(this);
 

@@ -9,9 +9,6 @@ import java.util.Random;
 public class DirectionContainer<E> extends HashSet<E>
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -7360462751577910244L;
 
     public E getRandomElement()

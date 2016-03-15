@@ -42,8 +42,8 @@ public class BonoStrategy implements SnakeStrategy
         System.out.println("Food: " + arena.getFood().get(0).getCoordinate());
 
         for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena.nextCoordinate(actualHeadCoordinate,
-                    actualDirection);
+            Coordinate nextCoordinate = arena
+                    .nextCoordinate(actualHeadCoordinate, actualDirection);
 
             if (!arena.isOccupied(nextCoordinate)) {
                 Coordinate coordinateToInvestigate = actualHeadCoordinate;
@@ -62,8 +62,8 @@ public class BonoStrategy implements SnakeStrategy
                             DistanceProcessor distanceProcessor = DistanceProcessor
                                     .getDistanceProcessor(actualDirection);
                             int distance = distanceProcessor.getDistance(
-                                    actualHeadCoordinate, coordinateToInvestigate,
-                                    maxCoordinate);
+                                    actualHeadCoordinate,
+                                    coordinateToInvestigate, maxCoordinate);
 
                             if (isBlockingRisk(distance, blockingTailLength)) {
                                 blockingDirectionsData.putData(actualDirection,
@@ -251,7 +251,11 @@ public class BonoStrategy implements SnakeStrategy
                 }
             }
 
-            if (!allXsAreTheSame && !allYsAreTheSame) {
+            if ((!allXsAreTheSame && !allYsAreTheSame)
+                    || (allXsAreTheSame && snake.length() == arena
+                            .getMaxCoordinate().getY())
+                    || (allYsAreTheSame && snake.length() == arena
+                            .getMaxCoordinate().getX())) {
                 validBlock = true;
             }
         } else {

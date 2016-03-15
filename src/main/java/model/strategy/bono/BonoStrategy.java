@@ -28,7 +28,7 @@ public class BonoStrategy implements SnakeStrategy
 
         Direction newDirection = Direction.SOUTH;
 
-        Coordinate actualCoordinate = snake.getHeadCoordinate();
+        Coordinate actualHeadCoordinate = snake.getHeadCoordinate();
         Coordinate foodCoordinate = arena.getFood().get(0).getCoordinate();
         Coordinate maxCoordinate = arena.getMaxCoordinate();
 
@@ -42,11 +42,11 @@ public class BonoStrategy implements SnakeStrategy
         System.out.println("Food: " + arena.getFood().get(0).getCoordinate());
 
         for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena.nextCoordinate(actualCoordinate,
+            Coordinate nextCoordinate = arena.nextCoordinate(actualHeadCoordinate,
                     actualDirection);
 
             if (!arena.isOccupied(nextCoordinate)) {
-                Coordinate coordinateToInvestigate = actualCoordinate;
+                Coordinate coordinateToInvestigate = actualHeadCoordinate;
                 for (int i = 0; i < 49; i++) {
                     coordinateToInvestigate = arena.nextCoordinate(
                             coordinateToInvestigate, actualDirection);
@@ -55,14 +55,14 @@ public class BonoStrategy implements SnakeStrategy
                         Snake blockingSnake = getBlockingSnake(
                                 coordinateToInvestigate);
 
-                        if (isValidBlock(actualCoordinate, blockingSnake)) {
+                        if (isValidBlock(actualHeadCoordinate, blockingSnake)) {
                             int blockingTailLength = getBlockingTailLength(
                                     coordinateToInvestigate, blockingSnake);
 
                             DistanceProcessor distanceProcessor = DistanceProcessor
                                     .getDistanceProcessor(actualDirection);
                             int distance = distanceProcessor.getDistance(
-                                    actualCoordinate, coordinateToInvestigate,
+                                    actualHeadCoordinate, coordinateToInvestigate,
                                     maxCoordinate);
 
                             if (isBlockingRisk(distance, blockingTailLength)) {

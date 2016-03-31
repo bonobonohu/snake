@@ -22,6 +22,7 @@ public class BonoStrategy implements SnakeStrategy
     public Direction nextMove(Snake snakeArgument, Arena arenaArgument)
     {
         // dummy commit for Jenkins testing. sorry.
+        System.out.println("JENKINS HAPPENS.");
         snake = snakeArgument;
         arena = arenaArgument;
 

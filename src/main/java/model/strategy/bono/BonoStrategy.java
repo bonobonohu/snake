@@ -2,7 +2,7 @@ package model.strategy.bono;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,7 +13,7 @@ import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
 
-public class UltimateKillerBonoStrategy implements SnakeStrategy
+public class BonoStrategy implements SnakeStrategy
 {
     private Snake snake;
     private Arena arena;
@@ -28,26 +28,25 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
 
         Direction newDirection = Direction.SOUTH;
 
-        Coordinate actualCoordinate = snake.getHeadCoordinate();
+        Coordinate actualHeadCoordinate = snake.getHeadCoordinate();
         Coordinate foodCoordinate = arena.getFood().get(0).getCoordinate();
         Coordinate maxCoordinate = arena.getMaxCoordinate();
 
-        Map<Direction, Integer> blockingDirections = new HashMap<>();
-        Map<Coordinate, Map<Direction, Integer>> blockingCoordinates = new HashMap<>();
+        DirectionData blockingDirectionsData = new DirectionData();
 
-        Map<Integer, DirectionsContainer<Direction>> distancesToFood = new TreeMap<>();
-        DirectionsContainer<Direction> allValidDirections = new DirectionsContainer<>();
-        DirectionsContainer<Direction> equivalentBestDirections = new DirectionsContainer<>();
+        Map<Integer, DirectionContainer<Direction>> distancesToFood = new TreeMap<>();
+        DirectionContainer<Direction> allValidDirections = new DirectionContainer<>();
+        DirectionContainer<Direction> equivalentBestDirections = new DirectionContainer<>();
 
         System.out.println("Head: " + snake.getHeadCoordinate());
         System.out.println("Food: " + arena.getFood().get(0).getCoordinate());
 
         for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena.nextCoordinate(actualCoordinate,
-                    actualDirection);
+            Coordinate nextCoordinate = arena
+                    .nextCoordinate(actualHeadCoordinate, actualDirection);
 
             if (!arena.isOccupied(nextCoordinate)) {
-                Coordinate coordinateToInvestigate = actualCoordinate;
+                Coordinate coordinateToInvestigate = actualHeadCoordinate;
                 for (int i = 0; i < 49; i++) {
                     coordinateToInvestigate = arena.nextCoordinate(
                             coordinateToInvestigate, actualDirection);
@@ -56,59 +55,19 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
                         Snake blockingSnake = getBlockingSnake(
                                 coordinateToInvestigate);
 
-                        if (isValidBlock(actualCoordinate, blockingSnake)) {
+                        if (isValidBlock(actualHeadCoordinate, blockingSnake)) {
                             int blockingTailLength = getBlockingTailLength(
                                     coordinateToInvestigate, blockingSnake);
 
                             DistanceProcessor distanceProcessor = DistanceProcessor
                                     .getDistanceProcessor(actualDirection);
                             int distance = distanceProcessor.getDistance(
-                                    actualCoordinate, coordinateToInvestigate,
-                                    maxCoordinate);
+                                    actualHeadCoordinate,
+                                    coordinateToInvestigate, maxCoordinate);
 
                             if (isBlockingRisk(distance, blockingTailLength)) {
-                                if (blockingDirections
-                                        .containsKey(actualDirection)) {
-                                    int storedDistance = blockingDirections
-                                            .get(actualDirection);
-                                    if (distance < storedDistance) {
-                                        blockingDirections.put(actualDirection,
-                                                distance);
-
-                                        // ha konkrétan az adott koordináta már
-                                        // szerepel valahol, akkor megnézni,
-                                        // hogy mekkora távval szerepel, és
-                                        // mindig a legKÖZELEBBIT megtartani.
-                                    }
-                                } else {
-                                    blockingDirections.put(actualDirection,
-                                            distance);
-
-                                    // ha konkrétan az adott koordináta már
-                                    // szerepel valahol, akkor megnézni,
-                                    // hogy mekkora távval szerepel, és
-                                    // mindig a legKÖZELEBBIT megtartani.
-                                }
-
-                                // System.out.println("actualCoordinate: "
-                                // + actualCoordinate);
-                                //
-                                // System.out.println(
-                                // "actualDirection: " + actualDirection);
-                                //
-                                // System.out.println("blocking Coordinate: "
-                                // + nextCoordinateToInvestigate);
-                                //
-                                // System.out.println(
-                                // "blockingDistance: " + distance);
-                                //
-                                // System.out.println("blockingLength: "
-                                // + blockingTailLength);
-                                //
-                                // System.out.println("blockingSnake: "
-                                // + blockingSnake.getName() + ", length: "
-                                // + blockingSnake.length() + ", "
-                                // + blockingSnake);
+                                blockingDirectionsData.putData(actualDirection,
+                                        distance, coordinateToInvestigate);
                             }
                         }
                     }
@@ -118,13 +77,13 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
                         .minDistance(foodCoordinate, maxCoordinate);
 
                 if (distancesToFood.containsKey(actualDistanceToFood)) {
-                    DirectionsContainer<Direction> directions = distancesToFood
+                    DirectionContainer<Direction> directions = distancesToFood
                             .get(actualDistanceToFood);
                     directions.add(actualDirection);
 
                     distancesToFood.put(actualDistanceToFood, directions);
                 } else {
-                    DirectionsContainer<Direction> directions = new DirectionsContainer<>();
+                    DirectionContainer<Direction> directions = new DirectionContainer<>();
                     directions.add(actualDirection);
 
                     distancesToFood.put(actualDistanceToFood, directions);
@@ -133,12 +92,12 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
         }
 
         if (distancesToFood.size() > 0) {
-            List<DirectionsContainer<Direction>> directionContainers = new ArrayList<>();
+            List<DirectionContainer<Direction>> directionContainers = new ArrayList<>();
             directionContainers.addAll(distancesToFood.values());
 
             System.out.println("Directions: " + directionContainers);
 
-            for (DirectionsContainer<Direction> directionContainer : directionContainers) {
+            for (DirectionContainer<Direction> directionContainer : directionContainers) {
                 allValidDirections.addAll(directionContainer);
             }
 
@@ -149,14 +108,14 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
             System.out.println(
                     "Equivalent Best Directions: " + equivalentBestDirections);
 
-            if (blockingDirections.size() > 0) {
-                System.out
-                        .println("Blocking Directions: " + blockingDirections);
+            if (blockingDirectionsData.size() > 0) {
+                System.out.println(
+                        "Blocking Directions: " + blockingDirectionsData);
 
-                DirectionsContainer<Direction> freeEquivalentBestDirections = equivalentBestDirections
+                DirectionContainer<Direction> freeEquivalentBestDirections = equivalentBestDirections
                         .getAsNewObject();
                 freeEquivalentBestDirections
-                        .removeAll(blockingDirections.keySet());
+                        .removeAll(blockingDirectionsData.getDirections());
 
                 if (freeEquivalentBestDirections.size() > 0) {
                     newDirection = freeEquivalentBestDirections
@@ -166,9 +125,10 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
                             "Random element from the free equivalent best directions: "
                                     + newDirection);
                 } else {
-                    DirectionsContainer<Direction> freeValidDirections = allValidDirections
+                    DirectionContainer<Direction> freeValidDirections = allValidDirections
                             .getAsNewObject();
-                    freeValidDirections.removeAll(blockingDirections.keySet());
+                    freeValidDirections
+                            .removeAll(blockingDirectionsData.getDirections());
 
                     if (freeValidDirections.size() > 0) {
                         newDirection = freeValidDirections.getRandomElement();
@@ -177,21 +137,21 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
                                 "Random element from the free valid directions: "
                                         + newDirection);
                     } else {
-                        Map<Integer, DirectionsContainer<Direction>> orderedBlockings = new TreeMap<>(
+                        Map<Integer, DirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
                                 Collections.reverseOrder());
 
-                        for (Map.Entry<Direction, Integer> entry : blockingDirections
-                                .entrySet()) {
+                        for (Map.Entry<Direction, Integer> entry : blockingDirectionsData
+                                .getDistanceToDirectionsEntrySet()) {
                             if (orderedBlockings
                                     .containsKey(entry.getValue())) {
-                                DirectionsContainer<Direction> directionsTemp = orderedBlockings
+                                DirectionContainer<Direction> directionsTemp = orderedBlockings
                                         .get(entry.getValue());
                                 directionsTemp.add(entry.getKey());
 
                                 orderedBlockings.put(entry.getValue(),
                                         directionsTemp);
                             } else {
-                                DirectionsContainer<Direction> directionsTemp = new DirectionsContainer<>();
+                                DirectionContainer<Direction> directionsTemp = new DirectionContainer<>();
                                 directionsTemp.add(entry.getKey());
 
                                 orderedBlockings.put(entry.getValue(),
@@ -199,9 +159,15 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
                             }
                         }
 
-                        for (Map.Entry<Integer, DirectionsContainer<Direction>> blockingsTemp : orderedBlockings
-                                .entrySet()) {
-                            DirectionsContainer<Direction> blockingDirectionsTemp = blockingsTemp
+                        boolean foundNewDirection = false;
+                        Iterator<Map.Entry<Integer, DirectionContainer<Direction>>> orderedBlockingsEntrySetIterator = orderedBlockings
+                                .entrySet().iterator();
+                        while (!foundNewDirection
+                                && orderedBlockingsEntrySetIterator.hasNext()) {
+                            Map.Entry<Integer, DirectionContainer<Direction>> blockingsTemp = orderedBlockingsEntrySetIterator
+                                    .next();
+
+                            DirectionContainer<Direction> blockingDirectionsTemp = blockingsTemp
                                     .getValue();
 
                             int numOfTries = 0;
@@ -210,14 +176,15 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
                                 randomDirection = blockingDirectionsTemp
                                         .getRandomElement();
 
-                                newDirection = randomDirection;
+                                if (randomDirection != null) {
+                                    newDirection = randomDirection;
+                                    foundNewDirection = true;
+                                }
 
                                 numOfTries++;
-                            } while (allValidDirections
+                            } while (!foundNewDirection || (allValidDirections
                                     .contains(randomDirection)
-                                    && numOfTries < allValidDirections.size());
-                            // @todo az utolsó random blocking elementtel száll
-                            // ki.
+                                    && numOfTries < allValidDirections.size()));
                         }
 
                         System.out.println(
@@ -266,7 +233,7 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
         return blockingTailLength;
     }
 
-    private boolean isValidBlock(Coordinate actualCoordinate,
+    private boolean isValidBlock(Coordinate actualHeadCoordinate,
             Snake blockingSnake)
     {
         boolean validBlock = false;
@@ -276,15 +243,19 @@ public class UltimateKillerBonoStrategy implements SnakeStrategy
             boolean allYsAreTheSame = true;
 
             for (Coordinate actualBodyItem : snake.getBodyItems()) {
-                if (actualBodyItem.getX() != actualCoordinate.getX()) {
+                if (actualBodyItem.getX() != actualHeadCoordinate.getX()) {
                     allXsAreTheSame = false;
                 }
-                if (actualBodyItem.getY() != actualCoordinate.getY()) {
+                if (actualBodyItem.getY() != actualHeadCoordinate.getY()) {
                     allYsAreTheSame = false;
                 }
             }
 
-            if (!allXsAreTheSame && !allYsAreTheSame) {
+            if ((!allXsAreTheSame && !allYsAreTheSame)
+                    || (allXsAreTheSame && snake.length() == arena
+                            .getMaxCoordinate().getY())
+                    || (allYsAreTheSame && snake.length() == arena
+                            .getMaxCoordinate().getX())) {
                 validBlock = true;
             }
         } else {

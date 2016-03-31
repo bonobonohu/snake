@@ -21,6 +21,7 @@ public class BonoStrategy implements SnakeStrategy
     @Override
     public Direction nextMove(Snake snakeArgument, Arena arenaArgument)
     {
+        // dummy commit for Jenkins testing. sorry.
         snake = snakeArgument;
         arena = arenaArgument;
 

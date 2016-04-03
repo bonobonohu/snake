@@ -108,7 +108,13 @@ public class BonoStrategy implements SnakeStrategy
             System.out.println(
                     "Equivalent Best Directions: " + equivalentBestDirections);
 
-            if (blockingDirectionsData.size() > 0) {
+            if (blockingDirectionsData.size() == 0) {
+                newDirection = equivalentBestDirections.getRandomElement();
+
+                System.out.println(
+                        "Random element from the equivalent best directions: "
+                                + newDirection);
+            } else {
                 System.out.println(
                         "Blocking Directions: " + blockingDirectionsData);
 
@@ -192,12 +198,6 @@ public class BonoStrategy implements SnakeStrategy
                                         + newDirection);
                     }
                 }
-            } else {
-                newDirection = equivalentBestDirections.getRandomElement();
-
-                System.out.println(
-                        "Random element from the equivalent best directions: "
-                                + newDirection);
             }
         } else {
             System.out.println(

@@ -2,7 +2,6 @@ package model.strategy.bono.directionhandlers;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -13,13 +12,10 @@ public class DirectionContainer<E> extends HashSet<E>
 
     public E getRandomElement()
     {
-        Iterator<E> iterator = iterator();
         List<E> elements = new ArrayList<>();
         Random randomIndex = new Random();
 
-        while (iterator.hasNext()) {
-            elements.add(iterator.next());
-        }
+        elements.addAll(this);
 
         E returnElement = elements.get(randomIndex.nextInt(elements.size()));
 

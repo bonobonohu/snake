@@ -12,6 +12,7 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
+import model.strategy.bono.distanceprocessor.DistanceProcessor;
 
 public class BonoStrategy implements SnakeStrategy
 {
@@ -26,7 +27,7 @@ public class BonoStrategy implements SnakeStrategy
 
         System.out.println("--- BEGIN " + snake.getName() + "---");
 
-        Direction newDirection = Direction.SOUTH;
+        Direction newDirection = null;
 
         Coordinate actualHeadCoordinate = snake.getHeadCoordinate();
         Coordinate foodCoordinate = arena.getFood().get(0).getCoordinate();
@@ -94,8 +95,6 @@ public class BonoStrategy implements SnakeStrategy
         if (distancesToFood.size() > 0) {
             List<DirectionContainer<Direction>> directionContainers = new ArrayList<>();
             directionContainers.addAll(distancesToFood.values());
-
-            System.out.println("Directions: " + directionContainers);
 
             for (DirectionContainer<Direction> directionContainer : directionContainers) {
                 allValidDirections.addAll(directionContainer);
@@ -205,6 +204,10 @@ public class BonoStrategy implements SnakeStrategy
         }
 
         System.out.println("--- END " + snake.getName() + "---");
+
+        if (newDirection == null) {
+            newDirection = Direction.SOUTH;
+        }
 
         return newDirection;
     }

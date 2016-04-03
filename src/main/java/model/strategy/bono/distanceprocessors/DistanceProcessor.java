@@ -1,4 +1,4 @@
-package model.strategy.bono.distanceprocessor;
+package model.strategy.bono.distanceprocessors;
 
 import model.Coordinate;
 import model.Direction;

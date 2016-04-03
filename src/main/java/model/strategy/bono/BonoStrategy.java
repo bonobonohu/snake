@@ -12,9 +12,9 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
-import model.strategy.bono.directionhandler.DirectionContainer;
-import model.strategy.bono.directionhandler.DirectionData;
-import model.strategy.bono.distanceprocessor.DistanceProcessor;
+import model.strategy.bono.directionhandlers.DirectionContainer;
+import model.strategy.bono.directionhandlers.DirectionData;
+import model.strategy.bono.distanceprocessors.DistanceProcessor;
 
 public class BonoStrategy implements SnakeStrategy
 {

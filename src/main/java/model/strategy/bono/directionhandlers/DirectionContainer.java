@@ -1,4 +1,4 @@
-package model.strategy.bono.directionhandler;
+package model.strategy.bono.directionhandlers;
 
 import java.util.ArrayList;
 import java.util.HashSet;

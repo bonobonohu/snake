@@ -1,4 +1,4 @@
-package model.strategy.bono.directionhandler;
+package model.strategy.bono.directionhandlers;
 
 import java.util.HashMap;
 import java.util.Map;

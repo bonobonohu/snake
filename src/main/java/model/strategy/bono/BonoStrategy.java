@@ -1,8 +1,6 @@
 package model.strategy.bono;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -15,6 +13,12 @@ import model.strategy.SnakeStrategy;
 import model.strategy.bono.directionhandlers.DirectionContainer;
 import model.strategy.bono.directionhandlers.DirectionData;
 import model.strategy.bono.distanceprocessors.DistanceProcessor;
+import model.strategy.bono.newdirectionprocessors.ByBlockingDistances;
+import model.strategy.bono.newdirectionprocessors.ByEquivalentBestDirections;
+import model.strategy.bono.newdirectionprocessors.ByFreeEquivalentBestDirections;
+import model.strategy.bono.newdirectionprocessors.ByFreeValidDirections;
+import model.strategy.bono.newdirectionprocessors.ByKispalEsABorz;
+import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
 
 public class BonoStrategy implements SnakeStrategy
 {
@@ -109,95 +113,26 @@ public class BonoStrategy implements SnakeStrategy
             System.out.println(
                     "Equivalent Best Directions: " + equivalentBestDirections);
 
-            if (blockingDirectionsData.size() == 0) {
-                newDirection = equivalentBestDirections.getRandomElement();
+            System.out
+                    .println("Blocking Directions: " + blockingDirectionsData);
 
-                System.out.println(
-                        "Random element from the equivalent best directions: "
-                                + newDirection);
-            } else {
-                System.out.println(
-                        "Blocking Directions: " + blockingDirectionsData);
+            List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
+            newDirectionProcessors.add(new ByEquivalentBestDirections());
+            newDirectionProcessors.add(new ByFreeEquivalentBestDirections());
+            newDirectionProcessors.add(new ByFreeValidDirections());
+            newDirectionProcessors.add(new ByBlockingDistances());
+            newDirectionProcessors.add(new ByKispalEsABorz());
 
-                DirectionContainer<Direction> freeEquivalentBestDirections = equivalentBestDirections
-                        .getAsNewObject();
-                freeEquivalentBestDirections
-                        .removeAll(blockingDirectionsData.getDirections());
+            for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {
+                if (newDirection == null) {
+                    newDirectionProcessor
+                            .setBlockingDirectionsData(blockingDirectionsData);
+                    newDirectionProcessor
+                            .setAllValidDirections(allValidDirections);
+                    newDirectionProcessor.setEquivalentBestDirections(
+                            equivalentBestDirections);
 
-                if (freeEquivalentBestDirections.size() > 0) {
-                    newDirection = freeEquivalentBestDirections
-                            .getRandomElement();
-
-                    System.out.println(
-                            "Random element from the free equivalent best directions: "
-                                    + newDirection);
-                } else {
-                    DirectionContainer<Direction> freeValidDirections = allValidDirections
-                            .getAsNewObject();
-                    freeValidDirections
-                            .removeAll(blockingDirectionsData.getDirections());
-
-                    if (freeValidDirections.size() > 0) {
-                        newDirection = freeValidDirections.getRandomElement();
-
-                        System.out.println(
-                                "Random element from the free valid directions: "
-                                        + newDirection);
-                    } else {
-                        Map<Integer, DirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
-                                Collections.reverseOrder());
-
-                        for (Map.Entry<Direction, Integer> entry : blockingDirectionsData
-                                .getDistanceToDirectionsEntrySet()) {
-                            if (orderedBlockings
-                                    .containsKey(entry.getValue())) {
-                                DirectionContainer<Direction> directionsTemp = orderedBlockings
-                                        .get(entry.getValue());
-                                directionsTemp.add(entry.getKey());
-
-                                orderedBlockings.put(entry.getValue(),
-                                        directionsTemp);
-                            } else {
-                                DirectionContainer<Direction> directionsTemp = new DirectionContainer<>();
-                                directionsTemp.add(entry.getKey());
-
-                                orderedBlockings.put(entry.getValue(),
-                                        directionsTemp);
-                            }
-                        }
-
-                        boolean foundNewDirection = false;
-                        Iterator<Map.Entry<Integer, DirectionContainer<Direction>>> orderedBlockingsEntrySetIterator = orderedBlockings
-                                .entrySet().iterator();
-                        while (!foundNewDirection
-                                && orderedBlockingsEntrySetIterator.hasNext()) {
-                            Map.Entry<Integer, DirectionContainer<Direction>> blockingsTemp = orderedBlockingsEntrySetIterator
-                                    .next();
-
-                            DirectionContainer<Direction> blockingDirectionsTemp = blockingsTemp
-                                    .getValue();
-
-                            int numOfTries = 0;
-                            Direction randomDirection;
-                            do {
-                                randomDirection = blockingDirectionsTemp
-                                        .getRandomElement();
-
-                                if (randomDirection != null) {
-                                    newDirection = randomDirection;
-                                    foundNewDirection = true;
-                                }
-
-                                numOfTries++;
-                            } while (!foundNewDirection || (allValidDirections
-                                    .contains(randomDirection)
-                                    && numOfTries < allValidDirections.size()));
-                        }
-
-                        System.out.println(
-                                "Weighted element by blocking distances: "
-                                        + newDirection);
-                    }
+                    newDirection = newDirectionProcessor.getNewDirection();
                 }
             }
         } else {
@@ -206,10 +141,6 @@ public class BonoStrategy implements SnakeStrategy
         }
 
         System.out.println("--- END " + snake.getName() + "---");
-
-        if (newDirection == null) {
-            newDirection = Direction.SOUTH;
-        }
 
         return newDirection;
     }

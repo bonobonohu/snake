@@ -17,7 +17,8 @@ public class DirectionContainer<E> extends HashSet<E>
 
         elements.addAll(this);
 
-        E returnElement = elements.get(randomIndex.nextInt(elements.size()));
+        E returnElement = elements.size() > 0
+                ? elements.get(randomIndex.nextInt(elements.size())) : null;
 
         return returnElement;
     }

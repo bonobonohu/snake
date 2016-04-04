@@ -9,7 +9,8 @@ public class ByEquivalentBestDirections extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        if (blockingDirectionsData.size() == 0) {
+        if (equivalentBestDirections != null
+                && equivalentBestDirections.size() == 0) {
             newDirection = equivalentBestDirections.getRandomElement();
 
             System.out.println(

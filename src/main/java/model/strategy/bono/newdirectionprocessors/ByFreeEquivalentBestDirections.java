@@ -10,12 +10,13 @@ public class ByFreeEquivalentBestDirections extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        DirectionContainer<Direction> freeEquivalentBestDirections = equivalentBestDirections
-                .getAsNewObject();
-        freeEquivalentBestDirections
-                .removeAll(blockingDirectionsData.getDirections());
+        if (equivalentBestDirections != null
+                && equivalentBestDirections.size() > 0) {
+            DirectionContainer<Direction> freeEquivalentBestDirections = equivalentBestDirections
+                    .getAsNewObject();
+            freeEquivalentBestDirections
+                    .removeAll(blockingDirectionsData.getDirections());
 
-        if (freeEquivalentBestDirections.size() > 0) {
             newDirection = freeEquivalentBestDirections.getRandomElement();
 
             System.out.println(

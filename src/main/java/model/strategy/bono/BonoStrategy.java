@@ -45,8 +45,8 @@ public class BonoStrategy implements SnakeStrategy
         DirectionContainer<Direction> allValidDirections = new DirectionContainer<>();
         DirectionContainer<Direction> equivalentBestDirections = new DirectionContainer<>();
 
-        System.out.println("Head: " + snake.getHeadCoordinate());
         System.out.println("Food: " + arena.getFood().get(0).getCoordinate());
+        System.out.println("Head: " + snake.getHeadCoordinate());
 
         for (Direction actualDirection : Direction.values()) {
             Coordinate nextCoordinate = arena
@@ -98,46 +98,46 @@ public class BonoStrategy implements SnakeStrategy
             }
         }
 
-        if (distancesToFood.size() > 0) {
-            List<DirectionContainer<Direction>> directionContainers = new ArrayList<>();
-            directionContainers.addAll(distancesToFood.values());
+        List<DirectionContainer<Direction>> directionContainers = new ArrayList<>();
 
+        if (distancesToFood.size() > 0) {
+            directionContainers.addAll(distancesToFood.values());
             for (DirectionContainer<Direction> directionContainer : directionContainers) {
                 allValidDirections.addAll(directionContainer);
             }
-
-            System.out.println("All Valid Directions: " + allValidDirections);
-
-            equivalentBestDirections = directionContainers.get(0);
-
-            System.out.println(
-                    "Equivalent Best Directions: " + equivalentBestDirections);
-
-            System.out
-                    .println("Blocking Directions: " + blockingDirectionsData);
-
-            List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
-            newDirectionProcessors.add(new ByEquivalentBestDirections());
-            newDirectionProcessors.add(new ByFreeEquivalentBestDirections());
-            newDirectionProcessors.add(new ByFreeValidDirections());
-            newDirectionProcessors.add(new ByBlockingDistances());
-            newDirectionProcessors.add(new ByKispalEsABorz());
-
-            for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {
-                if (newDirection == null) {
-                    newDirectionProcessor
-                            .setBlockingDirectionsData(blockingDirectionsData);
-                    newDirectionProcessor
-                            .setAllValidDirections(allValidDirections);
-                    newDirectionProcessor.setEquivalentBestDirections(
-                            equivalentBestDirections);
-
-                    newDirection = newDirectionProcessor.getNewDirection();
-                }
-            }
         } else {
+            directionContainers.add(null);
+
             System.out.println(
                     "All directions are blocked directly. We are in deep shit.");
+        }
+
+        System.out.println("All Valid Directions: " + allValidDirections);
+
+        equivalentBestDirections = directionContainers.get(0);
+
+        System.out.println(
+                "Equivalent Best Directions: " + equivalentBestDirections);
+
+        System.out.println("Blocking Directions: " + blockingDirectionsData);
+
+        List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
+        newDirectionProcessors.add(new ByEquivalentBestDirections());
+        newDirectionProcessors.add(new ByFreeEquivalentBestDirections());
+        newDirectionProcessors.add(new ByFreeValidDirections());
+        newDirectionProcessors.add(new ByBlockingDistances());
+        newDirectionProcessors.add(new ByKispalEsABorz());
+
+        for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {
+            if (newDirection == null) {
+                newDirectionProcessor
+                        .setBlockingDirectionsData(blockingDirectionsData);
+                newDirectionProcessor.setAllValidDirections(allValidDirections);
+                newDirectionProcessor
+                        .setEquivalentBestDirections(equivalentBestDirections);
+
+                newDirection = newDirectionProcessor.getNewDirection();
+            }
         }
 
         System.out.println("--- END " + snake.getName() + "---");

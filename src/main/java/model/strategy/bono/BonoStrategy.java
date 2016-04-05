@@ -11,7 +11,7 @@ import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
 import model.strategy.bono.directionhandlers.DirectionContainer;
-import model.strategy.bono.directionhandlers.DirectionData;
+import model.strategy.bono.directionhandlers.DirectionDataHandler;
 import model.strategy.bono.distanceprocessors.DistanceProcessor;
 import model.strategy.bono.newdirectionprocessors.ByBlockingDistances;
 import model.strategy.bono.newdirectionprocessors.ByEquivalentBestDirections;
@@ -39,7 +39,7 @@ public class BonoStrategy implements SnakeStrategy
         Coordinate foodCoordinate = arena.getFood().get(0).getCoordinate();
         Coordinate maxCoordinate = arena.getMaxCoordinate();
 
-        DirectionData blockingDirectionsData = new DirectionData();
+        DirectionDataHandler blockingDirectionsDataHandler = new DirectionDataHandler();
 
         Map<Integer, DirectionContainer<Direction>> distancesToFood = new TreeMap<>();
         DirectionContainer<Direction> allValidDirections = new DirectionContainer<>();
@@ -73,7 +73,7 @@ public class BonoStrategy implements SnakeStrategy
                                     coordinateToInvestigate, maxCoordinate);
 
                             if (isBlockingRisk(distance, blockingTailLength)) {
-                                blockingDirectionsData.putData(actualDirection,
+                                blockingDirectionsDataHandler.putData(actualDirection,
                                         distance, coordinateToInvestigate);
                             }
                         }
@@ -120,7 +120,7 @@ public class BonoStrategy implements SnakeStrategy
         System.out.println(
                 "Equivalent Best Directions: " + equivalentBestDirections);
 
-        System.out.println("Blocking Directions: " + blockingDirectionsData);
+        System.out.println("Blocking Directions: " + blockingDirectionsDataHandler);
 
         List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
         newDirectionProcessors.add(new ByEquivalentBestDirections());
@@ -132,7 +132,7 @@ public class BonoStrategy implements SnakeStrategy
         for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {
             if (newDirection == null) {
                 newDirectionProcessor
-                        .setBlockingDirectionsData(blockingDirectionsData);
+                        .setBlockingDirectionsData(blockingDirectionsDataHandler);
                 newDirectionProcessor.setAllValidDirections(allValidDirections);
                 newDirectionProcessor
                         .setEquivalentBestDirections(equivalentBestDirections);

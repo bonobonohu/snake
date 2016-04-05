@@ -7,7 +7,7 @@ import java.util.Set;
 import model.Coordinate;
 import model.Direction;
 
-public class DirectionData
+public class DirectionDataHandler
 {
     private Map<Direction, Integer> distanceToDirection = new HashMap<>();
     private Map<Direction, Coordinate> coordinateToDirection = new HashMap<>();

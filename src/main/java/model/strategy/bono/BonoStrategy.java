@@ -10,7 +10,6 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
-<<<<<<< HEAD
 import model.strategy.bono.directionhandlers.DirectionContainer;
 import model.strategy.bono.directionhandlers.DirectionData;
 import model.strategy.bono.distanceprocessors.DistanceProcessor;
@@ -20,9 +19,6 @@ import model.strategy.bono.newdirectionprocessors.ByFreeEquivalentBestDirections
 import model.strategy.bono.newdirectionprocessors.ByFreeValidDirections;
 import model.strategy.bono.newdirectionprocessors.ByKispalEsABorz;
 import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
-=======
-import model.strategy.bono.distanceprocessor.DistanceProcessor;
->>>>>>> branch 'development' of https://bonobonohu@bitbucket.org/bonobonohu/snake.git
 
 public class BonoStrategy implements SnakeStrategy
 {

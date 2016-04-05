@@ -5,6 +5,11 @@ import model.strategy.bono.directionhandlers.DirectionContainer;
 
 public class ByFreeValidDirections extends NewDirectionProcessor
 {
+    public ByFreeValidDirections(DependencyProvider dependencyProvider)
+    {
+        super(dependencyProvider);
+    }
+
     @Override
     public Direction getNewDirection()
     {
@@ -14,7 +19,7 @@ public class ByFreeValidDirections extends NewDirectionProcessor
             DirectionContainer<Direction> freeValidDirections = allValidDirections
                     .getAsNewObject();
             freeValidDirections
-                    .removeAll(blockingDirectionsData.getDirections());
+                    .removeAll(blockingDirectionsDataHandler.getDirections());
 
             newDirection = freeValidDirections.getRandomElement();
 

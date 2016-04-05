@@ -18,6 +18,7 @@ import model.strategy.bono.newdirectionprocessors.ByEquivalentBestDirections;
 import model.strategy.bono.newdirectionprocessors.ByFreeEquivalentBestDirections;
 import model.strategy.bono.newdirectionprocessors.ByFreeValidDirections;
 import model.strategy.bono.newdirectionprocessors.ByKispalEsABorz;
+import model.strategy.bono.newdirectionprocessors.DependencyProvider;
 import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
 
 public class BonoStrategy implements SnakeStrategy
@@ -73,8 +74,9 @@ public class BonoStrategy implements SnakeStrategy
                                     coordinateToInvestigate, maxCoordinate);
 
                             if (isBlockingRisk(distance, blockingTailLength)) {
-                                blockingDirectionsDataHandler.putData(actualDirection,
-                                        distance, coordinateToInvestigate);
+                                blockingDirectionsDataHandler.putData(
+                                        actualDirection, distance,
+                                        coordinateToInvestigate);
                             }
                         }
                     }
@@ -120,23 +122,24 @@ public class BonoStrategy implements SnakeStrategy
         System.out.println(
                 "Equivalent Best Directions: " + equivalentBestDirections);
 
-        System.out.println("Blocking Directions: " + blockingDirectionsDataHandler);
+        System.out.println(
+                "Blocking Directions: " + blockingDirectionsDataHandler);
 
+        DependencyProvider dependencyProvider = new DependencyProvider(
+                blockingDirectionsDataHandler, allValidDirections,
+                equivalentBestDirections);
         List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
-        newDirectionProcessors.add(new ByEquivalentBestDirections());
-        newDirectionProcessors.add(new ByFreeEquivalentBestDirections());
-        newDirectionProcessors.add(new ByFreeValidDirections());
-        newDirectionProcessors.add(new ByBlockingDistances());
-        newDirectionProcessors.add(new ByKispalEsABorz());
+        newDirectionProcessors
+                .add(new ByEquivalentBestDirections(dependencyProvider));
+        newDirectionProcessors
+                .add(new ByFreeEquivalentBestDirections(dependencyProvider));
+        newDirectionProcessors
+                .add(new ByFreeValidDirections(dependencyProvider));
+        newDirectionProcessors.add(new ByBlockingDistances(dependencyProvider));
+        newDirectionProcessors.add(new ByKispalEsABorz(dependencyProvider));
 
         for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {
             if (newDirection == null) {
-                newDirectionProcessor
-                        .setBlockingDirectionsData(blockingDirectionsDataHandler);
-                newDirectionProcessor.setAllValidDirections(allValidDirections);
-                newDirectionProcessor
-                        .setEquivalentBestDirections(equivalentBestDirections);
-
                 newDirection = newDirectionProcessor.getNewDirection();
             }
         }

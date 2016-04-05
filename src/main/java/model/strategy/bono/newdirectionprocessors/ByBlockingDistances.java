@@ -10,6 +10,11 @@ import model.strategy.bono.directionhandlers.DirectionContainer;
 
 public class ByBlockingDistances extends NewDirectionProcessor
 {
+    public ByBlockingDistances(DependencyProvider dependencyProvider)
+    {
+        super(dependencyProvider);
+    }
+
     @Override
     public Direction getNewDirection()
     {
@@ -18,7 +23,7 @@ public class ByBlockingDistances extends NewDirectionProcessor
         Map<Integer, DirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
                 Collections.reverseOrder());
 
-        for (Map.Entry<Direction, Integer> entry : blockingDirectionsData
+        for (Map.Entry<Direction, Integer> entry : blockingDirectionsDataHandler
                 .getDistanceToDirectionsEntrySet()) {
             if (orderedBlockings.containsKey(entry.getValue())) {
                 DirectionContainer<Direction> directionsTemp = orderedBlockings

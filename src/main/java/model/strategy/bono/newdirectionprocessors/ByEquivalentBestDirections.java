@@ -4,6 +4,12 @@ import model.Direction;
 
 public class ByEquivalentBestDirections extends NewDirectionProcessor
 {
+
+    public ByEquivalentBestDirections(DependencyProvider dependencyProvider)
+    {
+        super(dependencyProvider);
+    }
+
     @Override
     public Direction getNewDirection()
     {

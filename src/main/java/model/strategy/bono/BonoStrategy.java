@@ -143,10 +143,6 @@ public class BonoStrategy implements SnakeStrategy
 
         System.out.println("--- END " + snake.getName() + "---");
 
-        if (newDirection == null) {
-            newDirection = Direction.SOUTH;
-        }
-
         return newDirection;
     }
 

@@ -20,7 +20,7 @@ public class ByFreeEquivalentBestDirections extends NewDirectionProcessor
             DirectionContainer<Direction> freeEquivalentBestDirections = equivalentBestDirections
                     .getAsNewObject();
             freeEquivalentBestDirections
-                    .removeAll(blockingDirectionsDataHandler.getDirections());
+                    .removeAll(blockingDirections.getDirections());
 
             newDirection = processFinalDirection(freeEquivalentBestDirections);
 

@@ -19,7 +19,7 @@ public class ByFreeValidDirections extends NewDirectionProcessor
             DirectionContainer<Direction> freeValidDirections = allValidDirections
                     .getAsNewObject();
             freeValidDirections
-                    .removeAll(blockingDirectionsDataHandler.getDirections());
+                    .removeAll(blockingDirections.getDirections());
 
             newDirection = processFinalDirection(freeValidDirections);
 

@@ -1,36 +1,37 @@
 package model.strategy.bono.newdirectionprocessors;
 
 import model.Direction;
+import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
 import model.strategy.bono.directionhandlers.DirectionContainer;
-import model.strategy.bono.directionhandlers.DirectionDataHandler;
 
 public class DependencyProvider
 {
-    private DirectionDataHandler blockingDirectionsDataHandler;
-    private DirectionContainer<Direction> allValidDirections;
+    private BlockingDirectionContainer blockingDirectionsDataHandler;
     private DirectionContainer<Direction> equivalentBestDirections;
+    private DirectionContainer<Direction> allValidDirections;
 
-    public DependencyProvider(DirectionDataHandler blockingDirectionsDataHandler,
-            DirectionContainer<Direction> allValidDirections,
-            DirectionContainer<Direction> equivalentBestDirections)
+    public DependencyProvider(
+            BlockingDirectionContainer blockingDirectionsDataHandler,
+            DirectionContainer<Direction> equivalentBestDirections,
+            DirectionContainer<Direction> allValidDirections)
     {
         this.blockingDirectionsDataHandler = blockingDirectionsDataHandler;
-        this.allValidDirections = allValidDirections;
         this.equivalentBestDirections = equivalentBestDirections;
+        this.allValidDirections = allValidDirections;
     }
 
-    public DirectionDataHandler getBlockingDirectionsDataHandler()
+    public BlockingDirectionContainer getBlockingDirectionsDataHandler()
     {
         return blockingDirectionsDataHandler;
-    }
-
-    public DirectionContainer<Direction> getAllValidDirections()
-    {
-        return allValidDirections;
     }
 
     public DirectionContainer<Direction> getEquivalentBestDirections()
     {
         return equivalentBestDirections;
+    }
+
+    public DirectionContainer<Direction> getAllValidDirections()
+    {
+        return allValidDirections;
     }
 }

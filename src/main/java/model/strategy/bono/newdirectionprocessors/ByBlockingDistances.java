@@ -23,7 +23,7 @@ public class ByBlockingDistances extends NewDirectionProcessor
         Map<Integer, DirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
                 Collections.reverseOrder());
 
-        for (Map.Entry<Direction, Integer> entry : blockingDirectionsDataHandler
+        for (Map.Entry<Direction, Integer> entry : blockingDirections
                 .getDistanceToDirectionsEntrySet()) {
             if (orderedBlockings.containsKey(entry.getValue())) {
                 DirectionContainer<Direction> directionsTemp = orderedBlockings

@@ -74,7 +74,7 @@ public class BonoStrategy implements SnakeStrategy
         allValidDirections = processAllValidDirections(distancesToFood);
 
         newDirection = processNewDirection(blockingDirections,
-                allValidDirections, equivalentBestDirections);
+                equivalentBestDirections, allValidDirections);
 
         return newDirection;
     }

@@ -21,7 +21,7 @@ public class ByFreeValidDirections extends NewDirectionProcessor
             freeValidDirections
                     .removeAll(blockingDirectionsDataHandler.getDirections());
 
-            newDirection = freeValidDirections.getRandomElement();
+            newDirection = processFinalDirection(freeValidDirections);
 
             System.out.println("Random element from the free valid directions: "
                     + newDirection);

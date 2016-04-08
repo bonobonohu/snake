@@ -20,4 +20,16 @@ public abstract class NewDirectionProcessor
     }
 
     public abstract Direction getNewDirection();
+
+    protected Direction processFinalDirection(
+            DirectionContainer<Direction> directionContainer)
+    {
+        Direction newDirection;
+
+        // List<Direction> directions = directionContainer.getAllAsList();
+
+        newDirection = directionContainer.getRandomElement();
+
+        return newDirection;
+    }
 }

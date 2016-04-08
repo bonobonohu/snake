@@ -17,7 +17,7 @@ public class ByEquivalentBestDirections extends NewDirectionProcessor
 
         if (equivalentBestDirections != null
                 && equivalentBestDirections.size() == 0) {
-            newDirection = equivalentBestDirections.getRandomElement();
+            newDirection = processFinalDirection(equivalentBestDirections);
 
             System.out.println(
                     "Random element from the equivalent best directions: "

@@ -22,7 +22,7 @@ public class ByFreeEquivalentBestDirections extends NewDirectionProcessor
             freeEquivalentBestDirections
                     .removeAll(blockingDirectionsDataHandler.getDirections());
 
-            newDirection = freeEquivalentBestDirections.getRandomElement();
+            newDirection = processFinalDirection(freeEquivalentBestDirections);
 
             System.out.println(
                     "Random element from the free equivalent best directions: "

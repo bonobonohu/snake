@@ -51,18 +51,18 @@ public class ByBlockingDistances extends NewDirectionProcessor
                     .getValue();
 
             int numOfTries = 0;
-            Direction randomDirection;
+            Direction finalDirection;
             do {
-                randomDirection = blockingDirectionsTemp.getRandomElement();
+                finalDirection = processFinalDirection(blockingDirectionsTemp);
 
-                if (randomDirection != null) {
-                    newDirection = randomDirection;
+                if (finalDirection != null) {
+                    newDirection = finalDirection;
                     foundNewDirection = true;
                 }
 
                 numOfTries++;
             } while (!foundNewDirection
-                    || (allValidDirections.contains(randomDirection)
+                    || (allValidDirections.contains(finalDirection)
                             && numOfTries < allValidDirections.size()));
         }
 

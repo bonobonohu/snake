@@ -114,10 +114,9 @@ public class BonoStrategy implements SnakeStrategy
             System.out.println(
                     "All directions are blocked directly. We are in deep shit.");
         }
+        equivalentBestDirections = directionContainers.get(0);
 
         System.out.println("All Valid Directions: " + allValidDirections);
-
-        equivalentBestDirections = directionContainers.get(0);
 
         System.out.println(
                 "Equivalent Best Directions: " + equivalentBestDirections);

@@ -23,6 +23,15 @@ public class DirectionContainer<E> extends HashSet<E>
         return returnElement;
     }
 
+    public List<E> getAllAsList()
+    {
+        List<E> elements = new ArrayList<>();
+
+        elements.addAll(this);
+
+        return elements;
+    }
+
     public DirectionContainer<E> getAsNewObject()
     {
         DirectionContainer<E> newDirectionsContainer = new DirectionContainer<>();

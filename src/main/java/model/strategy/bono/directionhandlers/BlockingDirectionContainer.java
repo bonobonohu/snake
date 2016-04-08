@@ -14,7 +14,7 @@ public class BlockingDirectionContainer
     private Map<Coordinate, Integer> distanceToCoordinate = new HashMap<>();
     private Map<Coordinate, Direction> directionToCoordinate = new HashMap<>();
 
-    public void putData(Direction direction, int distance,
+    public void putData(int distance, Direction direction,
             Coordinate coordinate)
     {
         if (directionHasDistance(direction)) {

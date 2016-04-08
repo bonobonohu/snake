@@ -65,9 +65,9 @@ public class BonoStrategy implements SnakeStrategy
         DirectionContainer<Direction> equivalentBestDirections = new DirectionContainer<>();
         DirectionContainer<Direction> allValidDirections = new DirectionContainer<>();
 
-        distancesToFood = processDistancesToFood();
-
         blockingDirections = processBlockingDirections();
+
+        distancesToFood = processDistancesToFood();
 
         equivalentBestDirections = processEquivalentBestDirections(
                 distancesToFood);
@@ -134,13 +134,13 @@ public class BonoStrategy implements SnakeStrategy
 
                             DistanceProcessor distanceProcessor = DistanceProcessor
                                     .getDistanceProcessor(actualDirection);
-                            int distance = distanceProcessor.getDistance(
+                            int distanceToBlock = distanceProcessor.getDistance(
                                     actualHeadCoordinate,
                                     coordinateToInvestigate, maxCoordinate);
 
-                            if (isBlockingRisk(blockingTailLength, distance)) {
-                                blockingDirections.putData(actualDirection,
-                                        distance, coordinateToInvestigate);
+                            if (isBlockingRisk(blockingTailLength, distanceToBlock)) {
+                                blockingDirections.putData(distanceToBlock,
+                                        actualDirection, coordinateToInvestigate);
                             }
                         }
                     }

@@ -23,21 +23,7 @@ public class ByBlockingDistances extends NewDirectionProcessor
         Map<Integer, SimpleDirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
                 Collections.reverseOrder());
 
-        for (Map.Entry<Direction, Integer> entry : blockingDirections
-                .getDistanceToDirectionsEntrySet()) {
-            if (orderedBlockings.containsKey(entry.getValue())) {
-                SimpleDirectionContainer<Direction> directionsTemp = orderedBlockings
-                        .get(entry.getValue());
-                directionsTemp.add(entry.getKey());
-
-                orderedBlockings.put(entry.getValue(), directionsTemp);
-            } else {
-                SimpleDirectionContainer<Direction> directionsTemp = new SimpleDirectionContainer<>();
-                directionsTemp.add(entry.getKey());
-
-                orderedBlockings.put(entry.getValue(), directionsTemp);
-            }
-        }
+        orderedBlockings = blockingDirections.getOrderedBlockings();
 
         boolean foundNewDirection = false;
         Iterator<Map.Entry<Integer, SimpleDirectionContainer<Direction>>> orderedBlockingsEntrySetIterator = orderedBlockings
@@ -54,6 +40,7 @@ public class ByBlockingDistances extends NewDirectionProcessor
             Direction finalDirection;
             do {
                 finalDirection = processFinalDirection(blockingDirectionsTemp);
+                // finalDirection = blockingDirectionsTemp.getRandomElement();
 
                 if (finalDirection != null) {
                     newDirection = finalDirection;
@@ -62,7 +49,7 @@ public class ByBlockingDistances extends NewDirectionProcessor
 
                 numOfTries++;
             } while (!foundNewDirection
-                    || (allValidDirections.contains(finalDirection)
+                    && (allValidDirections.contains(finalDirection)
                             && numOfTries < allValidDirections.size()));
         }
 

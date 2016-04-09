@@ -61,7 +61,6 @@ public class BonoStrategy implements SnakeStrategy
 
         BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
                 snake, arena);
-
         BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
 
         SimpleDirectionContainer<Direction> equivalentBestDirections = new SimpleDirectionContainer<>();
@@ -161,8 +160,8 @@ public class BonoStrategy implements SnakeStrategy
     {
         Direction newDirection = null;
 
-        DependencyProvider dependencyProvider = new DependencyProvider(
-                blockingDirections, equivalentBestDirections,
+        DependencyProvider dependencyProvider = new DependencyProvider(arena,
+                snake, blockingDirections, equivalentBestDirections,
                 allValidDirections);
         List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
         newDirectionProcessors

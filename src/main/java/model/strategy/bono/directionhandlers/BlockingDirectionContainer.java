@@ -1,8 +1,10 @@
 package model.strategy.bono.directionhandlers;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import model.Coordinate;
 import model.Direction;
@@ -149,9 +151,40 @@ public class BlockingDirectionContainer
         return distanceToDirection.size();
     }
 
-    public Set<Map.Entry<Direction, Integer>> getDistanceToDirectionsEntrySet()
+    public Map<Integer, SimpleDirectionContainer<Direction>> getOrderedBlockings()
     {
-        return distanceToDirection.entrySet();
+        Map<Integer, SimpleDirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
+                Collections.reverseOrder());
+
+        for (Map.Entry<Direction, Integer> entry : distanceToDirection
+                .entrySet()) {
+            if (orderedBlockings.containsKey(entry.getValue())) {
+                SimpleDirectionContainer<Direction> directionsTemp = orderedBlockings
+                        .get(entry.getValue());
+                directionsTemp.add(entry.getKey());
+
+                orderedBlockings.put(entry.getValue(), directionsTemp);
+            } else {
+                SimpleDirectionContainer<Direction> directionsTemp = new SimpleDirectionContainer<>();
+                directionsTemp.add(entry.getKey());
+
+                orderedBlockings.put(entry.getValue(), directionsTemp);
+            }
+        }
+
+        return orderedBlockings;
+    }
+
+    public int processFreeRadicals()
+    {
+        int freeRadicals = 0;
+
+        for (Map.Entry<Direction, Integer> entry : distanceToDirection
+                .entrySet()) {
+            freeRadicals = freeRadicals + entry.getValue();
+        }
+
+        return freeRadicals;
     }
 
     public String toString()

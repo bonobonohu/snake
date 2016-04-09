@@ -1,7 +1,7 @@
 package model.strategy.bono.newdirectionprocessors;
 
 import model.Direction;
-import model.strategy.bono.directionhandlers.DirectionContainer;
+import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
 public class ByFreeValidDirections extends NewDirectionProcessor
 {
@@ -16,7 +16,7 @@ public class ByFreeValidDirections extends NewDirectionProcessor
         Direction newDirection = null;
 
         if (allValidDirections != null && allValidDirections.size() > 0) {
-            DirectionContainer<Direction> freeValidDirections = allValidDirections
+            SimpleDirectionContainer<Direction> freeValidDirections = allValidDirections
                     .getAsNewObject();
             freeValidDirections
                     .removeAll(blockingDirections.getDirections());

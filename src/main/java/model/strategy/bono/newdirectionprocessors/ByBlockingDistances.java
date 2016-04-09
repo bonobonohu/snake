@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import model.Direction;
-import model.strategy.bono.directionhandlers.DirectionContainer;
+import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
 public class ByBlockingDistances extends NewDirectionProcessor
 {
@@ -20,19 +20,19 @@ public class ByBlockingDistances extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        Map<Integer, DirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
+        Map<Integer, SimpleDirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
                 Collections.reverseOrder());
 
         for (Map.Entry<Direction, Integer> entry : blockingDirections
                 .getDistanceToDirectionsEntrySet()) {
             if (orderedBlockings.containsKey(entry.getValue())) {
-                DirectionContainer<Direction> directionsTemp = orderedBlockings
+                SimpleDirectionContainer<Direction> directionsTemp = orderedBlockings
                         .get(entry.getValue());
                 directionsTemp.add(entry.getKey());
 
                 orderedBlockings.put(entry.getValue(), directionsTemp);
             } else {
-                DirectionContainer<Direction> directionsTemp = new DirectionContainer<>();
+                SimpleDirectionContainer<Direction> directionsTemp = new SimpleDirectionContainer<>();
                 directionsTemp.add(entry.getKey());
 
                 orderedBlockings.put(entry.getValue(), directionsTemp);
@@ -40,14 +40,14 @@ public class ByBlockingDistances extends NewDirectionProcessor
         }
 
         boolean foundNewDirection = false;
-        Iterator<Map.Entry<Integer, DirectionContainer<Direction>>> orderedBlockingsEntrySetIterator = orderedBlockings
+        Iterator<Map.Entry<Integer, SimpleDirectionContainer<Direction>>> orderedBlockingsEntrySetIterator = orderedBlockings
                 .entrySet().iterator();
         while (!foundNewDirection
                 && orderedBlockingsEntrySetIterator.hasNext()) {
-            Map.Entry<Integer, DirectionContainer<Direction>> blockingsTemp = orderedBlockingsEntrySetIterator
+            Map.Entry<Integer, SimpleDirectionContainer<Direction>> blockingsTemp = orderedBlockingsEntrySetIterator
                     .next();
 
-            DirectionContainer<Direction> blockingDirectionsTemp = blockingsTemp
+            SimpleDirectionContainer<Direction> blockingDirectionsTemp = blockingsTemp
                     .getValue();
 
             int numOfTries = 0;

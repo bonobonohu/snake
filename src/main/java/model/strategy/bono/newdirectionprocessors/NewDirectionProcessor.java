@@ -2,13 +2,13 @@ package model.strategy.bono.newdirectionprocessors;
 
 import model.Direction;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
-import model.strategy.bono.directionhandlers.DirectionContainer;
+import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
 public abstract class NewDirectionProcessor
 {
     protected BlockingDirectionContainer blockingDirections;
-    protected DirectionContainer<Direction> equivalentBestDirections;
-    protected DirectionContainer<Direction> allValidDirections;
+    protected SimpleDirectionContainer<Direction> equivalentBestDirections;
+    protected SimpleDirectionContainer<Direction> allValidDirections;
 
     public NewDirectionProcessor(DependencyProvider dependencyProvider)
     {
@@ -22,7 +22,7 @@ public abstract class NewDirectionProcessor
     public abstract Direction getNewDirection();
 
     protected Direction processFinalDirection(
-            DirectionContainer<Direction> directionContainer)
+            SimpleDirectionContainer<Direction> directionContainer)
     {
         Direction newDirection;
 

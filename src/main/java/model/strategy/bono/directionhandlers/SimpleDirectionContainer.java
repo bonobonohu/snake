@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-public class DirectionContainer<E> extends HashSet<E>
+public class SimpleDirectionContainer<E> extends HashSet<E>
 {
 
     private static final long serialVersionUID = -7360462751577910244L;
@@ -32,9 +32,9 @@ public class DirectionContainer<E> extends HashSet<E>
         return elements;
     }
 
-    public DirectionContainer<E> getAsNewObject()
+    public SimpleDirectionContainer<E> getAsNewObject()
     {
-        DirectionContainer<E> newDirectionsContainer = new DirectionContainer<>();
+        SimpleDirectionContainer<E> newDirectionsContainer = new SimpleDirectionContainer<>();
 
         newDirectionsContainer.addAll(this);
 

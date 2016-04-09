@@ -142,8 +142,7 @@ public class BonoStrategy implements SnakeStrategy
 
                             if (isBlockingRisk(blockingTailLength,
                                     distanceToBlock + stepForward)) {
-                                blockingDirections.putData(
-                                        actualDirection,
+                                blockingDirections.putData(actualDirection,
                                         coordinateToInvestigate,
                                         distanceToBlock + stepForward);
                             }

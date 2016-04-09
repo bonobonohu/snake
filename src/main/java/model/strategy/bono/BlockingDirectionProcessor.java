@@ -14,7 +14,6 @@ public class BlockingDirectionProcessor
     private Arena arena;
     private Snake snake;
 
-    private Coordinate actualHeadCoordinate;
     private Coordinate maxCoordinate;
 
     public BlockingDirectionProcessor(Snake snakeParam, Arena arenaParam)
@@ -22,11 +21,11 @@ public class BlockingDirectionProcessor
         arena = arenaParam;
         snake = snakeParam;
 
-        actualHeadCoordinate = snake.getHeadCoordinate();
         maxCoordinate = arena.getMaxCoordinate();
     }
 
-    public BlockingDirectionContainer process(int stepForward)
+    public BlockingDirectionContainer process(Coordinate actualHeadCoordinate,
+            int stepForward)
     {
         BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
 
@@ -45,7 +44,7 @@ public class BlockingDirectionProcessor
                         Snake blockingSnake = getBlockingSnake(
                                 coordinateToInvestigate);
 
-                        if (isValidBlock(blockingSnake)) {
+                        if (isValidBlock(actualHeadCoordinate, blockingSnake)) {
                             int blockingTailLength = getBlockingTailLength(
                                     blockingSnake, coordinateToInvestigate);
 
@@ -90,7 +89,8 @@ public class BlockingDirectionProcessor
         return blockingSnake;
     }
 
-    private boolean isValidBlock(Snake blockingSnake)
+    private boolean isValidBlock(Coordinate actualHeadCoordinate,
+            Snake blockingSnake)
     {
         boolean validBlock = false;
 
@@ -108,10 +108,10 @@ public class BlockingDirectionProcessor
             }
 
             if ((!allXsAreTheSame && !allYsAreTheSame)
-                    || (allXsAreTheSame && snake.length() == arena
-                            .getMaxCoordinate().getY())
-                    || (allYsAreTheSame && snake.length() == arena
-                            .getMaxCoordinate().getX())) {
+                    || (allXsAreTheSame
+                            && snake.length() == maxCoordinate.getY())
+                    || (allYsAreTheSame
+                            && snake.length() == maxCoordinate.getX())) {
                 validBlock = true;
             }
         } else {

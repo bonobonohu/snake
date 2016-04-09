@@ -69,7 +69,7 @@ public class BonoStrategy implements SnakeStrategy
 
         int stepForward = 0;
         blockingDirections = blockingDirectionProcessor
-                .process(stepForward);
+                .process(actualHeadCoordinate, stepForward);
 
         distancesToFood = processDistancesToFood();
 

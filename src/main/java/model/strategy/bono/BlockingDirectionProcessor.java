@@ -15,7 +15,6 @@ public class BlockingDirectionProcessor
     private Snake snake;
 
     private Coordinate actualHeadCoordinate;
-    private Coordinate foodCoordinate;
     private Coordinate maxCoordinate;
 
     public BlockingDirectionProcessor(Snake snakeParam, Arena arenaParam)
@@ -24,7 +23,6 @@ public class BlockingDirectionProcessor
         snake = snakeParam;
 
         actualHeadCoordinate = snake.getHeadCoordinate();
-        foodCoordinate = arena.getFood().get(0).getCoordinate();
         maxCoordinate = arena.getMaxCoordinate();
     }
 

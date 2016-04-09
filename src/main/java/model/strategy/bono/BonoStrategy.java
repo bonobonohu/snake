@@ -138,9 +138,11 @@ public class BonoStrategy implements SnakeStrategy
                                     actualHeadCoordinate,
                                     coordinateToInvestigate, maxCoordinate);
 
-                            if (isBlockingRisk(blockingTailLength, distanceToBlock)) {
+                            if (isBlockingRisk(blockingTailLength,
+                                    distanceToBlock)) {
                                 blockingDirections.putData(distanceToBlock,
-                                        actualDirection, coordinateToInvestigate);
+                                        actualDirection,
+                                        coordinateToInvestigate);
                             }
                         }
                     }

@@ -141,10 +141,11 @@ public class BonoStrategy implements SnakeStrategy
                                     coordinateToInvestigate, maxCoordinate);
 
                             if (isBlockingRisk(blockingTailLength,
-                                    distanceToBlock, stepForward)) {
-                                blockingDirections.putData(distanceToBlock,
+                                    distanceToBlock + stepForward)) {
+                                blockingDirections.putData(
                                         actualDirection,
-                                        coordinateToInvestigate);
+                                        coordinateToInvestigate,
+                                        distanceToBlock + stepForward);
                             }
                         }
                     }
@@ -225,10 +226,9 @@ public class BonoStrategy implements SnakeStrategy
         return blockingTailLength;
     }
 
-    private boolean isBlockingRisk(int blockingTailLength, int distanceToBlock,
-            int stepForward)
+    private boolean isBlockingRisk(int blockingTailLength, int distanceToBlock)
     {
-        return blockingTailLength >= distanceToBlock + stepForward;
+        return blockingTailLength >= distanceToBlock;
     }
 
     private SimpleDirectionContainer<Direction> processEquivalentBestDirections(

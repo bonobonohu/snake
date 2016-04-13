@@ -47,7 +47,6 @@ public abstract class NewDirectionProcessor
         List<Direction> directions = directionContainer.getAllAsList();
         Map<Direction, Integer> freeRadicalsToDirection = new HashMap<>();
 
-        int stepForward = 1;
         for (Direction actualDirection : directions) {
             BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
                     snake, arena);
@@ -57,14 +56,13 @@ public abstract class NewDirectionProcessor
                     .nextCoordinate(actualHeadCoordinate, actualDirection);
 
             blockingDirections = blockingDirectionProcessor
-                    .process(nextCoordinate, stepForward);
+                    .process(nextCoordinate);
 
             int freeRadicals = blockingDirections.processFreeRadicals();
             freeRadicalsToDirection.put(actualDirection, freeRadicals);
 
             System.out.println("Free radicals to " + actualDirection + ": "
                     + freeRadicals);
-
         }
 
         newDirection = directionContainer.getRandomElement();

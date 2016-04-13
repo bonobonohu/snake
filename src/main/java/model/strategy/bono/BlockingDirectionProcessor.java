@@ -24,8 +24,7 @@ public class BlockingDirectionProcessor
         maxCoordinate = arena.getMaxCoordinate();
     }
 
-    public BlockingDirectionContainer process(Coordinate actualHeadCoordinate,
-            int stepForward)
+    public BlockingDirectionContainer process(Coordinate actualHeadCoordinate)
     {
         BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
 
@@ -55,10 +54,10 @@ public class BlockingDirectionProcessor
                                     coordinateToInvestigate, maxCoordinate);
 
                             if (isBlockingRisk(blockingTailLength,
-                                    distanceToBlock + stepForward)) {
+                                    distanceToBlock)) {
                                 blockingDirections.putData(actualDirection,
                                         coordinateToInvestigate,
-                                        distanceToBlock + stepForward);
+                                        distanceToBlock);
                             }
                         }
                     }

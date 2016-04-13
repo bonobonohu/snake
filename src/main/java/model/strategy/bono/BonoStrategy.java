@@ -66,9 +66,8 @@ public class BonoStrategy implements SnakeStrategy
         SimpleDirectionContainer<Direction> equivalentBestDirections = new SimpleDirectionContainer<>();
         SimpleDirectionContainer<Direction> allValidDirections = new SimpleDirectionContainer<>();
 
-        int stepForward = 0;
         blockingDirections = blockingDirectionProcessor
-                .process(actualHeadCoordinate, stepForward);
+                .process(actualHeadCoordinate);
 
         distancesToFood = processDistancesToFood();
 

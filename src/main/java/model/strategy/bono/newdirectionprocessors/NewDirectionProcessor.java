@@ -92,10 +92,11 @@ public abstract class NewDirectionProcessor
         List<Direction> directions = directionContainer.getAllAsList();
 
         for (Direction actualDirection : directions) {
-            Coordinate nextCoordinate = arena
-                    .nextCoordinate(actualHeadCoordinate, actualDirection);
             int directlyBlockedDirections = 1;
             // 1, because we are coming from somewhere, stupid!
+
+            Coordinate nextCoordinate = arena
+                    .nextCoordinate(actualHeadCoordinate, actualDirection);
 
             for (Direction actualTestingDirection : Direction.values()) {
                 Coordinate nextTestingCoordinate = arena
@@ -108,6 +109,9 @@ public abstract class NewDirectionProcessor
 
             if (directlyBlockedDirections < 3) {
                 testedDirections.add(actualDirection);
+            } else {
+                System.out.println("Direction blocked from at least 3 ways: "
+                        + actualDirection);
             }
         }
 

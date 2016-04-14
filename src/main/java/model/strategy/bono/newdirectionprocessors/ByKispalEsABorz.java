@@ -17,10 +17,7 @@ public class ByKispalEsABorz extends NewDirectionProcessor
         Direction newDirection = null;
 
         SimpleDirectionContainer<Direction> kispalDirections = new SimpleDirectionContainer<>();
-        kispalDirections.add(Direction.SOUTH);
         kispalDirections.add(Direction.NORTH);
-        kispalDirections.add(Direction.EAST);
-        kispalDirections.add(Direction.WEST);
 
         newDirection = processFinalDirection(kispalDirections);
 

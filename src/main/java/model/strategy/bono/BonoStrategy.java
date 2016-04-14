@@ -16,6 +16,7 @@ import model.strategy.bono.newdirectionprocessors.ByBlockingDistances;
 import model.strategy.bono.newdirectionprocessors.ByFreeEquivalentBestDirections;
 import model.strategy.bono.newdirectionprocessors.ByFreeValidDirections;
 import model.strategy.bono.newdirectionprocessors.ByKispalEsABorz;
+import model.strategy.bono.newdirectionprocessors.ByRandom;
 import model.strategy.bono.newdirectionprocessors.DependencyProvider;
 import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
 
@@ -173,6 +174,8 @@ public class BonoStrategy implements SnakeStrategy
                     dependencyProvider, testDirectBlocks));
             newDirectionProcessors.add(new ByBlockingDistances(
                     dependencyProvider, testDirectBlocks));
+            newDirectionProcessors
+                    .add(new ByRandom(dependencyProvider, testDirectBlocks));
             newDirectionProcessors.add(
                     new ByKispalEsABorz(dependencyProvider, testDirectBlocks));
 

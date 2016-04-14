@@ -1,5 +1,6 @@
 package model.strategy.bono.newdirectionprocessors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Arena;
@@ -21,6 +22,32 @@ public abstract class NewDirectionProcessor
     protected BlockingDirectionContainer blockingDirections;
     protected SimpleDirectionContainer<Direction> equivalentBestDirections;
     protected SimpleDirectionContainer<Direction> allValidDirections;
+
+    public static Direction processNewDirection(
+            DependencyProvider dependencyProvider, boolean testDirectBlocks)
+    {
+        Direction newDirection = null;
+
+        List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
+        newDirectionProcessors.add(new ByFreeEquivalentBestDirections(
+                dependencyProvider, testDirectBlocks));
+        newDirectionProcessors.add(new ByFreeValidDirections(dependencyProvider,
+                testDirectBlocks));
+        newDirectionProcessors.add(
+                new ByBlockingDistances(dependencyProvider, testDirectBlocks));
+        newDirectionProcessors
+                .add(new ByRandom(dependencyProvider, testDirectBlocks));
+        newDirectionProcessors
+                .add(new ByKispalEsABorz(dependencyProvider, testDirectBlocks));
+
+        for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {
+            if (newDirection == null) {
+                newDirection = newDirectionProcessor.getNewDirection();
+            }
+        }
+
+        return newDirection;
+    }
 
     public NewDirectionProcessor(DependencyProvider dependencyProvider,
             boolean testDirectBlocks)

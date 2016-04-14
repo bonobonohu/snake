@@ -12,11 +12,6 @@ import model.Snake;
 import model.strategy.SnakeStrategy;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
-import model.strategy.bono.newdirectionprocessors.ByBlockingDistances;
-import model.strategy.bono.newdirectionprocessors.ByFreeEquivalentBestDirections;
-import model.strategy.bono.newdirectionprocessors.ByFreeValidDirections;
-import model.strategy.bono.newdirectionprocessors.ByKispalEsABorz;
-import model.strategy.bono.newdirectionprocessors.ByRandom;
 import model.strategy.bono.newdirectionprocessors.DependencyProvider;
 import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
 
@@ -167,23 +162,9 @@ public class BonoStrategy implements SnakeStrategy
             DependencyProvider dependencyProvider = new DependencyProvider(
                     arena, snake, blockingDirections, equivalentBestDirections,
                     allValidDirections);
-            List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
-            newDirectionProcessors.add(new ByFreeEquivalentBestDirections(
-                    dependencyProvider, testDirectBlocks));
-            newDirectionProcessors.add(new ByFreeValidDirections(
-                    dependencyProvider, testDirectBlocks));
-            newDirectionProcessors.add(new ByBlockingDistances(
-                    dependencyProvider, testDirectBlocks));
-            newDirectionProcessors
-                    .add(new ByRandom(dependencyProvider, testDirectBlocks));
-            newDirectionProcessors.add(
-                    new ByKispalEsABorz(dependencyProvider, testDirectBlocks));
 
-            for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {
-                if (newDirection == null) {
-                    newDirection = newDirectionProcessor.getNewDirection();
-                }
-            }
+            newDirection = NewDirectionProcessor
+                    .processNewDirection(dependencyProvider, testDirectBlocks);
 
             testDirectBlocks = false;
         } while (newDirection == null);

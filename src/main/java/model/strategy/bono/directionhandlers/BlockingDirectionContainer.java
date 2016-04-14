@@ -175,18 +175,6 @@ public class BlockingDirectionContainer
         return orderedBlockings;
     }
 
-    public int processFreeRadicals()
-    {
-        int freeRadicals = 0;
-
-        for (Map.Entry<Direction, Integer> entry : distanceToDirection
-                .entrySet()) {
-            freeRadicals = freeRadicals + entry.getValue();
-        }
-
-        return freeRadicals;
-    }
-
     public String toString()
     {
         return "DirectionData [distanceToDirection=" + distanceToDirection

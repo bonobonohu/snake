@@ -1,14 +1,11 @@
 package model.strategy.bono.newdirectionprocessors;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import model.Arena;
 import model.Coordinate;
 import model.Direction;
 import model.Snake;
-import model.strategy.bono.BlockingDirectionProcessor;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
@@ -19,16 +16,21 @@ public abstract class NewDirectionProcessor
 
     private Coordinate actualHeadCoordinate;
 
+    private boolean testDirectBlocks;
+
     protected BlockingDirectionContainer blockingDirections;
     protected SimpleDirectionContainer<Direction> equivalentBestDirections;
     protected SimpleDirectionContainer<Direction> allValidDirections;
 
-    public NewDirectionProcessor(DependencyProvider dependencyProvider)
+    public NewDirectionProcessor(DependencyProvider dependencyProvider,
+            boolean testDirectBlocks)
     {
         this.arena = dependencyProvider.getArena();
         this.snake = dependencyProvider.getSnake();
 
         actualHeadCoordinate = snake.getHeadCoordinate();
+
+        this.testDirectBlocks = testDirectBlocks;
 
         this.blockingDirections = dependencyProvider
                 .getBlockingDirectionsDataHandler();
@@ -44,28 +46,45 @@ public abstract class NewDirectionProcessor
     {
         Direction newDirection;
 
-        List<Direction> directions = directionContainer.getAllAsList();
-        Map<Direction, Integer> freeRadicalsToDirection = new HashMap<>();
-
-        for (Direction actualDirection : directions) {
-            BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
-                    snake, arena);
-            BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
-
-            Coordinate nextCoordinate = arena
-                    .nextCoordinate(actualHeadCoordinate, actualDirection);
-
-            blockingDirections = blockingDirectionProcessor
-                    .process(nextCoordinate);
-
-            int freeRadicals = blockingDirections.processFreeRadicals();
-            freeRadicalsToDirection.put(actualDirection, freeRadicals);
-
-            System.out.println("Free radicals to " + actualDirection + ": "
-                    + freeRadicals);
+        if (testDirectBlocks) {
+            newDirection = testDirectBlocks(directionContainer);
+        } else {
+            newDirection = directionContainer.getRandomElement();
         }
 
-        newDirection = directionContainer.getRandomElement();
+        return newDirection;
+    }
+
+    private Direction testDirectBlocks(
+            SimpleDirectionContainer<Direction> directionContainer)
+    {
+        Direction newDirection = null;
+
+        SimpleDirectionContainer<Direction> testedDirections = new SimpleDirectionContainer<Direction>();
+
+        List<Direction> directions = directionContainer.getAllAsList();
+
+        for (Direction actualDirection : directions) {
+            Coordinate nextCoordinate = arena
+                    .nextCoordinate(actualHeadCoordinate, actualDirection);
+            int directlyBlockedDirections = 1;
+            // 1, because we are coming from somewhere, stupid!
+
+            for (Direction actualTestingDirection : Direction.values()) {
+                Coordinate nextTestingCoordinate = arena
+                        .nextCoordinate(nextCoordinate, actualTestingDirection);
+
+                if (arena.isOccupied(nextTestingCoordinate)) {
+                    directlyBlockedDirections++;
+                }
+            }
+
+            if (directlyBlockedDirections < 3) {
+                testedDirections.add(actualDirection);
+            }
+        }
+
+        newDirection = testedDirections.getRandomElement();
 
         return newDirection;
     }

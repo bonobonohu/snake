@@ -10,9 +10,10 @@ import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
 public class ByBlockingDistances extends NewDirectionProcessor
 {
-    public ByBlockingDistances(DependencyProvider dependencyProvider)
+    public ByBlockingDistances(DependencyProvider dependencyProvider,
+            boolean testDirectBlocks)
     {
-        super(dependencyProvider);
+        super(dependencyProvider, testDirectBlocks);
     }
 
     @Override
@@ -40,7 +41,6 @@ public class ByBlockingDistances extends NewDirectionProcessor
             Direction finalDirection;
             do {
                 finalDirection = processFinalDirection(blockingDirectionsTemp);
-                // finalDirection = blockingDirectionsTemp.getRandomElement();
 
                 if (finalDirection != null) {
                     newDirection = finalDirection;

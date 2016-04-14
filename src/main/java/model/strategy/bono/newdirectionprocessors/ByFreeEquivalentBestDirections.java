@@ -5,9 +5,10 @@ import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
 public class ByFreeEquivalentBestDirections extends NewDirectionProcessor
 {
-    public ByFreeEquivalentBestDirections(DependencyProvider dependencyProvider)
+    public ByFreeEquivalentBestDirections(DependencyProvider dependencyProvider,
+            boolean testDirectBlocks)
     {
-        super(dependencyProvider);
+        super(dependencyProvider, testDirectBlocks);
     }
 
     @Override

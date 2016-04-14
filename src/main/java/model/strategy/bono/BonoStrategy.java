@@ -13,7 +13,6 @@ import model.strategy.SnakeStrategy;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 import model.strategy.bono.newdirectionprocessors.ByBlockingDistances;
-import model.strategy.bono.newdirectionprocessors.ByEquivalentBestDirections;
 import model.strategy.bono.newdirectionprocessors.ByFreeEquivalentBestDirections;
 import model.strategy.bono.newdirectionprocessors.ByFreeValidDirections;
 import model.strategy.bono.newdirectionprocessors.ByKispalEsABorz;
@@ -47,6 +46,8 @@ public class BonoStrategy implements SnakeStrategy
         System.out.println("Head: " + snake.getHeadCoordinate());
 
         newDirection = process();
+
+        System.out.println("The processed Direction: " + newDirection);
 
         System.out.println("--- END " + snake.getName() + "---");
 
@@ -159,24 +160,30 @@ public class BonoStrategy implements SnakeStrategy
     {
         Direction newDirection = null;
 
-        DependencyProvider dependencyProvider = new DependencyProvider(arena,
-                snake, blockingDirections, equivalentBestDirections,
-                allValidDirections);
-        List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
-        newDirectionProcessors
-                .add(new ByEquivalentBestDirections(dependencyProvider));
-        newDirectionProcessors
-                .add(new ByFreeEquivalentBestDirections(dependencyProvider));
-        newDirectionProcessors
-                .add(new ByFreeValidDirections(dependencyProvider));
-        newDirectionProcessors.add(new ByBlockingDistances(dependencyProvider));
-        newDirectionProcessors.add(new ByKispalEsABorz(dependencyProvider));
+        boolean testDirectBlocks = true;
 
-        for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {
-            if (newDirection == null) {
-                newDirection = newDirectionProcessor.getNewDirection();
+        do {
+            DependencyProvider dependencyProvider = new DependencyProvider(
+                    arena, snake, blockingDirections, equivalentBestDirections,
+                    allValidDirections);
+            List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
+            newDirectionProcessors.add(new ByFreeEquivalentBestDirections(
+                    dependencyProvider, testDirectBlocks));
+            newDirectionProcessors.add(new ByFreeValidDirections(
+                    dependencyProvider, testDirectBlocks));
+            newDirectionProcessors.add(new ByBlockingDistances(
+                    dependencyProvider, testDirectBlocks));
+            newDirectionProcessors.add(
+                    new ByKispalEsABorz(dependencyProvider, testDirectBlocks));
+
+            for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {
+                if (newDirection == null) {
+                    newDirection = newDirectionProcessor.getNewDirection();
+                }
             }
-        }
+
+            testDirectBlocks = false;
+        } while (newDirection == null);
 
         return newDirection;
     }

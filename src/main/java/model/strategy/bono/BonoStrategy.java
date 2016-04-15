@@ -156,15 +156,21 @@ public class BonoStrategy implements SnakeStrategy
     {
         Direction newDirection = null;
 
+        DependencyProvider dependencyProvider = new DependencyProvider(arena,
+                snake, blockingDirections, equivalentBestDirections,
+                allValidDirections);
+
         boolean testDirectBlocks = true;
 
         do {
-            DependencyProvider dependencyProvider = new DependencyProvider(
-                    arena, snake, blockingDirections, equivalentBestDirections,
-                    allValidDirections);
-
             newDirection = NewDirectionProcessor
                     .processNewDirection(dependencyProvider, testDirectBlocks);
+
+            if (testDirectBlocks == false && newDirection == null) {
+                newDirection = NewDirectionProcessor
+                        .processLastChanceNewDirection(dependencyProvider,
+                                testDirectBlocks);
+            }
 
             testDirectBlocks = false;
         } while (newDirection == null);

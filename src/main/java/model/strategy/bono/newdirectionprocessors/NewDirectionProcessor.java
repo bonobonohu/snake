@@ -35,6 +35,22 @@ public abstract class NewDirectionProcessor
                 testDirectBlocks));
         newDirectionProcessors.add(
                 new ByBlockingDistances(dependencyProvider, testDirectBlocks));
+
+        for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {
+            if (newDirection == null) {
+                newDirection = newDirectionProcessor.getNewDirection();
+            }
+        }
+
+        return newDirection;
+    }
+
+    public static Direction processLastChanceNewDirection(
+            DependencyProvider dependencyProvider, boolean testDirectBlocks)
+    {
+        Direction newDirection = null;
+
+        List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
         newDirectionProcessors
                 .add(new ByRandom(dependencyProvider, testDirectBlocks));
         newDirectionProcessors
@@ -92,8 +108,7 @@ public abstract class NewDirectionProcessor
         List<Direction> directions = directionContainer.getAllAsList();
 
         for (Direction actualDirection : directions) {
-            int directlyBlockedDirections = 1;
-            // 1, because we are coming from somewhere, stupid!
+            int directlyBlockedDirections = 0;
 
             Coordinate nextCoordinate = arena
                     .nextCoordinate(actualHeadCoordinate, actualDirection);

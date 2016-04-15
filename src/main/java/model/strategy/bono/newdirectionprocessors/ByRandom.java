@@ -1,7 +1,6 @@
 package model.strategy.bono.newdirectionprocessors;
 
 import model.Direction;
-import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
 public class ByRandom extends NewDirectionProcessor
 {
@@ -16,13 +15,7 @@ public class ByRandom extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        SimpleDirectionContainer<Direction> directions = new SimpleDirectionContainer<>();
-        directions.add(Direction.SOUTH);
-        directions.add(Direction.NORTH);
-        directions.add(Direction.EAST);
-        directions.add(Direction.WEST);
-
-        newDirection = processFinalDirection(directions);
+        newDirection = processFinalDirection(allValidDirections);
 
         return newDirection;
     }

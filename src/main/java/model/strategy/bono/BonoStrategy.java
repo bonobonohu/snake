@@ -43,8 +43,6 @@ public class BonoStrategy implements SnakeStrategy
 
         newDirection = process();
 
-        System.out.println("The processed Direction: " + newDirection);
-
         System.out.println("--- END " + snake.getName() + "---");
 
         return newDirection;
@@ -104,6 +102,8 @@ public class BonoStrategy implements SnakeStrategy
                 }
             }
         }
+
+        System.out.println("Distances To Food: " + distancesToFood);
 
         return distancesToFood;
     }
@@ -174,6 +174,8 @@ public class BonoStrategy implements SnakeStrategy
 
             testDirectBlocks = false;
         } while (newDirection == null);
+
+        System.out.println("The processed Direction: " + newDirection);
 
         return newDirection;
     }

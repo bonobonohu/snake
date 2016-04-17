@@ -1,8 +1,10 @@
 package model.strategy.bono;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import model.Arena;
@@ -23,6 +25,12 @@ public class BonoStrategy implements SnakeStrategy
     private Coordinate actualHeadCoordinate;
     private Coordinate foodCoordinate;
     private Coordinate maxCoordinate;
+
+    SimpleDirectionContainer<Direction> freeDirections = new SimpleDirectionContainer<Direction>();
+    SimpleDirectionContainer<Direction> closedDirections = new SimpleDirectionContainer<Direction>();
+
+    Set<Coordinate> alreadyCheckedCoordinatesTemp = new HashSet<Coordinate>();
+    Set<Coordinate> freeCoordinatesTemp = new HashSet<Coordinate>();
 
     @Override
     public Direction nextMove(Snake snakeArgument, Arena arenaArgument)
@@ -74,6 +82,131 @@ public class BonoStrategy implements SnakeStrategy
                 equivalentBestDirections, allValidDirections);
 
         return newDirection;
+    }
+
+    private SimpleDirectionContainer<Direction> preFilterDirections()
+    {
+        processFreeDirections();
+
+        processClosedDirections();
+
+        return null;
+    }
+
+    private void processFreeDirections()
+    {
+        for (Direction actualDirection : Direction.values()) {
+            Coordinate nextCoordinate = arena
+                    .nextCoordinate(actualHeadCoordinate, actualDirection);
+
+            if (!arena.isOccupied(nextCoordinate)) {
+                freeDirections.add(actualDirection);
+            }
+        }
+    }
+
+    private void processClosedDirections()
+    {
+        SimpleDirectionContainer<Direction> closedDirections = new SimpleDirectionContainer<Direction>();
+        boolean isALoop;
+        Set<Coordinate> freeCoordinates = new HashSet<Coordinate>();
+
+        for (Direction actualDirection : freeDirections.getAllAsList()) {
+            alreadyCheckedCoordinatesTemp.clear();
+
+            Coordinate nextCoordinate = arena
+                    .nextCoordinate(actualHeadCoordinate, actualDirection);
+
+            isALoop = isALoop(nextCoordinate, null);
+
+            if (isALoop) {
+                freeCoordinates = getFreeCoordinates(nextCoordinate);
+            }
+        }
+    }
+
+    private boolean isALoop(Coordinate headCoordinate, Coordinate nextStep)
+    {
+        if (alreadyCheckedCoordinatesTemp.size() != 0
+                && alreadyCheckedCoordinatesTemp.contains(nextStep)) {
+            return false;
+        }
+
+        if (nextStep.equals(headCoordinate)) {
+            return true;
+        }
+
+        if (nextStep != null) {
+            alreadyCheckedCoordinatesTemp.add(nextStep);
+        }
+
+        Coordinate coordinateToInvestigate = nextStep != null ? nextStep
+                : headCoordinate;
+
+        for (Direction actualDirection : Direction.values()) {
+            Coordinate nextCoordinate = arena
+                    .nextCoordinate(coordinateToInvestigate, actualDirection);
+
+            if (arena.isOccupied(nextCoordinate)
+                    && isALoop(headCoordinate, nextCoordinate)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private Set<Coordinate> getFreeCoordinates(Coordinate headCoordinate)
+    {
+        Set<Coordinate> freeCoordinates = new HashSet<Coordinate>();
+
+        for (Direction actualDirection : Direction.values()) {
+            freeCoordinatesTemp.clear();
+
+            Coordinate nextCoordinate = arena.nextCoordinate(headCoordinate,
+                    actualDirection);
+
+            if (!arena.isOccupied(nextCoordinate)) {
+                getFreeCoordinatesSetToDirection(nextCoordinate);
+            }
+
+            // itt beletenni valami directionnel ellátott konténerbe, aztán
+            // lehet nézni, hogy melyik directionnek van e metszete melyikkel,
+            // meg minden. ha több különböző van, akkor adjunk vissza üreset,
+            // meg akkor is, ha mind üres. bár akkor ha mind üres, akkor azok
+            // végülis megegyeznek. ha mindegyik megegyezik, akkor meg
+            // visszaadjuk azt.
+            // ha csinálunk négy égtáj szerint külön-külön konténert, akkor már
+            // menet közben lehet nézni, hogy van e közös eleme a többivel, és
+            // amint lesz közös elem, abba lehet fejezni az adott irány
+            // vizsgálatát, mert már nem lehet diszjunkt.
+            // csak arra figyelj, nehogy belezavarodj, hogy melyik irány
+            // vizsgálattal végeztél meg melyikkel nem. szóval, az éppen
+            // vizsgáltat ilyenkor ürítsd ki, aztán a végén menj végig az összes
+            // égtájon, és ami nem üres, az lesz, amiben megvan az összes
+            // koordináta. vagy valami ilyesmi.
+        }
+
+        return null;
+    }
+
+    private void getFreeCoordinatesSetToDirection(Coordinate freeCoordinate)
+    {
+        if (freeCoordinatesTemp.size() != 0
+                && freeCoordinatesTemp.contains(freeCoordinate)) {
+            return;
+        } else {
+            freeCoordinatesTemp.add(freeCoordinate);
+        }
+
+        for (Direction actualDirection : Direction.values()) {
+            Coordinate nextCoordinate = arena.nextCoordinate(freeCoordinate,
+                    actualDirection);
+
+            if (!arena.isOccupied(nextCoordinate)) {
+                getFreeCoordinatesSetToDirection(nextCoordinate);
+            }
+        }
     }
 
     private Map<Integer, SimpleDirectionContainer<Direction>> processDistancesToFood()

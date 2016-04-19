@@ -108,7 +108,6 @@ public class BonoStrategy implements SnakeStrategy
     private void processClosedDirections()
     {
         SimpleDirectionContainer<Direction> closedDirections = new SimpleDirectionContainer<Direction>();
-        boolean isALoop;
         Set<Coordinate> freeCoordinates = new HashSet<Coordinate>();
 
         for (Direction actualDirection : freeDirections.getAllAsList()) {
@@ -117,9 +116,7 @@ public class BonoStrategy implements SnakeStrategy
             Coordinate nextCoordinate = arena
                     .nextCoordinate(actualHeadCoordinate, actualDirection);
 
-            isALoop = isALoop(nextCoordinate, null);
-
-            if (isALoop) {
+            if (isALoop(nextCoordinate, null)) {
                 freeCoordinates = getFreeCoordinates(nextCoordinate);
             }
         }
@@ -132,12 +129,12 @@ public class BonoStrategy implements SnakeStrategy
             return false;
         }
 
-        if (nextStep.equals(headCoordinate)) {
-            return true;
-        }
-
         if (nextStep != null) {
             alreadyCheckedCoordinatesTemp.add(nextStep);
+        }
+
+        if (nextStep.equals(headCoordinate)) {
+            return true;
         }
 
         Coordinate coordinateToInvestigate = nextStep != null ? nextStep

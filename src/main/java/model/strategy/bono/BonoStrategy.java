@@ -168,15 +168,17 @@ public class BonoStrategy implements SnakeStrategy
             }
 
             // itt beletenni valami directionnel ellátott konténerbe, aztán
-            // lehet nézni, hogy melyik directionnek van e metszete melyikkel,
-            // meg minden. ha több különböző van, akkor adjunk vissza üreset,
-            // meg akkor is, ha mind üres. bár akkor ha mind üres, akkor azok
-            // végülis megegyeznek. ha mindegyik megegyezik, akkor meg
-            // visszaadjuk azt.
+            // lehet nézni, hogy melyik directionnek van e metszete melyikkel.
+            //
+            // ha több különböző van, akkor adjunk vissza üreset, meg akkor is,
+            // ha mind üres. bár akkor ha mind üres, akkor azok végülis
+            // megegyeznek. ha mindegyik megegyezik, akkor meg visszaadjuk azt.
+            //
             // ha csinálunk négy égtáj szerint külön-külön konténert, akkor már
             // menet közben lehet nézni, hogy van e közös eleme a többivel, és
             // amint lesz közös elem, abba lehet fejezni az adott irány
             // vizsgálatát, mert már nem lehet diszjunkt.
+            //
             // csak arra figyelj, nehogy belezavarodj, hogy melyik irány
             // vizsgálattal végeztél meg melyikkel nem. szóval, az éppen
             // vizsgáltat ilyenkor ürítsd ki, aztán a végén menj végig az összes

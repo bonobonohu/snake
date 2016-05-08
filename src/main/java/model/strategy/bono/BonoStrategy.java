@@ -62,11 +62,12 @@ public class BonoStrategy implements SnakeStrategy
     {
         Direction newDirection = null;
 
-        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = new TreeMap<>();
-
         BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
                 snake, arena);
+
         BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
+
+        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = new TreeMap<>();
 
         SimpleDirectionContainer<Direction> equivalentBestDirections = new SimpleDirectionContainer<>();
         SimpleDirectionContainer<Direction> allValidDirections = new SimpleDirectionContainer<>();

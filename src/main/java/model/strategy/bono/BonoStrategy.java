@@ -69,6 +69,12 @@ public class BonoStrategy implements SnakeStrategy
         SimpleDirectionContainer<Direction> allValidDirections = getAllValidDirections(
                 distancesToFood);
 
+        SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
+        SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
+                freeDirections);
+        SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
+                freeDirections, closedDirections);
+
         DependencyProvider dependencyProvider = new DependencyProvider(arena,
                 snake, blockingDirections, equivalentBestDirections,
                 allValidDirections);

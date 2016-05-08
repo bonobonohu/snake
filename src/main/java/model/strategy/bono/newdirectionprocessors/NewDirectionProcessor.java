@@ -19,6 +19,8 @@ public abstract class NewDirectionProcessor
         Direction newDirection = null;
 
         List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
+        // newDirectionProcessors
+        // .add(new ByEquivalentBestDirections(dependencyProvider));
         newDirectionProcessors
                 .add(new ByFreeEquivalentBestDirections(dependencyProvider));
         newDirectionProcessors

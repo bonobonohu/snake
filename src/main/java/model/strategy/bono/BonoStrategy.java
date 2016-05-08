@@ -46,7 +46,7 @@ public class BonoStrategy implements SnakeStrategy
         maxCoordinate = arena.getMaxCoordinate();
 
         System.out.println("Food: " + arena.getFood().get(0).getCoordinate());
-        System.out.println("Head: " + snake.getHeadCoordinate());
+        System.out.println("Head: " + actualHeadCoordinate);
 
         newDirection = process();
 
@@ -59,19 +59,21 @@ public class BonoStrategy implements SnakeStrategy
     {
         Direction newDirection = null;
 
-        SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
-        SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
-                freeDirections);
-        SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
-                freeDirections, closedDirections);
+        // SimpleDirectionContainer<Direction> freeDirections =
+        // getFreeDirections();
+        // SimpleDirectionContainer<Direction> closedDirections =
+        // getClosedDirections(
+        // freeDirections);
+        // SimpleDirectionContainer<Direction> filteredDirections =
+        // getFilteredDirections(
+        // freeDirections, closedDirections);
 
         BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
                 snake, arena);
         BlockingDirectionContainer blockingDirections = blockingDirectionProcessor
                 .process(actualHeadCoordinate);
 
-        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = getDistancesToFood(
-                filteredDirections);
+        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = getDistancesToFood(); // filteredDirections
         SimpleDirectionContainer<Direction> equivalentBestDirections = getEquivalentBestDirections(
                 distancesToFood);
         SimpleDirectionContainer<Direction> allValidDirections = getAllValidDirections(
@@ -129,50 +131,117 @@ public class BonoStrategy implements SnakeStrategy
             Coordinate nextCoordinate = arena
                     .nextCoordinate(actualHeadCoordinate, actualDirection);
 
-            checkThereIsALoop(nextCoordinate, null);
+            checkThereIsALoop(nextCoordinate, null, 0);
             if (thereIsALoopTemp) {
-                Integer freeCoordinatesCount = getFreeCoordinatesCount(
-                        nextCoordinate);
+                System.out.println("Loop Found: " + actualDirection);
 
-                System.out.println(
-                        "Free coordinates count: " + freeCoordinatesCount);
-                boolean loopMe = true;
-                while (loopMe) {
-                }
+                for (Direction actualDirectionToCheckFreeCoordinates : Direction
+                        .values()) {
+                    Coordinate nextCoordinateToCheckFreeCoordinates = arena
+                            .nextCoordinate(actualHeadCoordinate,
+                                    actualDirectionToCheckFreeCoordinates);
 
-                if (freeCoordinatesCount == 0) {
-                    closedDirections.add(actualDirection);
-                } else {
-                    freeCoordinatesCountByDirection.put(actualDirection,
-                            freeCoordinatesCount);
+                    Integer freeCoordinatesCount = getFreeCoordinatesCount(
+                            nextCoordinateToCheckFreeCoordinates);
+
+                    System.out.println(
+                            "Free Coordinates Count: " + freeCoordinatesCount);
+
+                    if (freeCoordinatesCount == 0) {
+                        closedDirections
+                                .add(actualDirectionToCheckFreeCoordinates);
+                    } else {
+                        freeCoordinatesCountByDirection.put(
+                                actualDirectionToCheckFreeCoordinates,
+                                freeCoordinatesCount);
+                    }
                 }
             }
         }
 
         if (freeCoordinatesCountByDirection.size() > 1) {
-            /* alternate: a legnyagyobbon kívül mindet visszaadni... */
-            Integer minCount = Integer.MAX_VALUE;
-            Direction minDirection = null;
+            /* Free Coordinates Count, Count in the Map */
+            Map<Integer, Integer> multipleCounts = new HashMap<>();
 
             for (Direction key : freeCoordinatesCountByDirection.keySet()) {
-                if (freeCoordinatesCountByDirection.get(key) < minCount) {
-                    minCount = freeCoordinatesCountByDirection.get(key);
-                    minDirection = key;
+                Integer actualCount = freeCoordinatesCountByDirection.get(key);
+
+                if (!multipleCounts.containsKey(actualCount)) {
+                    multipleCounts.put(actualCount, 1);
+                } else {
+                    Integer oldCount = multipleCounts.get(actualCount);
+
+                    multipleCounts.put(actualCount, ++oldCount);
                 }
             }
+            SimpleDirectionContainer<Direction> multipleDirections = new SimpleDirectionContainer<>();
+            for (Integer actualMultipleCount : multipleCounts.keySet()) {
+                if (actualMultipleCount > 1) {
+                    for (Direction key : freeCoordinatesCountByDirection
+                            .keySet()) {
+                        if (freeCoordinatesCountByDirection
+                                .get(key) == actualMultipleCount) {
+                            multipleDirections.add(key);
+                        }
+                    }
+                }
+            }
+            for (Direction actualDirection : multipleDirections) {
+                freeCoordinatesCountByDirection.remove(actualDirection);
+            }
 
-            if (minDirection != null) {
-                closedDirections.add(minDirection);
+            if (freeCoordinatesCountByDirection.size() > 1) {
+                /* csak a min. */
+                {
+                    Integer minCount = Integer.MAX_VALUE;
+                    Direction minDirection = null;
+
+                    for (Direction key : freeCoordinatesCountByDirection
+                            .keySet()) {
+                        if (freeCoordinatesCountByDirection
+                                .get(key) < minCount) {
+                            minCount = freeCoordinatesCountByDirection.get(key);
+                            minDirection = key;
+                        }
+                    }
+
+                    if (minDirection != null) {
+                        closedDirections.add(minDirection);
+                    }
+                }
+
+                /* maxon kívül az összes. */
+                // {
+                // Integer maxCount = Integer.MIN_VALUE;
+                // Direction maxDirection = null;
+                //
+                // for (Direction key :
+                // freeCoordinatesCountByDirection.keySet()) {
+                // if (freeCoordinatesCountByDirection.get(key) > maxCount) {
+                // maxCount = freeCoordinatesCountByDirection.get(key);
+                // maxDirection = key;
+                // }
+                // }
+                //
+                // if (maxDirection != null) {
+                // for (Direction key : freeCoordinatesCountByDirection
+                // .keySet()) {
+                // if (key != maxDirection) {
+                // closedDirections.add(key);
+                // }
+                // }
+                // }
+                // }
             }
         }
 
-        System.out.println("Closed directions: " + closedDirections);
+        System.out.println("Closed Directions: " + closedDirections);
 
         return closedDirections;
     }
 
     private void checkThereIsALoop(Coordinate headCoordinate,
-            Coordinate nextStep)
+            Coordinate nextStep, int recursionLevel)
     {
         Coordinate coordinateToInvestigate;
 
@@ -183,17 +252,8 @@ public class BonoStrategy implements SnakeStrategy
 
             coordinateToInvestigate = headCoordinate;
         } else {
-            if (thereIsALoopTemp) {
-                return;
-            }
-
-            if (alreadyCheckedCoordinatesTemp.contains(nextStep)) {
-                return;
-            }
-
-            if (nextStep.equals(headCoordinate)) {
-                thereIsALoopTemp = true;
-
+            if (thereIsALoopTemp
+                    || alreadyCheckedCoordinatesTemp.contains(nextStep)) {
                 return;
             }
 
@@ -206,8 +266,19 @@ public class BonoStrategy implements SnakeStrategy
             Coordinate nextCoordinate = arena
                     .nextCoordinate(coordinateToInvestigate, actualDirection);
 
+            // headcoordinate-et tilos bejegyezni, mint already checkedet.
+            // ne a size-ot vizsgáld! elmászhat! a rekurziós szintet nézd!
+            // rekurzió első szintjén nem számít a fejes!
+            // első vagy nulladik? hogy nevezzük?
+
+            if (nextCoordinate.equals(headCoordinate) && recursionLevel > 1) {
+                thereIsALoopTemp = true;
+
+                return;
+            }
             if (arena.isOccupied(nextCoordinate)) {
-                checkThereIsALoop(headCoordinate, nextCoordinate);
+                checkThereIsALoop(headCoordinate, nextCoordinate,
+                        ++recursionLevel);
             }
         }
     }
@@ -246,29 +317,31 @@ public class BonoStrategy implements SnakeStrategy
         }
     }
 
-    private Map<Integer, SimpleDirectionContainer<Direction>> getDistancesToFood(
-            SimpleDirectionContainer<Direction> filteredDirections)
+    // SimpleDirectionContainer<Direction> filteredDirections
+    private Map<Integer, SimpleDirectionContainer<Direction>> getDistancesToFood()
     {
         Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = new TreeMap<>();
 
-        for (Direction actualDirection : filteredDirections) {
+        for (Direction actualDirection : Direction.values()) {
             Coordinate nextCoordinate = arena
                     .nextCoordinate(actualHeadCoordinate, actualDirection);
 
-            int actualDistanceToFood = nextCoordinate
-                    .minDistance(foodCoordinate, maxCoordinate);
+            if (!arena.isOccupied(nextCoordinate)) {
+                int actualDistanceToFood = nextCoordinate
+                        .minDistance(foodCoordinate, maxCoordinate);
 
-            if (distancesToFood.containsKey(actualDistanceToFood)) {
-                SimpleDirectionContainer<Direction> directions = distancesToFood
-                        .get(actualDistanceToFood);
-                directions.add(actualDirection);
+                if (distancesToFood.containsKey(actualDistanceToFood)) {
+                    SimpleDirectionContainer<Direction> directions = distancesToFood
+                            .get(actualDistanceToFood);
+                    directions.add(actualDirection);
 
-                distancesToFood.put(actualDistanceToFood, directions);
-            } else {
-                SimpleDirectionContainer<Direction> directions = new SimpleDirectionContainer<>();
-                directions.add(actualDirection);
+                    distancesToFood.put(actualDistanceToFood, directions);
+                } else {
+                    SimpleDirectionContainer<Direction> directions = new SimpleDirectionContainer<>();
+                    directions.add(actualDirection);
 
-                distancesToFood.put(actualDistanceToFood, directions);
+                    distancesToFood.put(actualDistanceToFood, directions);
+                }
             }
         }
 

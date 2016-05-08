@@ -29,6 +29,7 @@ public class BonoStrategy implements SnakeStrategy
 
     Set<Coordinate> alreadyCheckedCoordinatesTemp = new HashSet<>();
     Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
+    boolean thereIsALoopTemp;
 
     @Override
     public Direction nextMove(Snake snakeArgument, Arena arenaArgument)
@@ -128,7 +129,8 @@ public class BonoStrategy implements SnakeStrategy
             Coordinate nextCoordinate = arena
                     .nextCoordinate(actualHeadCoordinate, actualDirection);
 
-            if (isALoop(nextCoordinate, null)) {
+            checkThereIsALoop(nextCoordinate, null);
+            if (thereIsALoopTemp) {
                 Integer freeCoordinatesCount = getFreeCoordinatesCount(
                         nextCoordinate);
 
@@ -169,21 +171,30 @@ public class BonoStrategy implements SnakeStrategy
         return closedDirections;
     }
 
-    private boolean isALoop(Coordinate headCoordinate, Coordinate nextStep)
+    private void checkThereIsALoop(Coordinate headCoordinate,
+            Coordinate nextStep)
     {
         Coordinate coordinateToInvestigate;
 
         if (nextStep == null) {
+            thereIsALoopTemp = false;
+
             alreadyCheckedCoordinatesTemp.clear();
 
             coordinateToInvestigate = headCoordinate;
         } else {
+            if (thereIsALoopTemp) {
+                return;
+            }
+
             if (alreadyCheckedCoordinatesTemp.contains(nextStep)) {
-                return false;
+                return;
             }
 
             if (nextStep.equals(headCoordinate)) {
-                return true;
+                thereIsALoopTemp = true;
+
+                return;
             }
 
             alreadyCheckedCoordinatesTemp.add(nextStep);
@@ -195,13 +206,10 @@ public class BonoStrategy implements SnakeStrategy
             Coordinate nextCoordinate = arena
                     .nextCoordinate(coordinateToInvestigate, actualDirection);
 
-            if (arena.isOccupied(nextCoordinate)
-                    && isALoop(headCoordinate, nextCoordinate)) {
-                return true;
+            if (arena.isOccupied(nextCoordinate)) {
+                checkThereIsALoop(headCoordinate, nextCoordinate);
             }
         }
-
-        return false;
     }
 
     private Integer getFreeCoordinatesCount(Coordinate headCoordinate)

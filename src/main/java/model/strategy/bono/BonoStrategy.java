@@ -27,10 +27,6 @@ public class BonoStrategy implements SnakeStrategy
     private Coordinate foodCoordinate;
     private Coordinate maxCoordinate;
 
-    SimpleDirectionContainer<Direction> freeDirections = new SimpleDirectionContainer<>();
-    SimpleDirectionContainer<Direction> closedDirections = new SimpleDirectionContainer<>();
-    SimpleDirectionContainer<Direction> filteredDirections = new SimpleDirectionContainer<>();
-
     Set<Coordinate> alreadyCheckedCoordinatesTemp = new HashSet<>();
     Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
 
@@ -64,40 +60,40 @@ public class BonoStrategy implements SnakeStrategy
 
         BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
                 snake, arena);
-
-        BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
-
-        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = new TreeMap<>();
-
-        SimpleDirectionContainer<Direction> equivalentBestDirections = new SimpleDirectionContainer<>();
-        SimpleDirectionContainer<Direction> allValidDirections = new SimpleDirectionContainer<>();
-
-        blockingDirections = blockingDirectionProcessor
+        BlockingDirectionContainer blockingDirections = blockingDirectionProcessor
                 .process(actualHeadCoordinate);
 
-        distancesToFood = getDistancesToFood();
+        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = getDistancesToFood();
+        SimpleDirectionContainer<Direction> equivalentBestDirections = getEquivalentBestDirections(
+                distancesToFood);
+        SimpleDirectionContainer<Direction> allValidDirections = getAllValidDirections(
+                distancesToFood);
 
-        equivalentBestDirections = getEquivalentBestDirections(distancesToFood);
-        allValidDirections = getAllValidDirections(distancesToFood);
+        DependencyProvider dependencyProvider = new DependencyProvider(arena,
+                snake, blockingDirections, equivalentBestDirections,
+                allValidDirections);
 
-        newDirection = getNewDirection(blockingDirections,
-                equivalentBestDirections, allValidDirections);
+        newDirection = getNewDirection(dependencyProvider);
 
         return newDirection;
     }
 
-    private void processFilteredDirections()
+    private SimpleDirectionContainer<Direction> getFilteredDirections(
+            SimpleDirectionContainer<Direction> freeDirections,
+            SimpleDirectionContainer<Direction> closedDirections)
     {
-        processFreeDirections();
-
-        processClosedDirections();
+        SimpleDirectionContainer<Direction> filteredDirections = new SimpleDirectionContainer<>();
 
         filteredDirections = freeDirections.getAsNewObject();
         filteredDirections.removeAll(closedDirections);
+
+        return filteredDirections;
     }
 
-    private void processFreeDirections()
+    private SimpleDirectionContainer<Direction> getFreeDirections()
     {
+        SimpleDirectionContainer<Direction> freeDirections = new SimpleDirectionContainer<>();
+
         for (Direction actualDirection : Direction.values()) {
             Coordinate nextCoordinate = arena
                     .nextCoordinate(actualHeadCoordinate, actualDirection);
@@ -106,10 +102,15 @@ public class BonoStrategy implements SnakeStrategy
                 freeDirections.add(actualDirection);
             }
         }
+
+        return freeDirections;
     }
 
-    private void processClosedDirections()
+    private SimpleDirectionContainer<Direction> getClosedDirections(
+            SimpleDirectionContainer<Direction> freeDirections)
     {
+        SimpleDirectionContainer<Direction> closedDirections = new SimpleDirectionContainer<>();
+
         Map<Direction, Integer> freeCoordinatesCountByDirection = new HashMap<>();
 
         for (Direction actualDirection : freeDirections.getAllAsList()) {
@@ -144,6 +145,8 @@ public class BonoStrategy implements SnakeStrategy
                 closedDirections.add(minDirection);
             }
         }
+
+        return closedDirections;
     }
 
     private boolean isALoop(Coordinate headCoordinate, Coordinate nextStep)
@@ -288,16 +291,9 @@ public class BonoStrategy implements SnakeStrategy
         return allValidDirections;
     }
 
-    private Direction getNewDirection(
-            BlockingDirectionContainer blockingDirections,
-            SimpleDirectionContainer<Direction> equivalentBestDirections,
-            SimpleDirectionContainer<Direction> allValidDirections)
+    private Direction getNewDirection(DependencyProvider dependencyProvider)
     {
         Direction newDirection = null;
-
-        DependencyProvider dependencyProvider = new DependencyProvider(arena,
-                snake, blockingDirections, equivalentBestDirections,
-                allValidDirections);
 
         boolean testDirectBlocks = true;
 

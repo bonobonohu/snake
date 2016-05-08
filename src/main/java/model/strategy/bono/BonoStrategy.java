@@ -58,22 +58,23 @@ public class BonoStrategy implements SnakeStrategy
     {
         Direction newDirection = null;
 
-        BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
-                snake, arena);
-        BlockingDirectionContainer blockingDirections = blockingDirectionProcessor
-                .process(actualHeadCoordinate);
-
-        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = getDistancesToFood();
-        SimpleDirectionContainer<Direction> equivalentBestDirections = getEquivalentBestDirections(
-                distancesToFood);
-        SimpleDirectionContainer<Direction> allValidDirections = getAllValidDirections(
-                distancesToFood);
-
         SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
         SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
                 freeDirections);
         SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
                 freeDirections, closedDirections);
+
+        BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
+                snake, arena);
+        BlockingDirectionContainer blockingDirections = blockingDirectionProcessor
+                .process(actualHeadCoordinate);
+
+        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = getDistancesToFood(
+                filteredDirections);
+        SimpleDirectionContainer<Direction> equivalentBestDirections = getEquivalentBestDirections(
+                distancesToFood);
+        SimpleDirectionContainer<Direction> allValidDirections = getAllValidDirections(
+                distancesToFood);
 
         DependencyProvider dependencyProvider = new DependencyProvider(arena,
                 snake, blockingDirections, equivalentBestDirections,
@@ -93,6 +94,8 @@ public class BonoStrategy implements SnakeStrategy
         filteredDirections = freeDirections.getAsNewObject();
         filteredDirections.removeAll(closedDirections);
 
+        System.out.println("Filtered directions: " + filteredDirections);
+
         return filteredDirections;
     }
 
@@ -108,6 +111,8 @@ public class BonoStrategy implements SnakeStrategy
                 freeDirections.add(actualDirection);
             }
         }
+
+        System.out.println("Free directions: " + freeDirections);
 
         return freeDirections;
     }
@@ -151,6 +156,8 @@ public class BonoStrategy implements SnakeStrategy
                 closedDirections.add(minDirection);
             }
         }
+
+        System.out.println("Closed directions: " + closedDirections);
 
         return closedDirections;
     }
@@ -224,30 +231,29 @@ public class BonoStrategy implements SnakeStrategy
         }
     }
 
-    private Map<Integer, SimpleDirectionContainer<Direction>> getDistancesToFood()
+    private Map<Integer, SimpleDirectionContainer<Direction>> getDistancesToFood(
+            SimpleDirectionContainer<Direction> filteredDirections)
     {
         Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = new TreeMap<>();
 
-        for (Direction actualDirection : Direction.values()) {
+        for (Direction actualDirection : filteredDirections) {
             Coordinate nextCoordinate = arena
                     .nextCoordinate(actualHeadCoordinate, actualDirection);
 
-            if (!arena.isOccupied(nextCoordinate)) {
-                int actualDistanceToFood = nextCoordinate
-                        .minDistance(foodCoordinate, maxCoordinate);
+            int actualDistanceToFood = nextCoordinate
+                    .minDistance(foodCoordinate, maxCoordinate);
 
-                if (distancesToFood.containsKey(actualDistanceToFood)) {
-                    SimpleDirectionContainer<Direction> directions = distancesToFood
-                            .get(actualDistanceToFood);
-                    directions.add(actualDirection);
+            if (distancesToFood.containsKey(actualDistanceToFood)) {
+                SimpleDirectionContainer<Direction> directions = distancesToFood
+                        .get(actualDistanceToFood);
+                directions.add(actualDirection);
 
-                    distancesToFood.put(actualDistanceToFood, directions);
-                } else {
-                    SimpleDirectionContainer<Direction> directions = new SimpleDirectionContainer<>();
-                    directions.add(actualDirection);
+                distancesToFood.put(actualDistanceToFood, directions);
+            } else {
+                SimpleDirectionContainer<Direction> directions = new SimpleDirectionContainer<>();
+                directions.add(actualDirection);
 
-                    distancesToFood.put(actualDistanceToFood, directions);
-                }
+                distancesToFood.put(actualDistanceToFood, directions);
             }
         }
 

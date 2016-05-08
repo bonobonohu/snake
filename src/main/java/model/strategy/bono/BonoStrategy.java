@@ -131,6 +131,13 @@ public class BonoStrategy implements SnakeStrategy
             if (isALoop(nextCoordinate, null)) {
                 Integer freeCoordinatesCount = getFreeCoordinatesCount(
                         nextCoordinate);
+
+                System.out.println(
+                        "Free coordinates count: " + freeCoordinatesCount);
+                boolean loopMe = true;
+                while (loopMe) {
+                }
+
                 if (freeCoordinatesCount == 0) {
                     closedDirections.add(actualDirection);
                 } else {

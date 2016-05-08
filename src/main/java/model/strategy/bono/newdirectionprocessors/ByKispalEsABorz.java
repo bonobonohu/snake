@@ -5,10 +5,9 @@ import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
 public class ByKispalEsABorz extends NewDirectionProcessor
 {
-    public ByKispalEsABorz(DependencyProvider dependencyProvider,
-            boolean testDirectBlocks)
+    public ByKispalEsABorz(DependencyProvider dependencyProvider)
     {
-        super(dependencyProvider, testDirectBlocks);
+        super(dependencyProvider);
     }
 
     @Override

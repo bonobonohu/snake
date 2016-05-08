@@ -320,22 +320,8 @@ public class BonoStrategy implements SnakeStrategy
 
     private Direction getNewDirection(DependencyProvider dependencyProvider)
     {
-        Direction newDirection = null;
-
-        boolean testDirectBlocks = true;
-
-        do {
-            newDirection = NewDirectionProcessor
-                    .processNewDirection(dependencyProvider, testDirectBlocks);
-
-            if (testDirectBlocks == false && newDirection == null) {
-                newDirection = NewDirectionProcessor
-                        .processLastChanceNewDirection(dependencyProvider,
-                                testDirectBlocks);
-            }
-
-            testDirectBlocks = false;
-        } while (newDirection == null);
+        Direction newDirection = NewDirectionProcessor
+                .processNewDirection(dependencyProvider);
 
         System.out.println("The processed Direction: " + newDirection);
 

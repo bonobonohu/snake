@@ -5,10 +5,9 @@ import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
 public class ByFreeValidDirections extends NewDirectionProcessor
 {
-    public ByFreeValidDirections(DependencyProvider dependencyProvider,
-            boolean testDirectBlocks)
+    public ByFreeValidDirections(DependencyProvider dependencyProvider)
     {
-        super(dependencyProvider, testDirectBlocks);
+        super(dependencyProvider);
     }
 
     @Override

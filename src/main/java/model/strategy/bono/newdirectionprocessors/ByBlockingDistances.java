@@ -10,10 +10,9 @@ import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
 public class ByBlockingDistances extends NewDirectionProcessor
 {
-    public ByBlockingDistances(DependencyProvider dependencyProvider,
-            boolean testDirectBlocks)
+    public ByBlockingDistances(DependencyProvider dependencyProvider)
     {
-        super(dependencyProvider, testDirectBlocks);
+        super(dependencyProvider);
     }
 
     @Override

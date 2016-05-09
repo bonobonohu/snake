@@ -152,11 +152,11 @@ public class BonoStrategy implements SnakeStrategy
 
         if (freeCoordinatesCountByDirection.size() > 1) {
             boolean allTheSame = true;
-            Integer lastCount = Integer.MIN_VALUE;
+            Integer theCount = Integer.MIN_VALUE;
             for (Direction key : freeCoordinatesCountByDirection.keySet()) {
-                if (lastCount == Integer.MIN_VALUE) {
-                    lastCount = freeCoordinatesCountByDirection.get(key);
-                } else if (!lastCount
+                if (theCount == Integer.MIN_VALUE) {
+                    theCount = freeCoordinatesCountByDirection.get(key);
+                } else if (!theCount
                         .equals(freeCoordinatesCountByDirection.get(key))) {
                     allTheSame = false;
                     break;

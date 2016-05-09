@@ -151,57 +151,21 @@ public class BonoStrategy implements SnakeStrategy
                 + freeCoordinatesCountByDirection);
 
         if (freeCoordinatesCountByDirection.size() > 1) {
-            /* Free Coordinates Count, Count in the Map */
-            Map<Integer, Integer> multipleCounts = new HashMap<>();
-
+            boolean allTheSame = true;
+            Integer lastCount = Integer.MIN_VALUE;
             for (Direction key : freeCoordinatesCountByDirection.keySet()) {
-                Integer actualFreeCountForDirection = freeCoordinatesCountByDirection
-                        .get(key);
-
-                if (!multipleCounts.containsKey(actualFreeCountForDirection)) {
-                    multipleCounts.put(actualFreeCountForDirection, 1);
-                } else {
-                    Integer oldCount = multipleCounts
-                            .get(actualFreeCountForDirection);
-
-                    multipleCounts.put(actualFreeCountForDirection, ++oldCount);
+                if (lastCount == Integer.MIN_VALUE) {
+                    lastCount = freeCoordinatesCountByDirection.get(key);
+                } else if (!lastCount
+                        .equals(freeCoordinatesCountByDirection.get(key))) {
+                    allTheSame = false;
+                    break;
                 }
             }
 
-            System.out.println("Multiple Counts: " + multipleCounts);
-
-            SimpleDirectionContainer<Direction> multipleDirectionsToRemove = new SimpleDirectionContainer<>();
-            for (Integer actualFreeCountForDirection : multipleCounts
-                    .keySet()) {
-                Integer actualMultipleCount = multipleCounts
-                        .get(actualFreeCountForDirection);
-
-                if (actualMultipleCount > 1) {
-                    for (Direction key : freeCoordinatesCountByDirection
-                            .keySet()) {
-                        if (actualMultipleCount > 1
-                                && actualFreeCountForDirection
-                                        .equals(freeCoordinatesCountByDirection
-                                                .get(key))) {
-                            multipleDirectionsToRemove.add(key);
-
-                            if (multipleCounts.size() > 1) {
-                                actualMultipleCount--;
-                            }
-                        }
-                    }
-                }
+            if (allTheSame) {
+                freeCoordinatesCountByDirection.clear();
             }
-
-            System.out.println("Multiple Directions To Remove: "
-                    + multipleDirectionsToRemove);
-
-            for (Direction actualDirection : multipleDirectionsToRemove) {
-                freeCoordinatesCountByDirection.remove(actualDirection);
-            }
-
-            System.out.println("Free Coordinates Count By Direction After: "
-                    + freeCoordinatesCountByDirection);
 
             if (freeCoordinatesCountByDirection.size() > 1) {
                 /* csak a mineket tiltjuk ki. */

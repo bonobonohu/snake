@@ -23,10 +23,11 @@ public abstract class NewDirectionProcessor
         // .add(new ByEquivalentBestDirections(dependencyProvider));
         newDirectionProcessors
                 .add(new ByFreeEquivalentBestDirections(dependencyProvider));
-        newDirectionProcessors
-                .add(new ByFreeFilteredDirections(dependencyProvider));
+        // newDirectionProcessors
+        // .add(new ByFreeFilteredDirections(dependencyProvider));
         newDirectionProcessors.add(new ByBlockingDistances(dependencyProvider));
-        newDirectionProcessors.add(new ByFilteredDirections(dependencyProvider));
+        newDirectionProcessors
+                .add(new ByFilteredDirections(dependencyProvider));
         newDirectionProcessors.add(new ByRandom(dependencyProvider));
         newDirectionProcessors.add(new ByKispalEsABorz(dependencyProvider));
 

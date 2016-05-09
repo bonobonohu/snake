@@ -27,9 +27,7 @@ public class BonoStrategy implements SnakeStrategy
     private Coordinate foodCoordinate;
     private Coordinate maxCoordinate;
 
-    Set<Coordinate> alreadyCheckedCoordinatesTemp = new HashSet<>();
     Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
-    boolean thereIsALoopTemp;
 
     @Override
     public Direction nextMove(Snake snakeArgument, Arena arenaArgument)
@@ -206,23 +204,21 @@ public class BonoStrategy implements SnakeStrategy
                     + freeCoordinatesCountByDirection);
 
             if (freeCoordinatesCountByDirection.size() > 1) {
-                /* csak a mint tiltjuk ki. */
+                /* csak a mineket tiltjuk ki. */
                 {
                     Integer minCount = Integer.MAX_VALUE;
-                    Direction minDirection = null;
+                    SimpleDirectionContainer<Direction> minDirections = new SimpleDirectionContainer<>();
 
                     for (Direction key : freeCoordinatesCountByDirection
                             .keySet()) {
                         if (freeCoordinatesCountByDirection
                                 .get(key) < minCount) {
                             minCount = freeCoordinatesCountByDirection.get(key);
-                            minDirection = key;
+                            minDirections.add(key);
                         }
                     }
 
-                    if (minDirection != null) {
-                        closedDirections.add(minDirection);
-                    }
+                    closedDirections.addAll(minDirections);
                 }
 
                 /* maxon kívül az összest kitiltjuk. */

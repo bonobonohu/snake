@@ -93,7 +93,7 @@ public class BonoStrategy implements SnakeStrategy
         filteredDirections = freeDirections.getAsNewObject();
         filteredDirections.removeAll(closedDirections);
 
-        System.out.println("Filtered directions: " + filteredDirections);
+        System.out.println("Filtered Directions: " + filteredDirections);
 
         return filteredDirections;
     }
@@ -111,7 +111,7 @@ public class BonoStrategy implements SnakeStrategy
             }
         }
 
-        System.out.println("Free directions: " + freeDirections);
+        System.out.println("Free Directions: " + freeDirections);
 
         return freeDirections;
     }
@@ -348,7 +348,7 @@ public class BonoStrategy implements SnakeStrategy
         Direction newDirection = NewDirectionProcessor
                 .processNewDirection(dependencyProvider);
 
-        System.out.println("The processed Direction: " + newDirection);
+        System.out.println("The Processed Direction: " + newDirection);
 
         return newDirection;
     }

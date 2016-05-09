@@ -37,12 +37,6 @@ public class DefaultStrategy implements SnakeStrategy
             distances.put(direction, actualDistance);
         }
 
-        // System.out.println(snake.getName() + " - actualCoordinate: "
-        // + snake.getHeadCoordinate());
-        // System.out.println(
-        // snake.getName() + " - foodCoordinate: " + foodCoordinate);
-        // System.out.println(distances);
-
         return bestDirection;
     }
 }

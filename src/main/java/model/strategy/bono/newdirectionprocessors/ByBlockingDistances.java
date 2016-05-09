@@ -48,8 +48,8 @@ public class ByBlockingDistances extends NewDirectionProcessor
 
                 numOfTries++;
             } while (!foundNewDirection
-                    && (allValidDirections.contains(finalDirection)
-                            && numOfTries < allValidDirections.size()));
+                    && (filteredDirections.contains(finalDirection)
+                            && numOfTries < filteredDirections.size()));
         }
 
         System.out.println(

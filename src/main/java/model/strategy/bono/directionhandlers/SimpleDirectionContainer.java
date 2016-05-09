@@ -23,6 +23,22 @@ public class SimpleDirectionContainer<E> extends HashSet<E>
         return returnElement;
     }
 
+    public List<E> getRandomizedElementsAsList()
+    {
+        List<E> elements = new ArrayList<>();
+
+        SimpleDirectionContainer<E> allElements = this.getAsNewObject();
+
+        while (allElements.size() > 0) {
+            E randomElement = allElements.getRandomElement();
+            allElements.remove(randomElement);
+
+            elements.add(randomElement);
+        }
+
+        return elements;
+    }
+
     public List<E> getAllAsList()
     {
         List<E> elements = new ArrayList<>();

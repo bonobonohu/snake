@@ -7,6 +7,7 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
+import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 import model.strategy.bono.distanceprocessors.DistanceProcessor;
 
 public class BlockingDirectionProcessor
@@ -24,11 +25,12 @@ public class BlockingDirectionProcessor
         maxCoordinate = arena.getMaxCoordinate();
     }
 
-    public BlockingDirectionContainer process(Coordinate actualHeadCoordinate)
+    public BlockingDirectionContainer process(Coordinate actualHeadCoordinate,
+            SimpleDirectionContainer<Direction> filteredDirections)
     {
         BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
 
-        for (Direction actualDirection : Direction.values()) {
+        for (Direction actualDirection : filteredDirections) {
             Coordinate nextCoordinate = arena
                     .nextCoordinate(actualHeadCoordinate, actualDirection);
 

@@ -14,7 +14,7 @@ public class ByRandom extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        newDirection = processFinalDirection(allValidDirections);
+        newDirection = processFinalDirection(filteredDirections);
 
         return newDirection;
     }

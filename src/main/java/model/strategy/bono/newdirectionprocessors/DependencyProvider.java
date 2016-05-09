@@ -13,19 +13,19 @@ public class DependencyProvider
 
     private BlockingDirectionContainer blockingDirectionsDataHandler;
     private SimpleDirectionContainer<Direction> equivalentBestDirections;
-    private SimpleDirectionContainer<Direction> allValidDirections;
+    private SimpleDirectionContainer<Direction> filteredDirections;
 
     public DependencyProvider(Arena arena, Snake snake,
             BlockingDirectionContainer blockingDirectionsDataHandler,
-            SimpleDirectionContainer<Direction> equivalentBestDirections,
-            SimpleDirectionContainer<Direction> allValidDirections)
+            SimpleDirectionContainer<Direction> filteredDirections,
+            SimpleDirectionContainer<Direction> equivalentBestDirections)
     {
         this.arena = arena;
         this.snake = snake;
 
         this.blockingDirectionsDataHandler = blockingDirectionsDataHandler;
         this.equivalentBestDirections = equivalentBestDirections;
-        this.allValidDirections = allValidDirections;
+        this.filteredDirections = filteredDirections;
     }
 
     public Arena getArena()
@@ -48,8 +48,8 @@ public class DependencyProvider
         return equivalentBestDirections;
     }
 
-    public SimpleDirectionContainer<Direction> getAllValidDirections()
+    public SimpleDirectionContainer<Direction> getFilteredDirections()
     {
-        return allValidDirections;
+        return filteredDirections;
     }
 }

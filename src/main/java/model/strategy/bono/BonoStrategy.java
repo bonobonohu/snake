@@ -59,29 +59,25 @@ public class BonoStrategy implements SnakeStrategy
     {
         Direction newDirection = null;
 
-        // SimpleDirectionContainer<Direction> freeDirections =
-        // getFreeDirections();
-        // SimpleDirectionContainer<Direction> closedDirections =
-        // getClosedDirections(
-        // freeDirections);
-        // SimpleDirectionContainer<Direction> filteredDirections =
-        // getFilteredDirections(
-        // freeDirections, closedDirections);
+        SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
+        SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
+                freeDirections);
+        SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
+                freeDirections, closedDirections);
 
         BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
                 snake, arena);
         BlockingDirectionContainer blockingDirections = blockingDirectionProcessor
-                .process(actualHeadCoordinate);
+                .process(actualHeadCoordinate, filteredDirections);
 
-        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = getDistancesToFood(); // filteredDirections
+        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = getDistancesToFood(
+                filteredDirections);
         SimpleDirectionContainer<Direction> equivalentBestDirections = getEquivalentBestDirections(
-                distancesToFood);
-        SimpleDirectionContainer<Direction> allValidDirections = getAllValidDirections(
                 distancesToFood);
 
         DependencyProvider dependencyProvider = new DependencyProvider(arena,
-                snake, blockingDirections, equivalentBestDirections,
-                allValidDirections);
+                snake, blockingDirections, filteredDirections,
+                equivalentBestDirections);
 
         newDirection = getNewDirection(dependencyProvider);
 
@@ -127,71 +123,90 @@ public class BonoStrategy implements SnakeStrategy
 
         Map<Direction, Integer> freeCoordinatesCountByDirection = new HashMap<>();
 
-        for (Direction actualDirection : freeDirections.getAllAsList()) {
+        SimpleDirectionContainer<Direction> randomizableDirections = new SimpleDirectionContainer<>();
+        for (Direction actualDirection : Direction.values()) {
+            randomizableDirections.add(actualDirection);
+        }
+
+        for (Direction actualDirection : randomizableDirections
+                .getRandomizedElementsAsList()) {
             Coordinate nextCoordinate = arena
                     .nextCoordinate(actualHeadCoordinate, actualDirection);
 
-            checkThereIsALoop(nextCoordinate, null, 0);
-            if (thereIsALoopTemp) {
-                System.out.println("Loop Found: " + actualDirection);
+            if (!arena.isOccupied(nextCoordinate)) {
+                Integer freeCoordinatesCount = getFreeCoordinatesCount(
+                        nextCoordinate);
 
-                for (Direction actualDirectionToCheckFreeCoordinates : Direction
-                        .values()) {
-                    Coordinate nextCoordinateToCheckFreeCoordinates = arena
-                            .nextCoordinate(actualHeadCoordinate,
-                                    actualDirectionToCheckFreeCoordinates);
+                System.out.println("Free Coordinates Count For "
+                        + actualDirection + ": " + freeCoordinatesCount);
 
-                    Integer freeCoordinatesCount = getFreeCoordinatesCount(
-                            nextCoordinateToCheckFreeCoordinates);
-
-                    System.out.println(
-                            "Free Coordinates Count: " + freeCoordinatesCount);
-
-                    if (freeCoordinatesCount == 0) {
-                        closedDirections
-                                .add(actualDirectionToCheckFreeCoordinates);
-                    } else {
-                        freeCoordinatesCountByDirection.put(
-                                actualDirectionToCheckFreeCoordinates,
-                                freeCoordinatesCount);
-                    }
+                if (freeCoordinatesCount == 0) {
+                    closedDirections.add(actualDirection);
+                } else {
+                    freeCoordinatesCountByDirection.put(actualDirection,
+                            freeCoordinatesCount);
                 }
             }
         }
+
+        System.out.println("Free Coordinates Count By Direction Before: "
+                + freeCoordinatesCountByDirection);
 
         if (freeCoordinatesCountByDirection.size() > 1) {
             /* Free Coordinates Count, Count in the Map */
             Map<Integer, Integer> multipleCounts = new HashMap<>();
 
             for (Direction key : freeCoordinatesCountByDirection.keySet()) {
-                Integer actualCount = freeCoordinatesCountByDirection.get(key);
+                Integer actualFreeCountForDirection = freeCoordinatesCountByDirection
+                        .get(key);
 
-                if (!multipleCounts.containsKey(actualCount)) {
-                    multipleCounts.put(actualCount, 1);
+                if (!multipleCounts.containsKey(actualFreeCountForDirection)) {
+                    multipleCounts.put(actualFreeCountForDirection, 1);
                 } else {
-                    Integer oldCount = multipleCounts.get(actualCount);
+                    Integer oldCount = multipleCounts
+                            .get(actualFreeCountForDirection);
 
-                    multipleCounts.put(actualCount, ++oldCount);
+                    multipleCounts.put(actualFreeCountForDirection, ++oldCount);
                 }
             }
-            SimpleDirectionContainer<Direction> multipleDirections = new SimpleDirectionContainer<>();
-            for (Integer actualMultipleCount : multipleCounts.keySet()) {
+
+            System.out.println("Multiple Counts: " + multipleCounts);
+
+            SimpleDirectionContainer<Direction> multipleDirectionsToRemove = new SimpleDirectionContainer<>();
+            for (Integer actualFreeCountForDirection : multipleCounts
+                    .keySet()) {
+                Integer actualMultipleCount = multipleCounts
+                        .get(actualFreeCountForDirection);
+
                 if (actualMultipleCount > 1) {
                     for (Direction key : freeCoordinatesCountByDirection
                             .keySet()) {
-                        if (freeCoordinatesCountByDirection
-                                .get(key) == actualMultipleCount) {
-                            multipleDirections.add(key);
+                        if (actualMultipleCount > 1
+                                && actualFreeCountForDirection
+                                        .equals(freeCoordinatesCountByDirection
+                                                .get(key))) {
+                            multipleDirectionsToRemove.add(key);
+
+                            if (multipleCounts.size() > 1) {
+                                actualMultipleCount--;
+                            }
                         }
                     }
                 }
             }
-            for (Direction actualDirection : multipleDirections) {
+
+            System.out.println("Multiple Directions To Remove: "
+                    + multipleDirectionsToRemove);
+
+            for (Direction actualDirection : multipleDirectionsToRemove) {
                 freeCoordinatesCountByDirection.remove(actualDirection);
             }
 
+            System.out.println("Free Coordinates Count By Direction After: "
+                    + freeCoordinatesCountByDirection);
+
             if (freeCoordinatesCountByDirection.size() > 1) {
-                /* csak a min. */
+                /* csak a mint tiltjuk ki. */
                 {
                     Integer minCount = Integer.MAX_VALUE;
                     Direction minDirection = null;
@@ -210,7 +225,7 @@ public class BonoStrategy implements SnakeStrategy
                     }
                 }
 
-                /* maxon kívül az összes. */
+                /* maxon kívül az összest kitiltjuk. */
                 // {
                 // Integer maxCount = Integer.MIN_VALUE;
                 // Direction maxDirection = null;
@@ -238,49 +253,6 @@ public class BonoStrategy implements SnakeStrategy
         System.out.println("Closed Directions: " + closedDirections);
 
         return closedDirections;
-    }
-
-    private void checkThereIsALoop(Coordinate headCoordinate,
-            Coordinate nextStep, int recursionLevel)
-    {
-        Coordinate coordinateToInvestigate;
-
-        if (nextStep == null) {
-            thereIsALoopTemp = false;
-
-            alreadyCheckedCoordinatesTemp.clear();
-
-            coordinateToInvestigate = headCoordinate;
-        } else {
-            if (thereIsALoopTemp
-                    || alreadyCheckedCoordinatesTemp.contains(nextStep)) {
-                return;
-            }
-
-            alreadyCheckedCoordinatesTemp.add(nextStep);
-
-            coordinateToInvestigate = nextStep;
-        }
-
-        for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena
-                    .nextCoordinate(coordinateToInvestigate, actualDirection);
-
-            // headcoordinate-et tilos bejegyezni, mint already checkedet.
-            // ne a size-ot vizsgáld! elmászhat! a rekurziós szintet nézd!
-            // rekurzió első szintjén nem számít a fejes!
-            // első vagy nulladik? hogy nevezzük?
-
-            if (nextCoordinate.equals(headCoordinate) && recursionLevel > 1) {
-                thereIsALoopTemp = true;
-
-                return;
-            }
-            if (arena.isOccupied(nextCoordinate)) {
-                checkThereIsALoop(headCoordinate, nextCoordinate,
-                        ++recursionLevel);
-            }
-        }
     }
 
     private Integer getFreeCoordinatesCount(Coordinate headCoordinate)
@@ -317,12 +289,12 @@ public class BonoStrategy implements SnakeStrategy
         }
     }
 
-    // SimpleDirectionContainer<Direction> filteredDirections
-    private Map<Integer, SimpleDirectionContainer<Direction>> getDistancesToFood()
+    private Map<Integer, SimpleDirectionContainer<Direction>> getDistancesToFood(
+            SimpleDirectionContainer<Direction> filteredDirections)
     {
         Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = new TreeMap<>();
 
-        for (Direction actualDirection : Direction.values()) {
+        for (Direction actualDirection : filteredDirections) {
             Coordinate nextCoordinate = arena
                     .nextCoordinate(actualHeadCoordinate, actualDirection);
 
@@ -369,26 +341,6 @@ public class BonoStrategy implements SnakeStrategy
                 "Equivalent Best Directions: " + equivalentBestDirections);
 
         return equivalentBestDirections;
-    }
-
-    private SimpleDirectionContainer<Direction> getAllValidDirections(
-            Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood)
-    {
-        SimpleDirectionContainer<Direction> allValidDirections = new SimpleDirectionContainer<>();
-
-        List<SimpleDirectionContainer<Direction>> directionContainers = new ArrayList<>();
-
-        if (distancesToFood.size() > 0) {
-            directionContainers.addAll(distancesToFood.values());
-
-            for (SimpleDirectionContainer<Direction> directionContainer : directionContainers) {
-                allValidDirections.addAll(directionContainer);
-            }
-        }
-
-        System.out.println("All Valid Directions: " + allValidDirections);
-
-        return allValidDirections;
     }
 
     private Direction getNewDirection(DependencyProvider dependencyProvider)

@@ -11,7 +11,7 @@ public abstract class NewDirectionProcessor
 {
     protected BlockingDirectionContainer blockingDirections;
     protected SimpleDirectionContainer<Direction> equivalentBestDirections;
-    protected SimpleDirectionContainer<Direction> allValidDirections;
+    protected SimpleDirectionContainer<Direction> filteredDirections;
 
     public static Direction processNewDirection(
             DependencyProvider dependencyProvider)
@@ -24,8 +24,9 @@ public abstract class NewDirectionProcessor
         newDirectionProcessors
                 .add(new ByFreeEquivalentBestDirections(dependencyProvider));
         newDirectionProcessors
-                .add(new ByFreeValidDirections(dependencyProvider));
+                .add(new ByFreeFilteredDirections(dependencyProvider));
         newDirectionProcessors.add(new ByBlockingDistances(dependencyProvider));
+        newDirectionProcessors.add(new ByFilteredDirections(dependencyProvider));
         newDirectionProcessors.add(new ByRandom(dependencyProvider));
         newDirectionProcessors.add(new ByKispalEsABorz(dependencyProvider));
 
@@ -44,7 +45,7 @@ public abstract class NewDirectionProcessor
                 .getBlockingDirectionsDataHandler();
         this.equivalentBestDirections = dependencyProvider
                 .getEquivalentBestDirections();
-        this.allValidDirections = dependencyProvider.getAllValidDirections();
+        this.filteredDirections = dependencyProvider.getFilteredDirections();
     }
 
     public abstract Direction getNewDirection();

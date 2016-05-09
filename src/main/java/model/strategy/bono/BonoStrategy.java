@@ -162,7 +162,6 @@ public class BonoStrategy implements SnakeStrategy
                     break;
                 }
             }
-
             if (allTheSame) {
                 freeCoordinatesCountByDirection.clear();
             }

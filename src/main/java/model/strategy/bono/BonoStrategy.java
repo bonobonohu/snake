@@ -214,6 +214,13 @@ public class BonoStrategy implements SnakeStrategy
                         if (freeCoordinatesCountByDirection
                                 .get(key) < minCount) {
                             minCount = freeCoordinatesCountByDirection.get(key);
+                        }
+                    }
+
+                    for (Direction key : freeCoordinatesCountByDirection
+                            .keySet()) {
+                        if (freeCoordinatesCountByDirection
+                                .get(key) == minCount) {
                             minDirections.add(key);
                         }
                     }

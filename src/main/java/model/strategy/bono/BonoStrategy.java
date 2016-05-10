@@ -31,7 +31,7 @@ public class BonoStrategy implements SnakeStrategy
     private Coordinate foodCoordinate;
     private Coordinate maxCoordinate;
 
-    Printer printer = new Printer(false);
+    Printer printer = new Printer(true);
 
     Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
 

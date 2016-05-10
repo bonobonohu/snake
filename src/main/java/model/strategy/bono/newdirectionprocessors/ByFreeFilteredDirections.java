@@ -23,9 +23,8 @@ public class ByFreeFilteredDirections extends NewDirectionProcessor
 
             newDirection = processFinalDirection(freeFilteredDirections);
 
-            System.out.println(
-                    "Random element from the free filtered directions: "
-                            + newDirection);
+            printer.print("Random element from the free filtered directions: "
+                    + newDirection);
         }
 
         return newDirection;

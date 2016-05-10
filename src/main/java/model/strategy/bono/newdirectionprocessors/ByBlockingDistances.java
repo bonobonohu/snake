@@ -52,7 +52,7 @@ public class ByBlockingDistances extends NewDirectionProcessor
                             && numOfTries < filteredDirections.size()));
         }
 
-        System.out.println(
+        printer.print(
                 "Weighted element by blocking distances: " + newDirection);
 
         return newDirection;

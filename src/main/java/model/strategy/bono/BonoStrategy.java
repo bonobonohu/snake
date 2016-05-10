@@ -31,6 +31,8 @@ public class BonoStrategy implements SnakeStrategy
     private Coordinate foodCoordinate;
     private Coordinate maxCoordinate;
 
+    Printer printer = new Printer(false);
+
     Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
 
     @Override
@@ -41,20 +43,20 @@ public class BonoStrategy implements SnakeStrategy
         arena = arenaArgument;
         snake = snakeArgument;
 
-        System.out.println("--- BEGIN " + snake.getName() + "---");
+        printer.print("--- BEGIN " + snake.getName() + "---");
 
-        System.out.println("Length: " + snake.length());
+        printer.print("Length: " + snake.length());
 
         actualHeadCoordinate = snake.getHeadCoordinate();
         foodCoordinate = arena.getFood().get(0).getCoordinate();
         maxCoordinate = arena.getMaxCoordinate();
 
-        System.out.println("Food: " + arena.getFood().get(0).getCoordinate());
-        System.out.println("Head: " + actualHeadCoordinate);
+        printer.print("Food: " + arena.getFood().get(0).getCoordinate());
+        printer.print("Head: " + actualHeadCoordinate);
 
         newDirection = process();
 
-        System.out.println("--- END " + snake.getName() + "---");
+        printer.print("--- END " + snake.getName() + "---");
 
         return newDirection;
     }
@@ -70,7 +72,7 @@ public class BonoStrategy implements SnakeStrategy
                 freeDirections, closedDirections);
 
         BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
-                snake, arena);
+                snake, arena, printer);
         BlockingDirectionContainer blockingDirections = blockingDirectionProcessor
                 .process(actualHeadCoordinate, filteredDirections);
 
@@ -81,7 +83,7 @@ public class BonoStrategy implements SnakeStrategy
 
         DependencyProvider dependencyProvider = new DependencyProvider(arena,
                 snake, blockingDirections, filteredDirections,
-                equivalentBestDirections);
+                equivalentBestDirections, printer);
 
         newDirection = getNewDirection(dependencyProvider);
 
@@ -97,7 +99,7 @@ public class BonoStrategy implements SnakeStrategy
         filteredDirections = freeDirections.getAsNewObject();
         filteredDirections.removeAll(closedDirections);
 
-        System.out.println("Filtered Directions: " + filteredDirections);
+        printer.print("Filtered Directions: " + filteredDirections);
 
         return filteredDirections;
     }
@@ -115,7 +117,7 @@ public class BonoStrategy implements SnakeStrategy
             }
         }
 
-        System.out.println("Free Directions: " + freeDirections);
+        printer.print("Free Directions: " + freeDirections);
 
         return freeDirections;
     }
@@ -140,7 +142,7 @@ public class BonoStrategy implements SnakeStrategy
                     .addAll(strategy.process(freeCoordinatesCountByDirection));
         }
 
-        System.out.println("Closed Directions: " + closedDirections);
+        printer.print("Closed Directions: " + closedDirections);
 
         return closedDirections;
     }
@@ -166,7 +168,7 @@ public class BonoStrategy implements SnakeStrategy
             }
         }
 
-        System.out.println("Free Coordinates Count By Direction "
+        printer.print("Free Coordinates Count By Direction "
                 + freeCoordinatesCountByDirection);
 
         return freeCoordinatesCountByDirection;
@@ -254,7 +256,7 @@ public class BonoStrategy implements SnakeStrategy
             }
         }
 
-        System.out.println("Distances To Food: " + distancesToFood);
+        printer.print("Distances To Food: " + distancesToFood);
 
         return distancesToFood;
     }
@@ -274,7 +276,7 @@ public class BonoStrategy implements SnakeStrategy
 
         equivalentBestDirections = directionContainers.get(0);
 
-        System.out.println(
+        printer.print(
                 "Equivalent Best Directions: " + equivalentBestDirections);
 
         return equivalentBestDirections;
@@ -285,7 +287,7 @@ public class BonoStrategy implements SnakeStrategy
         Direction newDirection = NewDirectionProcessor
                 .processNewDirection(dependencyProvider);
 
-        System.out.println("The Processed Direction: " + newDirection);
+        printer.print("The Processed Direction: " + newDirection);
 
         return newDirection;
     }

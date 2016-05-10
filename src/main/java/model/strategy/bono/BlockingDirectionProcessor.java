@@ -15,12 +15,16 @@ public class BlockingDirectionProcessor
     private Arena arena;
     private Snake snake;
 
+    private Printer printer;
+
     private Coordinate maxCoordinate;
 
-    public BlockingDirectionProcessor(Snake snakeParam, Arena arenaParam)
+    public BlockingDirectionProcessor(Snake snake, Arena arena, Printer printer)
     {
-        arena = arenaParam;
-        snake = snakeParam;
+        this.arena = arena;
+        this.snake = snake;
+
+        this.printer = printer;
 
         maxCoordinate = arena.getMaxCoordinate();
     }
@@ -67,7 +71,7 @@ public class BlockingDirectionProcessor
             }
         }
 
-        System.out.println("Blocking Directions: " + blockingDirections);
+        printer.print("Blocking Directions: " + blockingDirections);
 
         return blockingDirections;
     }

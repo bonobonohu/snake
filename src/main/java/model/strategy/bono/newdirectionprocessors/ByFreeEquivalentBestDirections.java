@@ -24,7 +24,7 @@ public class ByFreeEquivalentBestDirections extends NewDirectionProcessor
 
             newDirection = processFinalDirection(freeEquivalentBestDirections);
 
-            System.out.println(
+            printer.print(
                     "Random element from the free equivalent best directions: "
                             + newDirection);
         }

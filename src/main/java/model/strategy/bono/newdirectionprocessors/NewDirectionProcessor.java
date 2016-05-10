@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Direction;
+import model.strategy.bono.Printer;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
@@ -12,6 +13,8 @@ public abstract class NewDirectionProcessor
     protected BlockingDirectionContainer blockingDirections;
     protected SimpleDirectionContainer<Direction> equivalentBestDirections;
     protected SimpleDirectionContainer<Direction> filteredDirections;
+
+    protected Printer printer;
 
     public static Direction processNewDirection(
             DependencyProvider dependencyProvider)
@@ -46,6 +49,8 @@ public abstract class NewDirectionProcessor
         this.equivalentBestDirections = dependencyProvider
                 .getEquivalentBestDirections();
         this.filteredDirections = dependencyProvider.getFilteredDirections();
+
+        this.printer = dependencyProvider.getPrinter();
     }
 
     public abstract Direction getNewDirection();

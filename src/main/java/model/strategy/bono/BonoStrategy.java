@@ -1,6 +1,7 @@
 package model.strategy.bono;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +14,9 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
+import model.strategy.bono.closeddirectionsprocessingstrategies.ClosedDirectionsProcessingStrategy;
+import model.strategy.bono.closeddirectionsprocessingstrategies.MinimumsStrategy;
+import model.strategy.bono.closeddirectionsprocessingstrategies.ZerosStrategy;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 import model.strategy.bono.newdirectionprocessors.DependencyProvider;
@@ -59,7 +63,7 @@ public class BonoStrategy implements SnakeStrategy
 
         SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
         SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
-                freeDirections);
+                freeDirections, new MinimumsStrategy());
         SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
                 freeDirections, closedDirections);
 
@@ -115,105 +119,23 @@ public class BonoStrategy implements SnakeStrategy
     }
 
     private SimpleDirectionContainer<Direction> getClosedDirections(
-            SimpleDirectionContainer<Direction> freeDirections)
+            SimpleDirectionContainer<Direction> freeDirections,
+            ClosedDirectionsProcessingStrategy strategy)
     {
         SimpleDirectionContainer<Direction> closedDirections = new SimpleDirectionContainer<>();
 
-        Map<Direction, Integer> freeCoordinatesCountByDirection = new HashMap<>();
+        Map<Direction, Integer> freeCoordinatesCountByDirection = getFreeCoordinatesCountByDirection();
 
-        SimpleDirectionContainer<Direction> randomizableDirections = new SimpleDirectionContainer<>();
-        for (Direction actualDirection : Direction.values()) {
-            randomizableDirections.add(actualDirection);
+        if (allAreTheSame(freeCoordinatesCountByDirection)) {
+            freeCoordinatesCountByDirection.clear();
         }
-
-        for (Direction actualDirection : randomizableDirections
-                .getRandomizedElementsAsList()) {
-            Coordinate nextCoordinate = arena
-                    .nextCoordinate(actualHeadCoordinate, actualDirection);
-
-            if (!arena.isOccupied(nextCoordinate)) {
-                Integer freeCoordinatesCount = getFreeCoordinatesCount(
-                        nextCoordinate);
-
-                System.out.println("Free Coordinates Count For "
-                        + actualDirection + ": " + freeCoordinatesCount);
-
-                if (freeCoordinatesCount == 0) {
-                    closedDirections.add(actualDirection);
-                } else {
-                    freeCoordinatesCountByDirection.put(actualDirection,
-                            freeCoordinatesCount);
-                }
-            }
-        }
-
-        System.out.println("Free Coordinates Count By Direction Before: "
-                + freeCoordinatesCountByDirection);
 
         if (freeCoordinatesCountByDirection.size() > 1) {
-            boolean allTheSame = true;
-            Integer theCount = Integer.MIN_VALUE;
-            for (Direction key : freeCoordinatesCountByDirection.keySet()) {
-                if (theCount == Integer.MIN_VALUE) {
-                    theCount = freeCoordinatesCountByDirection.get(key);
-                } else if (!theCount
-                        .equals(freeCoordinatesCountByDirection.get(key))) {
-                    allTheSame = false;
-                    break;
-                }
-            }
-            if (allTheSame) {
-                freeCoordinatesCountByDirection.clear();
-            }
+            closedDirections.addAll((new ZerosStrategy())
+                    .process(freeCoordinatesCountByDirection));
 
-            if (freeCoordinatesCountByDirection.size() > 1) {
-                /* csak a mineket tiltjuk ki. */
-                {
-                    Integer minCount = Integer.MAX_VALUE;
-                    SimpleDirectionContainer<Direction> minDirections = new SimpleDirectionContainer<>();
-
-                    for (Direction key : freeCoordinatesCountByDirection
-                            .keySet()) {
-                        if (freeCoordinatesCountByDirection
-                                .get(key) < minCount) {
-                            minCount = freeCoordinatesCountByDirection.get(key);
-                        }
-                    }
-
-                    for (Direction key : freeCoordinatesCountByDirection
-                            .keySet()) {
-                        if (freeCoordinatesCountByDirection
-                                .get(key) == minCount) {
-                            minDirections.add(key);
-                        }
-                    }
-
-                    closedDirections.addAll(minDirections);
-                }
-
-                /* maxon kívül az összest kitiltjuk. */
-                // {
-                // Integer maxCount = Integer.MIN_VALUE;
-                // Direction maxDirection = null;
-                //
-                // for (Direction key :
-                // freeCoordinatesCountByDirection.keySet()) {
-                // if (freeCoordinatesCountByDirection.get(key) > maxCount) {
-                // maxCount = freeCoordinatesCountByDirection.get(key);
-                // maxDirection = key;
-                // }
-                // }
-                //
-                // if (maxDirection != null) {
-                // for (Direction key : freeCoordinatesCountByDirection
-                // .keySet()) {
-                // if (key != maxDirection) {
-                // closedDirections.add(key);
-                // }
-                // }
-                // }
-                // }
-            }
+            closedDirections
+                    .addAll(strategy.process(freeCoordinatesCountByDirection));
         }
 
         System.out.println("Closed Directions: " + closedDirections);
@@ -221,7 +143,35 @@ public class BonoStrategy implements SnakeStrategy
         return closedDirections;
     }
 
-    private Integer getFreeCoordinatesCount(Coordinate headCoordinate)
+    private Map<Direction, Integer> getFreeCoordinatesCountByDirection()
+    {
+        Map<Direction, Integer> freeCoordinatesCountByDirection = new HashMap<>();
+
+        SimpleDirectionContainer<Direction> randomizableDirections = new SimpleDirectionContainer<>();
+        randomizableDirections.addAll(Arrays.asList(Direction.values()));
+
+        for (Direction actualDirection : randomizableDirections
+                .getRandomizedElementsAsList()) {
+            Coordinate nextCoordinate = arena
+                    .nextCoordinate(actualHeadCoordinate, actualDirection);
+
+            if (!arena.isOccupied(nextCoordinate)) {
+                Integer freeCoordinatesCountForADirection = getFreeCoordinatesCountForADirection(
+                        nextCoordinate);
+
+                freeCoordinatesCountByDirection.put(actualDirection,
+                        freeCoordinatesCountForADirection);
+            }
+        }
+
+        System.out.println("Free Coordinates Count By Direction "
+                + freeCoordinatesCountByDirection);
+
+        return freeCoordinatesCountByDirection;
+    }
+
+    private Integer getFreeCoordinatesCountForADirection(
+            Coordinate headCoordinate)
     {
         freeCoordinatesTemp.clear();
 
@@ -253,6 +203,25 @@ public class BonoStrategy implements SnakeStrategy
                 processFreeCoordinatesTemp(nextCoordinate);
             }
         }
+    }
+
+    private boolean allAreTheSame(
+            Map<Direction, Integer> freeCoordinatesCountByDirection)
+    {
+        boolean allTheSame = true;
+
+        Integer theCount = Integer.MIN_VALUE;
+        for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
+            if (theCount == Integer.MIN_VALUE) {
+                theCount = freeCoordinatesCountByDirection.get(direction);
+            } else if (!theCount
+                    .equals(freeCoordinatesCountByDirection.get(direction))) {
+                allTheSame = false;
+                break;
+            }
+        }
+
+        return allTheSame;
     }
 
     private Map<Integer, SimpleDirectionContainer<Direction>> getDistancesToFood(

@@ -28,7 +28,6 @@ public abstract class NewDirectionProcessor
         newDirectionProcessors.add(new ByBlockingDistances(dependencyProvider));
         newDirectionProcessors
                 .add(new ByFilteredDirections(dependencyProvider));
-        newDirectionProcessors.add(new ByRandom(dependencyProvider));
         newDirectionProcessors.add(new ByKispalEsABorz(dependencyProvider));
 
         for (NewDirectionProcessor newDirectionProcessor : newDirectionProcessors) {

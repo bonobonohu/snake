@@ -14,8 +14,8 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
+import model.strategy.bono.closeddirectionsprocessingstrategies.AllButMaximumsStrategy;
 import model.strategy.bono.closeddirectionsprocessingstrategies.ClosedDirectionsProcessingStrategy;
-import model.strategy.bono.closeddirectionsprocessingstrategies.MinimumsStrategy;
 import model.strategy.bono.closeddirectionsprocessingstrategies.ZerosStrategy;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
@@ -65,7 +65,7 @@ public class BonoStrategy implements SnakeStrategy
 
         SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
         SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
-                freeDirections, new MinimumsStrategy());
+                freeDirections, new AllButMaximumsStrategy());
         SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
                 freeDirections, closedDirections);
 

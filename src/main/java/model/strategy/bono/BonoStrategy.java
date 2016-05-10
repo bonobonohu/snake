@@ -14,9 +14,8 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
-import model.strategy.bono.closeddirectionsprocessingstrategies.AllButMaximumsStrategy;
 import model.strategy.bono.closeddirectionsprocessingstrategies.ClosedDirectionsProcessingStrategy;
-import model.strategy.bono.closeddirectionsprocessingstrategies.ZerosStrategy;
+import model.strategy.bono.closeddirectionsprocessingstrategies.MinimumsExceptZerosAndZerosStrategy;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 import model.strategy.bono.newdirectionprocessors.DependencyProvider;
@@ -24,6 +23,9 @@ import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
 
 public class BonoStrategy implements SnakeStrategy
 {
+    private static final boolean PRINT_LOGS = true;
+    private static final ClosedDirectionsProcessingStrategy CLOSED_DIRECTIONS_PROCESSING_STRATEGY = new MinimumsExceptZerosAndZerosStrategy();
+
     private Arena arena;
     private Snake snake;
 
@@ -31,7 +33,7 @@ public class BonoStrategy implements SnakeStrategy
     private Coordinate foodCoordinate;
     private Coordinate maxCoordinate;
 
-    Printer printer = new Printer(true);
+    Printer printer = new Printer(PRINT_LOGS);
 
     Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
 
@@ -67,7 +69,7 @@ public class BonoStrategy implements SnakeStrategy
 
         SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
         SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
-                freeDirections, new AllButMaximumsStrategy());
+                freeDirections, CLOSED_DIRECTIONS_PROCESSING_STRATEGY);
         SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
                 freeDirections, closedDirections);
 
@@ -135,9 +137,6 @@ public class BonoStrategy implements SnakeStrategy
         }
 
         if (freeCoordinatesCountByDirection.size() > 1) {
-            closedDirections.addAll((new ZerosStrategy())
-                    .process(freeCoordinatesCountByDirection));
-
             closedDirections
                     .addAll(strategy.process(freeCoordinatesCountByDirection));
         }

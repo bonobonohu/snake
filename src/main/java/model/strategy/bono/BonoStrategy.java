@@ -65,10 +65,10 @@ public class BonoStrategy implements SnakeStrategy
     {
         Direction newDirection = null;
 
-        SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
-        SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
+        SimpleDirectionContainer freeDirections = getFreeDirections();
+        SimpleDirectionContainer closedDirections = getClosedDirections(
                 freeDirections);
-        SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
+        SimpleDirectionContainer filteredDirections = getFilteredDirections(
                 freeDirections, closedDirections);
 
         BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(
@@ -76,9 +76,9 @@ public class BonoStrategy implements SnakeStrategy
         BlockingDirectionContainer blockingDirections = blockingDirectionProcessor
                 .process(actualHeadCoordinate, filteredDirections);
 
-        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = getDistancesToFood(
+        Map<Integer, SimpleDirectionContainer> distancesToFood = getDistancesToFood(
                 filteredDirections);
-        SimpleDirectionContainer<Direction> equivalentBestDirections = getEquivalentBestDirections(
+        SimpleDirectionContainer equivalentBestDirections = getEquivalentBestDirections(
                 distancesToFood);
 
         DependencyProvider dependencyProvider = new DependencyProvider(arena,
@@ -90,11 +90,11 @@ public class BonoStrategy implements SnakeStrategy
         return newDirection;
     }
 
-    private SimpleDirectionContainer<Direction> getFilteredDirections(
-            SimpleDirectionContainer<Direction> freeDirections,
-            SimpleDirectionContainer<Direction> closedDirections)
+    private SimpleDirectionContainer getFilteredDirections(
+            SimpleDirectionContainer freeDirections,
+            SimpleDirectionContainer closedDirections)
     {
-        SimpleDirectionContainer<Direction> filteredDirections = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer filteredDirections = new SimpleDirectionContainer();
 
         filteredDirections = freeDirections.getAsNewObject();
         filteredDirections.removeAll(closedDirections);
@@ -104,9 +104,9 @@ public class BonoStrategy implements SnakeStrategy
         return filteredDirections;
     }
 
-    private SimpleDirectionContainer<Direction> getFreeDirections()
+    private SimpleDirectionContainer getFreeDirections()
     {
-        SimpleDirectionContainer<Direction> freeDirections = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer freeDirections = new SimpleDirectionContainer();
 
         for (Direction actualDirection : Direction.values()) {
             Coordinate nextCoordinate = arena
@@ -122,10 +122,10 @@ public class BonoStrategy implements SnakeStrategy
         return freeDirections;
     }
 
-    private SimpleDirectionContainer<Direction> getClosedDirections(
-            SimpleDirectionContainer<Direction> freeDirections)
+    private SimpleDirectionContainer getClosedDirections(
+            SimpleDirectionContainer freeDirections)
     {
-        SimpleDirectionContainer<Direction> closedDirections = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer closedDirections = new SimpleDirectionContainer();
 
         Map<Direction, Integer> freeCoordinatesCountByDirection = getFreeCoordinatesCountByDirection();
 
@@ -145,7 +145,7 @@ public class BonoStrategy implements SnakeStrategy
     {
         Map<Direction, Integer> freeCoordinatesCountByDirection = new HashMap<>();
 
-        SimpleDirectionContainer<Direction> randomizableDirections = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer randomizableDirections = new SimpleDirectionContainer();
         randomizableDirections.addAll(Arrays.asList(Direction.values()));
 
         for (Direction actualDirection : randomizableDirections
@@ -222,10 +222,10 @@ public class BonoStrategy implements SnakeStrategy
         return allTheSame;
     }
 
-    private Map<Integer, SimpleDirectionContainer<Direction>> getDistancesToFood(
-            SimpleDirectionContainer<Direction> filteredDirections)
+    private Map<Integer, SimpleDirectionContainer> getDistancesToFood(
+            SimpleDirectionContainer filteredDirections)
     {
-        Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood = new TreeMap<>();
+        Map<Integer, SimpleDirectionContainer> distancesToFood = new TreeMap<>();
 
         for (Direction actualDirection : filteredDirections) {
             Coordinate nextCoordinate = arena
@@ -236,13 +236,13 @@ public class BonoStrategy implements SnakeStrategy
                         .minDistance(foodCoordinate, maxCoordinate);
 
                 if (distancesToFood.containsKey(actualDistanceToFood)) {
-                    SimpleDirectionContainer<Direction> directions = distancesToFood
+                    SimpleDirectionContainer directions = distancesToFood
                             .get(actualDistanceToFood);
                     directions.add(actualDirection);
 
                     distancesToFood.put(actualDistanceToFood, directions);
                 } else {
-                    SimpleDirectionContainer<Direction> directions = new SimpleDirectionContainer<>();
+                    SimpleDirectionContainer directions = new SimpleDirectionContainer();
                     directions.add(actualDirection);
 
                     distancesToFood.put(actualDistanceToFood, directions);
@@ -255,12 +255,12 @@ public class BonoStrategy implements SnakeStrategy
         return distancesToFood;
     }
 
-    private SimpleDirectionContainer<Direction> getEquivalentBestDirections(
-            Map<Integer, SimpleDirectionContainer<Direction>> distancesToFood)
+    private SimpleDirectionContainer getEquivalentBestDirections(
+            Map<Integer, SimpleDirectionContainer> distancesToFood)
     {
-        SimpleDirectionContainer<Direction> equivalentBestDirections = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer equivalentBestDirections = new SimpleDirectionContainer();
 
-        List<SimpleDirectionContainer<Direction>> directionContainers = new ArrayList<>();
+        List<SimpleDirectionContainer> directionContainers = new ArrayList<>();
 
         if (distancesToFood.size() > 0) {
             directionContainers.addAll(distancesToFood.values());

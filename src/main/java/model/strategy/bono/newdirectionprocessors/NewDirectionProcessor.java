@@ -11,8 +11,8 @@ import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 public abstract class NewDirectionProcessor
 {
     protected BlockingDirectionContainer blockingDirections;
-    protected SimpleDirectionContainer<Direction> equivalentBestDirections;
-    protected SimpleDirectionContainer<Direction> filteredDirections;
+    protected SimpleDirectionContainer equivalentBestDirections;
+    protected SimpleDirectionContainer filteredDirections;
 
     protected Printer printer;
 
@@ -56,7 +56,7 @@ public abstract class NewDirectionProcessor
     public abstract Direction getNewDirection();
 
     protected Direction processFinalDirection(
-            SimpleDirectionContainer<Direction> directionContainer)
+            SimpleDirectionContainer directionContainer)
     {
         return directionContainer.getRandomElement();
     }

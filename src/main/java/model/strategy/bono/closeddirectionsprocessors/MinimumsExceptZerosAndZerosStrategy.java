@@ -9,15 +9,15 @@ public class MinimumsExceptZerosAndZerosStrategy
         extends ClosedDirectionsProcessor
 {
     @Override
-    public SimpleDirectionContainer<Direction> getClosedDirections(
+    public SimpleDirectionContainer getClosedDirections(
             Map<Direction, Integer> freeCoordinatesCountByDirection)
     {
-        SimpleDirectionContainer<Direction> minimumExceptZeroAndZeroDirections = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer minimumExceptZeroAndZeroDirections = new SimpleDirectionContainer();
 
-        SimpleDirectionContainer<Direction> zeroDirections = getZeroDirections(
+        SimpleDirectionContainer zeroDirections = getZeroDirections(
                 freeCoordinatesCountByDirection);
 
-        SimpleDirectionContainer<Direction> minimumExceptZeroDirections = getMinimumExceptZeroDirections(
+        SimpleDirectionContainer minimumExceptZeroDirections = getMinimumExceptZeroDirections(
                 freeCoordinatesCountByDirection);
 
         minimumExceptZeroAndZeroDirections.addAll(zeroDirections);
@@ -31,10 +31,10 @@ public class MinimumsExceptZerosAndZerosStrategy
         return minimumExceptZeroAndZeroDirections;
     }
 
-    private SimpleDirectionContainer<Direction> getZeroDirections(
+    private SimpleDirectionContainer getZeroDirections(
             Map<Direction, Integer> freeCoordinatesCountByDirection)
     {
-        SimpleDirectionContainer<Direction> zeroDirections = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer zeroDirections = new SimpleDirectionContainer();
 
         for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
             if (freeCoordinatesCountByDirection.get(direction) == 0) {
@@ -45,10 +45,10 @@ public class MinimumsExceptZerosAndZerosStrategy
         return zeroDirections;
     }
 
-    private SimpleDirectionContainer<Direction> getMinimumExceptZeroDirections(
+    private SimpleDirectionContainer getMinimumExceptZeroDirections(
             Map<Direction, Integer> freeCoordinatesCountByDirection)
     {
-        SimpleDirectionContainer<Direction> minimumExceptZeroDirections = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer minimumExceptZeroDirections = new SimpleDirectionContainer();
 
         Integer minCount = Integer.MAX_VALUE;
 

@@ -5,32 +5,34 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-public class SimpleDirectionContainer<E> extends HashSet<E>
+import model.Direction;
+
+public class SimpleDirectionContainer extends HashSet<Direction>
 {
 
     private static final long serialVersionUID = -7360462751577910244L;
 
-    public E getRandomElement()
+    public Direction getRandomElement()
     {
-        List<E> elements = new ArrayList<>();
+        List<Direction> elements = new ArrayList<>();
         Random randomIndex = new Random();
 
         elements.addAll(this);
 
-        E returnElement = elements.size() > 0
+        Direction returnElement = elements.size() > 0
                 ? elements.get(randomIndex.nextInt(elements.size())) : null;
 
         return returnElement;
     }
 
-    public List<E> getRandomizedElementsAsList()
+    public List<Direction> getRandomizedElementsAsList()
     {
-        List<E> elements = new ArrayList<>();
+        List<Direction> elements = new ArrayList<>();
 
-        SimpleDirectionContainer<E> allElements = this.getAsNewObject();
+        SimpleDirectionContainer allElements = this.getAsNewObject();
 
         while (allElements.size() > 0) {
-            E randomElement = allElements.getRandomElement();
+            Direction randomElement = allElements.getRandomElement();
             allElements.remove(randomElement);
 
             elements.add(randomElement);
@@ -39,18 +41,18 @@ public class SimpleDirectionContainer<E> extends HashSet<E>
         return elements;
     }
 
-    public List<E> getAllAsList()
+    public List<Direction> getAllAsList()
     {
-        List<E> elements = new ArrayList<>();
+        List<Direction> elements = new ArrayList<>();
 
         elements.addAll(this);
 
         return elements;
     }
 
-    public SimpleDirectionContainer<E> getAsNewObject()
+    public SimpleDirectionContainer getAsNewObject()
     {
-        SimpleDirectionContainer<E> newDirectionsContainer = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer newDirectionsContainer = new SimpleDirectionContainer();
 
         newDirectionsContainer.addAll(this);
 

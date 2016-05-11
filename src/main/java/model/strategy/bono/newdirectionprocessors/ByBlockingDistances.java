@@ -20,20 +20,20 @@ public class ByBlockingDistances extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        Map<Integer, SimpleDirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
+        Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(
                 Collections.reverseOrder());
 
         orderedBlockings = blockingDirections.getOrderedBlockings();
 
         boolean foundNewDirection = false;
-        Iterator<Map.Entry<Integer, SimpleDirectionContainer<Direction>>> orderedBlockingsEntrySetIterator = orderedBlockings
+        Iterator<Map.Entry<Integer, SimpleDirectionContainer>> orderedBlockingsEntrySetIterator = orderedBlockings
                 .entrySet().iterator();
         while (!foundNewDirection
                 && orderedBlockingsEntrySetIterator.hasNext()) {
-            Map.Entry<Integer, SimpleDirectionContainer<Direction>> blockingsTemp = orderedBlockingsEntrySetIterator
+            Map.Entry<Integer, SimpleDirectionContainer> blockingsTemp = orderedBlockingsEntrySetIterator
                     .next();
 
-            SimpleDirectionContainer<Direction> blockingDirectionsTemp = blockingsTemp
+            SimpleDirectionContainer blockingDirectionsTemp = blockingsTemp
                     .getValue();
 
             int numOfTries = 0;

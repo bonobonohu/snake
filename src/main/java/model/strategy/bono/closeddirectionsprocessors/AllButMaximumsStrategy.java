@@ -9,13 +9,13 @@ import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 public class AllButMaximumsStrategy extends ClosedDirectionsProcessor
 {
     @Override
-    public SimpleDirectionContainer<Direction> getClosedDirections(
+    public SimpleDirectionContainer getClosedDirections(
             Map<Direction, Integer> freeCoordinatesCountByDirection)
     {
-        SimpleDirectionContainer<Direction> allButMaximumDirections = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer allButMaximumDirections = new SimpleDirectionContainer();
 
         Integer maxCount = Integer.MIN_VALUE;
-        SimpleDirectionContainer<Direction> maxDirections = new SimpleDirectionContainer<>();
+        SimpleDirectionContainer maxDirections = new SimpleDirectionContainer();
 
         for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
             if (freeCoordinatesCountByDirection.get(direction) > maxCount) {

@@ -1,7 +1,6 @@
 package model.strategy.bono.newdirectionprocessors;
 
 import model.Arena;
-import model.Direction;
 import model.Snake;
 import model.strategy.bono.Printer;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
@@ -13,16 +12,15 @@ public class DependencyProvider
     private Snake snake;
 
     private BlockingDirectionContainer blockingDirectionsDataHandler;
-    private SimpleDirectionContainer<Direction> equivalentBestDirections;
-    private SimpleDirectionContainer<Direction> filteredDirections;
+    private SimpleDirectionContainer equivalentBestDirections;
+    private SimpleDirectionContainer filteredDirections;
 
     private Printer printer;
 
     public DependencyProvider(Arena arena, Snake snake,
             BlockingDirectionContainer blockingDirectionsDataHandler,
-            SimpleDirectionContainer<Direction> filteredDirections,
-            SimpleDirectionContainer<Direction> equivalentBestDirections,
-            Printer printer)
+            SimpleDirectionContainer filteredDirections,
+            SimpleDirectionContainer equivalentBestDirections, Printer printer)
     {
         this.arena = arena;
         this.snake = snake;
@@ -49,12 +47,12 @@ public class DependencyProvider
         return blockingDirectionsDataHandler;
     }
 
-    public SimpleDirectionContainer<Direction> getEquivalentBestDirections()
+    public SimpleDirectionContainer getEquivalentBestDirections()
     {
         return equivalentBestDirections;
     }
 
-    public SimpleDirectionContainer<Direction> getFilteredDirections()
+    public SimpleDirectionContainer getFilteredDirections()
     {
         return filteredDirections;
     }

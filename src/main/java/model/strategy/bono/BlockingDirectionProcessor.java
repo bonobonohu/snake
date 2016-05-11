@@ -30,7 +30,7 @@ public class BlockingDirectionProcessor
     }
 
     public BlockingDirectionContainer process(Coordinate actualHeadCoordinate,
-            SimpleDirectionContainer<Direction> filteredDirections)
+            SimpleDirectionContainer filteredDirections)
     {
         BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
 

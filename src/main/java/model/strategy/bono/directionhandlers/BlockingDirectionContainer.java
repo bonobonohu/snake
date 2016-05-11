@@ -151,21 +151,21 @@ public class BlockingDirectionContainer
         return distanceToDirection.size();
     }
 
-    public Map<Integer, SimpleDirectionContainer<Direction>> getOrderedBlockings()
+    public Map<Integer, SimpleDirectionContainer> getOrderedBlockings()
     {
-        Map<Integer, SimpleDirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
+        Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(
                 Collections.reverseOrder());
 
         for (Map.Entry<Direction, Integer> entry : distanceToDirection
                 .entrySet()) {
             if (orderedBlockings.containsKey(entry.getValue())) {
-                SimpleDirectionContainer<Direction> directionsTemp = orderedBlockings
+                SimpleDirectionContainer directionsTemp = orderedBlockings
                         .get(entry.getValue());
                 directionsTemp.add(entry.getKey());
 
                 orderedBlockings.put(entry.getValue(), directionsTemp);
             } else {
-                SimpleDirectionContainer<Direction> directionsTemp = new SimpleDirectionContainer<>();
+                SimpleDirectionContainer directionsTemp = new SimpleDirectionContainer();
                 directionsTemp.add(entry.getKey());
 
                 orderedBlockings.put(entry.getValue(), directionsTemp);

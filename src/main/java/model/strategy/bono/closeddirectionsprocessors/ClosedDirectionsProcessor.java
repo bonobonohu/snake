@@ -12,6 +12,6 @@ public abstract class ClosedDirectionsProcessor
         return new MinimumsExceptZerosAndZerosStrategy();
     }
 
-    public abstract SimpleDirectionContainer<Direction> getClosedDirections(
+    public abstract SimpleDirectionContainer getClosedDirections(
             Map<Direction, Integer> freeCoordinatesCountByDirection);
 }

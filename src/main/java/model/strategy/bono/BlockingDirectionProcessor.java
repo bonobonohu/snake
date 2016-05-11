@@ -32,6 +32,10 @@ public class BlockingDirectionProcessor
     public BlockingDirectionContainer process(Coordinate actualHeadCoordinate,
             SimpleDirectionContainer filteredDirections)
     {
+        /**
+         * @todo avoid magic constant, make two fors (what if not 50x50 but
+         *       25x32 arena?), split into smaller methods!
+         */
         BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
 
         for (Direction actualDirection : filteredDirections) {

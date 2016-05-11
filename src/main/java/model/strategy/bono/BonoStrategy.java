@@ -14,7 +14,7 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
-import model.strategy.bono.closeddirectionsprocessingstrategies.ClosedDirectionsProcessor;
+import model.strategy.bono.closeddirectionsprocessors.ClosedDirectionsProcessor;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 import model.strategy.bono.newdirectionprocessors.DependencyProvider;

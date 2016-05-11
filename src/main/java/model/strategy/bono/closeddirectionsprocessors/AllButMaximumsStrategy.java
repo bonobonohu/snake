@@ -1,4 +1,4 @@
-package model.strategy.bono.closeddirectionsprocessingstrategies;
+package model.strategy.bono.closeddirectionsprocessors;
 
 import java.util.Arrays;
 import java.util.Map;

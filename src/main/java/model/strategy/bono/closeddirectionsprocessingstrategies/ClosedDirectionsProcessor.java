@@ -9,7 +9,6 @@ public abstract class ClosedDirectionsProcessor
 {
     public static ClosedDirectionsProcessor getStrategy()
     {
-
         return new MinimumsExceptZerosAndZerosStrategy();
     }
 

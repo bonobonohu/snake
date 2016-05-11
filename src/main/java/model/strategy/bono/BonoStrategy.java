@@ -133,10 +133,8 @@ public class BonoStrategy implements SnakeStrategy
             freeCoordinatesCountByDirection.clear();
         }
 
-        if (freeCoordinatesCountByDirection.size() > 1) {
-            closedDirections.addAll(ClosedDirectionsProcessor.getStrategy()
-                    .getClosedDirections(freeCoordinatesCountByDirection));
-        }
+        closedDirections.addAll(ClosedDirectionsProcessor.getStrategy()
+                .getClosedDirections(freeCoordinatesCountByDirection));
 
         printer.print("Closed Directions: " + closedDirections);
 

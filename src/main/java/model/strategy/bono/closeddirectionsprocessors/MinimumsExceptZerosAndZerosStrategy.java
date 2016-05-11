@@ -14,13 +14,43 @@ public class MinimumsExceptZerosAndZerosStrategy
     {
         SimpleDirectionContainer<Direction> minimumExceptZeroAndZeroDirections = new SimpleDirectionContainer<>();
 
-        SimpleDirectionContainer<Direction> zeroDirections = (new ZerosStrategy())
-                .getClosedDirections(freeCoordinatesCountByDirection);
+        SimpleDirectionContainer<Direction> zeroDirections = getZeroDirections(
+                freeCoordinatesCountByDirection);
+
+        SimpleDirectionContainer<Direction> minimumExceptZeroDirections = getMinimumExceptZeroDirections(
+                freeCoordinatesCountByDirection);
 
         minimumExceptZeroAndZeroDirections.addAll(zeroDirections);
 
+        if (freeCoordinatesCountByDirection.size()
+                - zeroDirections.size() > minimumExceptZeroDirections.size()) {
+            minimumExceptZeroAndZeroDirections
+                    .addAll(minimumExceptZeroDirections);
+        }
+
+        return minimumExceptZeroAndZeroDirections;
+    }
+
+    private SimpleDirectionContainer<Direction> getZeroDirections(
+            Map<Direction, Integer> freeCoordinatesCountByDirection)
+    {
+        SimpleDirectionContainer<Direction> zeroDirections = new SimpleDirectionContainer<>();
+
+        for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
+            if (freeCoordinatesCountByDirection.get(direction) == 0) {
+                zeroDirections.add(direction);
+            }
+        }
+
+        return zeroDirections;
+    }
+
+    private SimpleDirectionContainer<Direction> getMinimumExceptZeroDirections(
+            Map<Direction, Integer> freeCoordinatesCountByDirection)
+    {
+        SimpleDirectionContainer<Direction> minimumExceptZeroDirections = new SimpleDirectionContainer<>();
+
         Integer minCount = Integer.MAX_VALUE;
-        SimpleDirectionContainer<Direction> minDirections = new SimpleDirectionContainer<>();
 
         for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
             if (freeCoordinatesCountByDirection.get(direction) != 0
@@ -32,12 +62,10 @@ public class MinimumsExceptZerosAndZerosStrategy
 
         for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
             if (freeCoordinatesCountByDirection.get(direction) == minCount) {
-                minDirections.add(direction);
+                minimumExceptZeroDirections.add(direction);
             }
         }
 
-        minimumExceptZeroAndZeroDirections.addAll(minDirections);
-
-        return minimumExceptZeroAndZeroDirections;
+        return minimumExceptZeroDirections;
     }
 }

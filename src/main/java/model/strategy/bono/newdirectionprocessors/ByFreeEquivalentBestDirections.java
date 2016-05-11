@@ -15,17 +15,13 @@ public class ByFreeEquivalentBestDirections extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        if (!equivalentBestDirections.isEmpty()) {
-            SimpleDirectionContainer freeEquivalentBestDirections = equivalentBestDirections
-                    .getAsNewObject();
-            freeEquivalentBestDirections
-                    .removeAll(blockingDirections.getDirections());
+        if (equivalentBestDirections != null && !equivalentBestDirections.isEmpty()) {
+            SimpleDirectionContainer freeEquivalentBestDirections = equivalentBestDirections.getAsNewObject();
+            freeEquivalentBestDirections.removeAll(blockingDirections.getDirections());
 
             newDirection = processFinalDirection(freeEquivalentBestDirections);
 
-            printer.print(
-                    "Random element from the free equivalent best directions: "
-                            + newDirection);
+            printer.print("Random element from the free equivalent best directions: " + newDirection);
         }
 
         return newDirection;

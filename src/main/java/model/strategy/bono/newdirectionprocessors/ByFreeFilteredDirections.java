@@ -15,16 +15,13 @@ public class ByFreeFilteredDirections extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        if (!filteredDirections.isEmpty()) {
-            SimpleDirectionContainer freeFilteredDirections = filteredDirections
-                    .getAsNewObject();
-            freeFilteredDirections
-                    .removeAll(blockingDirections.getDirections());
+        if (filteredDirections != null && !filteredDirections.isEmpty()) {
+            SimpleDirectionContainer freeFilteredDirections = filteredDirections.getAsNewObject();
+            freeFilteredDirections.removeAll(blockingDirections.getDirections());
 
             newDirection = processFinalDirection(freeFilteredDirections);
 
-            printer.print("Random element from the free filtered directions: "
-                    + newDirection);
+            printer.print("Random element from the free filtered directions: " + newDirection);
         }
 
         return newDirection;

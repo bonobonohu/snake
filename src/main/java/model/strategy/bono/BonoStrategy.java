@@ -31,9 +31,9 @@ public class BonoStrategy implements SnakeStrategy
     private Coordinate foodCoordinate;
     private Coordinate maxCoordinate;
 
-    Printer printer = new Printer(PRINT_LOGS);
+    private Printer printer = new Printer(PRINT_LOGS);
 
-    Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
+    private Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
 
     @Override
     public Direction nextMove(Snake snakeArgument, Arena arenaArgument)
@@ -67,8 +67,7 @@ public class BonoStrategy implements SnakeStrategy
 
         SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
         SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
-                freeDirections,
-                ClosedDirectionsProcessor.getStrategy());
+                freeDirections, ClosedDirectionsProcessor.getStrategy());
         SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
                 freeDirections, closedDirections);
 

@@ -54,7 +54,7 @@ public class BlockingDirectionProcessor
                                     blockingSnake, coordinateToInvestigate);
 
                             DistanceProcessor distanceProcessor = DistanceProcessor
-                                    .getDistanceProcessor(actualDirection);
+                                    .getStrategy(actualDirection);
                             int distanceToBlock = distanceProcessor.getDistance(
                                     actualHeadCoordinate,
                                     coordinateToInvestigate, maxCoordinate);

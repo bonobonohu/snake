@@ -6,7 +6,7 @@ import java.util.Map;
 import model.Direction;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
-public class AllButMaximumsStrategy implements ClosedDirectionsProcessingStrategy
+public class AllButMaximumsStrategy extends ClosedDirectionsProcessor
 {
     @Override
     public SimpleDirectionContainer<Direction> process(

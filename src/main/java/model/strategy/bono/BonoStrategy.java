@@ -14,8 +14,7 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
-import model.strategy.bono.closeddirectionsprocessingstrategies.ClosedDirectionsProcessingStrategy;
-import model.strategy.bono.closeddirectionsprocessingstrategies.MinimumsExceptZerosAndZerosStrategy;
+import model.strategy.bono.closeddirectionsprocessingstrategies.ClosedDirectionsProcessor;
 import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 import model.strategy.bono.newdirectionprocessors.DependencyProvider;
@@ -24,7 +23,6 @@ import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
 public class BonoStrategy implements SnakeStrategy
 {
     private static final boolean PRINT_LOGS = true;
-    private static final ClosedDirectionsProcessingStrategy CLOSED_DIRECTIONS_PROCESSING_STRATEGY = new MinimumsExceptZerosAndZerosStrategy();
 
     private Arena arena;
     private Snake snake;
@@ -69,7 +67,8 @@ public class BonoStrategy implements SnakeStrategy
 
         SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
         SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
-                freeDirections, CLOSED_DIRECTIONS_PROCESSING_STRATEGY);
+                freeDirections,
+                ClosedDirectionsProcessor.getStrategy());
         SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
                 freeDirections, closedDirections);
 
@@ -126,7 +125,7 @@ public class BonoStrategy implements SnakeStrategy
 
     private SimpleDirectionContainer<Direction> getClosedDirections(
             SimpleDirectionContainer<Direction> freeDirections,
-            ClosedDirectionsProcessingStrategy strategy)
+            ClosedDirectionsProcessor strategy)
     {
         SimpleDirectionContainer<Direction> closedDirections = new SimpleDirectionContainer<>();
 

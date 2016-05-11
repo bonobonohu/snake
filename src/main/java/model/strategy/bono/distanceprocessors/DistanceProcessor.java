@@ -5,24 +5,24 @@ import model.Direction;
 
 public abstract class DistanceProcessor
 {
-    public abstract int getDistance(Coordinate actualCoordinate,
-            Coordinate blockingCoordinate, Coordinate maxCoordinate);
-
-    public static DistanceProcessor getDistanceProcessor(Direction direction)
+    public static DistanceProcessor getStrategy(Direction direction)
     {
         switch (direction) {
             case NORTH:
-                return new NorthLookingDistanceProcessor();
+                return new NorthLookingDistanceStrategy();
             case SOUTH:
-                return new SouthLookingDistanceProcessor();
+                return new SouthLookingDistanceStrategy();
             case EAST:
-                return new EastLookingDistanceProcessor();
+                return new EastLookingDistanceStrategy();
             case WEST:
-                return new WestLookingDistanceProcessor();
+                return new WestLookingDistanceStrategy();
             default:
-                return new NorthLookingDistanceProcessor();
+                return new NorthLookingDistanceStrategy();
         }
     }
+
+    public abstract int getDistance(Coordinate actualCoordinate,
+            Coordinate blockingCoordinate, Coordinate maxCoordinate);
 
     protected int getDistanceDirectly(int biggerCoordinateFactor,
             int smallerCoordinateFactor)

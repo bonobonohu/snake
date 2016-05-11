@@ -2,7 +2,7 @@ package model.strategy.bono.distanceprocessors;
 
 import model.Coordinate;
 
-public class EastLookingDistanceProcessor extends DistanceProcessor
+public class EastLookingDistanceStrategy extends DistanceProcessor
 {
     public int getDistance(Coordinate actualCoordinate,
             Coordinate blockingCoordinate, Coordinate maxCoordinate)

@@ -6,7 +6,7 @@ import model.Direction;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
 public class MinimumsExceptZerosAndZerosStrategy
-        implements ClosedDirectionsProcessingStrategy
+        extends ClosedDirectionsProcessor
 {
     @Override
     public SimpleDirectionContainer<Direction> process(

@@ -5,7 +5,7 @@ import java.util.Map;
 import model.Direction;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
-public class ZerosStrategy implements ClosedDirectionsProcessingStrategy
+public class ZerosStrategy extends ClosedDirectionsProcessor
 {
     @Override
     public SimpleDirectionContainer<Direction> process(

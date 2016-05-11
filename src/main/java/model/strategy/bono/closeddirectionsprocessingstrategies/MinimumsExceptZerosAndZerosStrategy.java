@@ -9,13 +9,13 @@ public class MinimumsExceptZerosAndZerosStrategy
         extends ClosedDirectionsProcessor
 {
     @Override
-    public SimpleDirectionContainer<Direction> process(
+    public SimpleDirectionContainer<Direction> getClosedDirections(
             Map<Direction, Integer> freeCoordinatesCountByDirection)
     {
         SimpleDirectionContainer<Direction> minimumExceptZeroAndZeroDirections = new SimpleDirectionContainer<>();
 
         SimpleDirectionContainer<Direction> zeroDirections = (new ZerosStrategy())
-                .process(freeCoordinatesCountByDirection);
+                .getClosedDirections(freeCoordinatesCountByDirection);
 
         minimumExceptZeroAndZeroDirections.addAll(zeroDirections);
 

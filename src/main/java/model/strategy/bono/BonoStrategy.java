@@ -67,7 +67,7 @@ public class BonoStrategy implements SnakeStrategy
 
         SimpleDirectionContainer<Direction> freeDirections = getFreeDirections();
         SimpleDirectionContainer<Direction> closedDirections = getClosedDirections(
-                freeDirections, ClosedDirectionsProcessor.getStrategy());
+                freeDirections);
         SimpleDirectionContainer<Direction> filteredDirections = getFilteredDirections(
                 freeDirections, closedDirections);
 
@@ -123,8 +123,7 @@ public class BonoStrategy implements SnakeStrategy
     }
 
     private SimpleDirectionContainer<Direction> getClosedDirections(
-            SimpleDirectionContainer<Direction> freeDirections,
-            ClosedDirectionsProcessor strategy)
+            SimpleDirectionContainer<Direction> freeDirections)
     {
         SimpleDirectionContainer<Direction> closedDirections = new SimpleDirectionContainer<>();
 
@@ -135,8 +134,8 @@ public class BonoStrategy implements SnakeStrategy
         }
 
         if (freeCoordinatesCountByDirection.size() > 1) {
-            closedDirections
-                    .addAll(strategy.process(freeCoordinatesCountByDirection));
+            closedDirections.addAll(ClosedDirectionsProcessor.getStrategy()
+                    .getClosedDirections(freeCoordinatesCountByDirection));
         }
 
         printer.print("Closed Directions: " + closedDirections);

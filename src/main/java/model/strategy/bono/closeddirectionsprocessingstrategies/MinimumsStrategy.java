@@ -8,7 +8,7 @@ import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 public class MinimumsStrategy extends ClosedDirectionsProcessor
 {
     @Override
-    public SimpleDirectionContainer<Direction> process(
+    public SimpleDirectionContainer<Direction> getClosedDirections(
             Map<Direction, Integer> freeCoordinatesCountByDirection)
     {
         SimpleDirectionContainer<Direction> minimumDirections = new SimpleDirectionContainer<>();

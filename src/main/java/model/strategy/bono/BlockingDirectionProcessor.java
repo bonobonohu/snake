@@ -53,11 +53,11 @@ public class BlockingDirectionProcessor
                             int blockingTailLength = getBlockingTailLength(
                                     blockingSnake, coordinateToInvestigate);
 
-                            DistanceProcessor distanceProcessor = DistanceProcessor
-                                    .getStrategy(actualDirection);
-                            int distanceToBlock = distanceProcessor.getDistance(
-                                    actualHeadCoordinate,
-                                    coordinateToInvestigate, maxCoordinate);
+                            int distanceToBlock = DistanceProcessor
+                                    .getStrategy(actualDirection)
+                                    .getDistance(actualHeadCoordinate,
+                                            coordinateToInvestigate,
+                                            maxCoordinate);
 
                             if (isBlockingRisk(blockingTailLength,
                                     distanceToBlock)) {

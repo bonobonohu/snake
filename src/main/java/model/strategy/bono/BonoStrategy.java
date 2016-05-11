@@ -262,7 +262,7 @@ public class BonoStrategy implements SnakeStrategy
 
         List<SimpleDirectionContainer> directionContainers = new ArrayList<>();
 
-        if (distancesToFood.size() > 0) {
+        if (!distancesToFood.isEmpty()) {
             directionContainers.addAll(distancesToFood.values());
         } else {
             directionContainers.add(null);

@@ -15,8 +15,7 @@ public class ByFreeEquivalentBestDirections extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        if (equivalentBestDirections != null
-                && equivalentBestDirections.size() > 0) {
+        if (!equivalentBestDirections.isEmpty()) {
             SimpleDirectionContainer freeEquivalentBestDirections = equivalentBestDirections
                     .getAsNewObject();
             freeEquivalentBestDirections

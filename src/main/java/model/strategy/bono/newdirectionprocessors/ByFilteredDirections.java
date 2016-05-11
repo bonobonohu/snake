@@ -14,7 +14,7 @@ public class ByFilteredDirections extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        if (filteredDirections != null && filteredDirections.size() > 0) {
+        if (!filteredDirections.isEmpty()) {
             newDirection = processFinalDirection(filteredDirections);
 
             printer.print("Random element from the filtered directions: "

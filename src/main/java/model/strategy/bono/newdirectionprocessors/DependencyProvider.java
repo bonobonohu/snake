@@ -17,10 +17,9 @@ public class DependencyProvider
 
     private Printer printer;
 
-    public DependencyProvider(Arena arena, Snake snake,
-            BlockingDirectionContainer blockingDirectionsDataHandler,
-            SimpleDirectionContainer filteredDirections,
-            SimpleDirectionContainer equivalentBestDirections, Printer printer)
+    public DependencyProvider(Arena arena, Snake snake, BlockingDirectionContainer blockingDirectionsDataHandler,
+            SimpleDirectionContainer filteredDirections, SimpleDirectionContainer equivalentBestDirections,
+            Printer printer)
     {
         this.arena = arena;
         this.snake = snake;

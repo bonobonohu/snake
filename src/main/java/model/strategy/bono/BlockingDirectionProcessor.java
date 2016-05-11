@@ -33,41 +33,30 @@ public class BlockingDirectionProcessor
             SimpleDirectionContainer filteredDirections)
     {
         /**
-         * @todo avoid magic constant, make two fors (what if not 50x50 but
-         *       25x32 arena?), split into smaller methods!
+         * @todo avoid magic constant, make two fors (what if not 50x50 but 25x32 arena?), split into smaller methods!
          */
         BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
 
         for (Direction actualDirection : filteredDirections) {
-            Coordinate nextCoordinate = arena
-                    .nextCoordinate(actualHeadCoordinate, actualDirection);
+            Coordinate nextCoordinate = arena.nextCoordinate(actualHeadCoordinate, actualDirection);
 
             if (!arena.isOccupied(nextCoordinate)) {
                 Coordinate coordinateToInvestigate = actualHeadCoordinate;
 
                 for (int i = 0; i < 49; i++) {
-                    coordinateToInvestigate = arena.nextCoordinate(
-                            coordinateToInvestigate, actualDirection);
+                    coordinateToInvestigate = arena.nextCoordinate(coordinateToInvestigate, actualDirection);
 
                     if (arena.isOccupied(coordinateToInvestigate)) {
-                        Snake blockingSnake = getBlockingSnake(
-                                coordinateToInvestigate);
+                        Snake blockingSnake = getBlockingSnake(coordinateToInvestigate);
 
                         if (isValidBlock(actualHeadCoordinate, blockingSnake)) {
-                            int blockingTailLength = getBlockingTailLength(
-                                    blockingSnake, coordinateToInvestigate);
+                            int blockingTailLength = getBlockingTailLength(blockingSnake, coordinateToInvestigate);
 
-                            int distanceToBlock = DistanceProcessor
-                                    .getStrategy(actualDirection)
-                                    .getDistance(actualHeadCoordinate,
-                                            coordinateToInvestigate,
-                                            maxCoordinate);
+                            int distanceToBlock = DistanceProcessor.getStrategy(actualDirection)
+                                    .getDistance(actualHeadCoordinate, coordinateToInvestigate, maxCoordinate);
 
-                            if (isBlockingRisk(blockingTailLength,
-                                    distanceToBlock)) {
-                                blockingDirections.putData(actualDirection,
-                                        coordinateToInvestigate,
-                                        distanceToBlock);
+                            if (isBlockingRisk(blockingTailLength, distanceToBlock)) {
+                                blockingDirections.putData(actualDirection, coordinateToInvestigate, distanceToBlock);
                             }
                         }
                     }
@@ -98,8 +87,7 @@ public class BlockingDirectionProcessor
         return blockingSnake;
     }
 
-    private boolean isValidBlock(Coordinate actualHeadCoordinate,
-            Snake blockingSnake)
+    private boolean isValidBlock(Coordinate actualHeadCoordinate, Snake blockingSnake)
     {
         boolean validBlock = false;
 
@@ -116,11 +104,8 @@ public class BlockingDirectionProcessor
                 }
             }
 
-            if ((!allXsAreTheSame && !allYsAreTheSame)
-                    || (allXsAreTheSame
-                            && snake.length() == maxCoordinate.getY())
-                    || (allYsAreTheSame
-                            && snake.length() == maxCoordinate.getX())) {
+            if ((!allXsAreTheSame && !allYsAreTheSame) || (allXsAreTheSame && snake.length() == maxCoordinate.getY())
+                    || (allYsAreTheSame && snake.length() == maxCoordinate.getX())) {
                 validBlock = true;
             }
         } else {
@@ -130,8 +115,7 @@ public class BlockingDirectionProcessor
         return validBlock;
     }
 
-    private int getBlockingTailLength(Snake blockingSnake,
-            Coordinate nextCoordinateToInvestigate)
+    private int getBlockingTailLength(Snake blockingSnake, Coordinate nextCoordinateToInvestigate)
     {
         boolean reachedTheBlockingPart = false;
         int blockingTailLength = 0;

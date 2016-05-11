@@ -20,21 +20,17 @@ public class ByBlockingDistances extends NewDirectionProcessor
     {
         Direction newDirection = null;
 
-        Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(
-                Collections.reverseOrder());
+        Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());
 
         orderedBlockings = blockingDirections.getOrderedBlockings();
 
         boolean foundNewDirection = false;
         Iterator<Map.Entry<Integer, SimpleDirectionContainer>> orderedBlockingsEntrySetIterator = orderedBlockings
                 .entrySet().iterator();
-        while (!foundNewDirection
-                && orderedBlockingsEntrySetIterator.hasNext()) {
-            Map.Entry<Integer, SimpleDirectionContainer> blockingsTemp = orderedBlockingsEntrySetIterator
-                    .next();
+        while (!foundNewDirection && orderedBlockingsEntrySetIterator.hasNext()) {
+            Map.Entry<Integer, SimpleDirectionContainer> blockingsTemp = orderedBlockingsEntrySetIterator.next();
 
-            SimpleDirectionContainer blockingDirectionsTemp = blockingsTemp
-                    .getValue();
+            SimpleDirectionContainer blockingDirectionsTemp = blockingsTemp.getValue();
 
             int numOfTries = 0;
             Direction finalDirection;
@@ -48,12 +44,10 @@ public class ByBlockingDistances extends NewDirectionProcessor
 
                 numOfTries++;
             } while (!foundNewDirection
-                    && (filteredDirections.contains(finalDirection)
-                            && numOfTries < filteredDirections.size()));
+                    && (filteredDirections.contains(finalDirection) && numOfTries < filteredDirections.size()));
         }
 
-        printer.print(
-                "Weighted element by blocking distances: " + newDirection);
+        printer.print("Weighted element by blocking distances: " + newDirection);
 
         return newDirection;
     }

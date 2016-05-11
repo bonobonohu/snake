@@ -13,10 +13,8 @@ public class Application
 
         ModifiableArena arena = new ModifiableArena();
 
-        ModifiableSnake snake1 = new ModifiableSnake(arena, new BonoStrategy(),
-                "Bono One");
-        ModifiableSnake snake2 = new ModifiableSnake(arena, new BonoStrategy(),
-                "Bono Two");
+        ModifiableSnake snake1 = new ModifiableSnake(arena, new BonoStrategy(), "Bono One");
+        ModifiableSnake snake2 = new ModifiableSnake(arena, new BonoStrategy(), "Bono Two");
 
         arena.addSnake(snake1);
         arena.addSnake(snake2);

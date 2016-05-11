@@ -5,34 +5,28 @@ import java.util.Map;
 import model.Direction;
 import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
 
-public class MinimumsExceptZerosAndZerosStrategy
-        extends ClosedDirectionsProcessor
+public class MinimumsExceptZerosAndZerosStrategy extends ClosedDirectionsProcessor
 {
     @Override
-    public SimpleDirectionContainer getClosedDirections(
-            Map<Direction, Integer> freeCoordinatesCountByDirection)
+    public SimpleDirectionContainer getClosedDirections(Map<Direction, Integer> freeCoordinatesCountByDirection)
     {
         SimpleDirectionContainer minimumExceptZeroAndZeroDirections = new SimpleDirectionContainer();
 
-        SimpleDirectionContainer zeroDirections = getZeroDirections(
-                freeCoordinatesCountByDirection);
+        SimpleDirectionContainer zeroDirections = getZeroDirections(freeCoordinatesCountByDirection);
 
         SimpleDirectionContainer minimumExceptZeroDirections = getMinimumExceptZeroDirections(
                 freeCoordinatesCountByDirection);
 
         minimumExceptZeroAndZeroDirections.addAll(zeroDirections);
 
-        if (freeCoordinatesCountByDirection.size()
-                - zeroDirections.size() > minimumExceptZeroDirections.size()) {
-            minimumExceptZeroAndZeroDirections
-                    .addAll(minimumExceptZeroDirections);
+        if (freeCoordinatesCountByDirection.size() - zeroDirections.size() > minimumExceptZeroDirections.size()) {
+            minimumExceptZeroAndZeroDirections.addAll(minimumExceptZeroDirections);
         }
 
         return minimumExceptZeroAndZeroDirections;
     }
 
-    private SimpleDirectionContainer getZeroDirections(
-            Map<Direction, Integer> freeCoordinatesCountByDirection)
+    private SimpleDirectionContainer getZeroDirections(Map<Direction, Integer> freeCoordinatesCountByDirection)
     {
         SimpleDirectionContainer zeroDirections = new SimpleDirectionContainer();
 
@@ -54,8 +48,7 @@ public class MinimumsExceptZerosAndZerosStrategy
 
         for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
             if (freeCoordinatesCountByDirection.get(direction) != 0
-                    && freeCoordinatesCountByDirection
-                            .get(direction) < minCount) {
+                    && freeCoordinatesCountByDirection.get(direction) < minCount) {
                 minCount = freeCoordinatesCountByDirection.get(direction);
             }
         }

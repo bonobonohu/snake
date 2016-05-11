@@ -16,15 +16,13 @@ public class BlockingDirectionContainer
     private Map<Coordinate, Integer> distanceToCoordinate = new HashMap<>();
     private Map<Coordinate, Direction> directionToCoordinate = new HashMap<>();
 
-    public void putData(Direction direction, Coordinate coordinate,
-            int distance)
+    public void putData(Direction direction, Coordinate coordinate, int distance)
     {
         if (directionHasDistance(direction)) {
             int storedDistanceToDirection = getDistanceByDirection(direction);
             if (distance < storedDistanceToDirection) {
                 if (coordinateHasDirection(coordinate)) {
-                    int storedDistanceToCoordinate = getDistanceByCoordinate(
-                            coordinate);
+                    int storedDistanceToCoordinate = getDistanceByCoordinate(coordinate);
 
                     if (distance <= storedDistanceToCoordinate) {
                         removeDataByCoordinate(coordinate);
@@ -43,8 +41,7 @@ public class BlockingDirectionContainer
             }
         } else {
             if (coordinateHasDirection(coordinate)) {
-                int storedDistanceToCoordinate = getDistanceByCoordinate(
-                        coordinate);
+                int storedDistanceToCoordinate = getDistanceByCoordinate(coordinate);
 
                 if (distance <= storedDistanceToCoordinate) {
                     removeDataByCoordinate(coordinate);
@@ -99,8 +96,7 @@ public class BlockingDirectionContainer
         distanceToDirection.put(direction, distance);
     }
 
-    private void putCoordinateToDirection(Direction direction,
-            Coordinate coordinate)
+    private void putCoordinateToDirection(Direction direction, Coordinate coordinate)
     {
         coordinateToDirection.put(direction, coordinate);
     }
@@ -110,8 +106,7 @@ public class BlockingDirectionContainer
         distanceToCoordinate.put(coordinate, distance);
     }
 
-    private void putDirectionToCoordinate(Coordinate coordinate,
-            Direction direction)
+    private void putDirectionToCoordinate(Coordinate coordinate, Direction direction)
     {
         directionToCoordinate.put(coordinate, direction);
     }
@@ -153,14 +148,11 @@ public class BlockingDirectionContainer
 
     public Map<Integer, SimpleDirectionContainer> getOrderedBlockings()
     {
-        Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(
-                Collections.reverseOrder());
+        Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());
 
-        for (Map.Entry<Direction, Integer> entry : distanceToDirection
-                .entrySet()) {
+        for (Map.Entry<Direction, Integer> entry : distanceToDirection.entrySet()) {
             if (orderedBlockings.containsKey(entry.getValue())) {
-                SimpleDirectionContainer directionsTemp = orderedBlockings
-                        .get(entry.getValue());
+                SimpleDirectionContainer directionsTemp = orderedBlockings.get(entry.getValue());
                 directionsTemp.add(entry.getKey());
 
                 orderedBlockings.put(entry.getValue(), directionsTemp);
@@ -177,7 +169,7 @@ public class BlockingDirectionContainer
 
     public String toString()
     {
-        return "DirectionData [distanceToDirection=" + distanceToDirection
-                + ", coordinateToDirection=" + coordinateToDirection + "]";
+        return "DirectionData [distanceToDirection=" + distanceToDirection + ", coordinateToDirection="
+                + coordinateToDirection + "]";
     }
 }

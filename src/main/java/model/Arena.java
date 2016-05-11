@@ -45,8 +45,7 @@ public class Arena
         return occupies(nextCoordinate, food);
     }
 
-    private boolean occupies(Coordinate nextCoordinate,
-            List<? extends Member> members)
+    private boolean occupies(Coordinate nextCoordinate, List<? extends Member> members)
     {
         boolean isOccupied = false;
         for (int i = 0; i < members.size() && !isOccupied; i++) {
@@ -105,8 +104,7 @@ public class Arena
     @Override
     public String toString()
     {
-        return "Arena [snakes=" + snakes + ", food=" + food + ", maxCoordinate="
-                + maxCoordinate + "]";
+        return "Arena [snakes=" + snakes + ", food=" + food + ", maxCoordinate=" + maxCoordinate + "]";
     }
 
 }

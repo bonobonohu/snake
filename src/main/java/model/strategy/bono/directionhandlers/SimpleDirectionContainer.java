@@ -19,8 +19,7 @@ public class SimpleDirectionContainer extends HashSet<Direction>
 
         elements.addAll(this);
 
-        Direction returnElement = !elements.isEmpty()
-                ? elements.get(randomIndex.nextInt(elements.size())) : null;
+        Direction returnElement = !elements.isEmpty() ? elements.get(randomIndex.nextInt(elements.size())) : null;
 
         return returnElement;
     }

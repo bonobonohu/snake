@@ -1,7 +1,7 @@
 package model.strategy.bono.newdirectionprocessors;
 
 import model.Direction;
-import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
+import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
 public class ByFreeFilteredDirections extends NewDirectionProcessor
 {

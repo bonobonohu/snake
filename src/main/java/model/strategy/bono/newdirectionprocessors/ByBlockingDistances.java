@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import model.Direction;
-import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
+import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
 public class ByBlockingDistances extends NewDirectionProcessor
 {

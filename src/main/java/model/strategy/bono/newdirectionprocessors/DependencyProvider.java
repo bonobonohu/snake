@@ -3,8 +3,8 @@ package model.strategy.bono.newdirectionprocessors;
 import model.Arena;
 import model.Snake;
 import model.strategy.bono.Printer;
-import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
-import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
+import model.strategy.bono.directioncontainers.BlockingDirectionContainer;
+import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
 public class DependencyProvider
 {

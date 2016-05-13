@@ -3,7 +3,7 @@ package model.strategy.bono.closeddirectionsprocessors;
 import java.util.Map;
 
 import model.Direction;
-import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
+import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
 public abstract class ClosedDirectionsProcessor
 {

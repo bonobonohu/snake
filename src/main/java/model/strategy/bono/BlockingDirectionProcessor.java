@@ -6,8 +6,8 @@ import model.Arena;
 import model.Coordinate;
 import model.Direction;
 import model.Snake;
-import model.strategy.bono.directionhandlers.BlockingDirectionContainer;
-import model.strategy.bono.directionhandlers.SimpleDirectionContainer;
+import model.strategy.bono.directioncontainers.BlockingDirectionContainer;
+import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 import model.strategy.bono.distanceprocessors.DistanceProcessor;
 
 public class BlockingDirectionProcessor

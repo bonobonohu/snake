@@ -38,8 +38,6 @@ public class BonoStrategy implements SnakeStrategy
     @Override
     public Direction nextMove(Snake snakeArgument, Arena arenaArgument)
     {
-        Direction newDirection = null;
-
         arena = arenaArgument;
         snake = snakeArgument;
 
@@ -54,7 +52,7 @@ public class BonoStrategy implements SnakeStrategy
         printer.print("Food: " + arena.getFood().get(0).getCoordinate());
         printer.print("Head: " + actualHeadCoordinate);
 
-        newDirection = process();
+        Direction newDirection = process();
 
         printer.print("--- END " + snake.getName() + "---");
 
@@ -63,10 +61,8 @@ public class BonoStrategy implements SnakeStrategy
 
     private Direction process()
     {
-        Direction newDirection = null;
-
         SimpleDirectionContainer freeDirections = getFreeDirections();
-        SimpleDirectionContainer closedDirections = getClosedDirections(freeDirections);
+        SimpleDirectionContainer closedDirections = getClosedDirections();
         SimpleDirectionContainer filteredDirections = getFilteredDirections(freeDirections, closedDirections);
 
         BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(snake, arena, printer);
@@ -82,9 +78,7 @@ public class BonoStrategy implements SnakeStrategy
         DependencyProvider dependencyProvider = new DependencyProvider(arena, snake, blockingDirections,
                 filteredDirections, equivalentBestDirections, printer);
 
-        newDirection = getNewDirection(dependencyProvider);
-
-        return newDirection;
+        return getNewDirection(dependencyProvider);
     }
 
     private SimpleDirectionContainer getFilteredDirections(SimpleDirectionContainer freeDirections,
@@ -115,7 +109,7 @@ public class BonoStrategy implements SnakeStrategy
         return freeDirections;
     }
 
-    private SimpleDirectionContainer getClosedDirections(SimpleDirectionContainer freeDirections)
+    private SimpleDirectionContainer getClosedDirections()
     {
         SimpleDirectionContainer closedDirections = new SimpleDirectionContainer();
 

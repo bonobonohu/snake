@@ -21,7 +21,7 @@ public abstract class NewDirectionProcessor
         Direction newDirection = null;
 
         /**
-         * @todo implement real chain of responsibility, in which every link says which one is the next following it!
+         * @todo implement real Chain of Responsibility pattern, in which every link says which one is the next following it!
          */
         List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
         // newDirectionProcessors

@@ -76,6 +76,9 @@ public class BonoStrategy implements SnakeStrategy
         Map<Integer, SimpleDirectionContainer> distancesToFood = getDistancesToFood(filteredDirections);
         SimpleDirectionContainer equivalentBestDirections = getEquivalentBestDirections(distancesToFood);
 
+        /**
+         * @todo implement Builder pattern.
+         */
         DependencyProvider dependencyProvider = new DependencyProvider(arena, snake, blockingDirections,
                 filteredDirections, equivalentBestDirections, printer);
 
@@ -87,9 +90,7 @@ public class BonoStrategy implements SnakeStrategy
     private SimpleDirectionContainer getFilteredDirections(SimpleDirectionContainer freeDirections,
             SimpleDirectionContainer closedDirections)
     {
-        SimpleDirectionContainer filteredDirections = new SimpleDirectionContainer();
-
-        filteredDirections = freeDirections.getAsNewObject();
+        SimpleDirectionContainer filteredDirections = freeDirections.getAsNewObject();
         filteredDirections.removeAll(closedDirections);
 
         printer.print("Filtered Directions: " + filteredDirections);
@@ -234,8 +235,6 @@ public class BonoStrategy implements SnakeStrategy
 
     private SimpleDirectionContainer getEquivalentBestDirections(Map<Integer, SimpleDirectionContainer> distancesToFood)
     {
-        SimpleDirectionContainer equivalentBestDirections = new SimpleDirectionContainer();
-
         List<SimpleDirectionContainer> directionContainers = new ArrayList<>();
 
         if (!distancesToFood.isEmpty()) {
@@ -244,7 +243,7 @@ public class BonoStrategy implements SnakeStrategy
             directionContainers.add(null);
         }
 
-        equivalentBestDirections = directionContainers.get(0);
+        SimpleDirectionContainer equivalentBestDirections = directionContainers.get(0);
 
         printer.print("Equivalent Best Directions: " + equivalentBestDirections);
 

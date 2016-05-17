@@ -1,8 +1,9 @@
 package controller;
 
-import java.awt.*;
+import java.awt.Dimension;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.Timer;
 
 import model.Arena;
 import model.ModifiableArena;

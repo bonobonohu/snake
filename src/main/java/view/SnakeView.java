@@ -1,6 +1,7 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 import model.Coordinate;
 import model.Snake;

@@ -2,16 +2,13 @@ package model.strategy.bono.newdirectionprocessors;
 
 import model.Direction;
 
-public class ByFilteredDirections extends NewDirectionProcessor
-{
-    public ByFilteredDirections(DependencyProvider dependencyProvider)
-    {
+public class ByFilteredDirections extends NewDirectionProcessor {
+    public ByFilteredDirections(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
     }
 
     @Override
-    public Direction getNewDirection()
-    {
+    public Direction getNewDirection() {
         Direction newDirection = null;
 
         if (filteredDirections != null && !filteredDirections.isEmpty()) {

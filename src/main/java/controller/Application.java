@@ -4,10 +4,8 @@ import model.ModifiableArena;
 import model.ModifiableSnake;
 import model.strategy.bono.BonoStrategy;
 
-public class Application
-{
-    public static void main(String[] args)
-    {
+public class Application {
+    public static void main(String[] args) {
         System.setSecurityManager(new SecurityManager());
 
         ModifiableArena arena = new ModifiableArena();

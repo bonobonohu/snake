@@ -2,16 +2,13 @@ package model.strategy.bono.newdirectionprocessors;
 
 import model.Direction;
 
-public class ByEquivalentBestDirections extends NewDirectionProcessor
-{
-    public ByEquivalentBestDirections(DependencyProvider dependencyProvider)
-    {
+public class ByEquivalentBestDirections extends NewDirectionProcessor {
+    public ByEquivalentBestDirections(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
     }
 
     @Override
-    public Direction getNewDirection()
-    {
+    public Direction getNewDirection() {
         Direction newDirection = null;
 
         if (equivalentBestDirections != null && !equivalentBestDirections.isEmpty()) {

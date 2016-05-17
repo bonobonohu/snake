@@ -7,13 +7,11 @@ import java.util.Random;
 
 import model.Direction;
 
-public class SimpleDirectionContainer extends HashSet<Direction>
-{
+public class SimpleDirectionContainer extends HashSet<Direction> {
 
     private static final long serialVersionUID = -7360462751577910244L;
 
-    public Direction getRandomElement()
-    {
+    public Direction getRandomElement() {
         List<Direction> elements = new ArrayList<>();
         Random randomIndex = new Random();
 
@@ -24,8 +22,7 @@ public class SimpleDirectionContainer extends HashSet<Direction>
         return returnElement;
     }
 
-    public List<Direction> getRandomizedElementsAsList()
-    {
+    public List<Direction> getRandomizedElementsAsList() {
         List<Direction> elements = new ArrayList<>();
 
         SimpleDirectionContainer allElements = this.getAsNewObject();
@@ -40,8 +37,7 @@ public class SimpleDirectionContainer extends HashSet<Direction>
         return elements;
     }
 
-    public List<Direction> getAllAsList()
-    {
+    public List<Direction> getAllAsList() {
         List<Direction> elements = new ArrayList<>();
 
         elements.addAll(this);
@@ -49,8 +45,7 @@ public class SimpleDirectionContainer extends HashSet<Direction>
         return elements;
     }
 
-    public SimpleDirectionContainer getAsNewObject()
-    {
+    public SimpleDirectionContainer getAsNewObject() {
         SimpleDirectionContainer newDirectionsContainer = new SimpleDirectionContainer();
 
         newDirectionsContainer.addAll(this);

@@ -8,11 +8,9 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 
-public class DefaultStrategy implements SnakeStrategy
-{
+public class DefaultStrategy implements SnakeStrategy {
     @Override
-    public Direction nextMove(Snake snake, Arena arena)
-    {
+    public Direction nextMove(Snake snake, Arena arena) {
         int minDistance = Integer.MAX_VALUE;
         Direction bestDirection = Direction.WEST;
 

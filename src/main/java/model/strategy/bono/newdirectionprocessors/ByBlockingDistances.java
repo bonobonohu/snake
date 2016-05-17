@@ -8,16 +8,13 @@ import java.util.TreeMap;
 import model.Direction;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
-public class ByBlockingDistances extends NewDirectionProcessor
-{
-    public ByBlockingDistances(DependencyProvider dependencyProvider)
-    {
+public class ByBlockingDistances extends NewDirectionProcessor {
+    public ByBlockingDistances(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
     }
 
     @Override
-    public Direction getNewDirection()
-    {
+    public Direction getNewDirection() {
         Direction newDirection = null;
 
         Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());

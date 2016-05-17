@@ -5,10 +5,8 @@ import java.util.Map;
 import model.Direction;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
-public abstract class ClosedDirectionsProcessor
-{
-    public static ClosedDirectionsProcessor getStrategy()
-    {
+public abstract class ClosedDirectionsProcessor {
+    public static ClosedDirectionsProcessor getStrategy() {
         return new AllButMaximumsStrategy();
     }
 

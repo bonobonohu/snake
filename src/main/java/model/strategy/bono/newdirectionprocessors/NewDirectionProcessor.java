@@ -8,16 +8,22 @@ import model.strategy.bono.Printer;
 import model.strategy.bono.directioncontainers.BlockingDirectionContainer;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
-public abstract class NewDirectionProcessor
-{
+public abstract class NewDirectionProcessor {
     protected BlockingDirectionContainer blockingDirections;
     protected SimpleDirectionContainer equivalentBestDirections;
     protected SimpleDirectionContainer filteredDirections;
 
     protected Printer printer;
 
-    public static Direction processNewDirection(DependencyProvider dependencyProvider)
-    {
+    public NewDirectionProcessor(DependencyProvider dependencyProvider) {
+        this.blockingDirections = dependencyProvider.getBlockingDirectionsDataHandler();
+        this.equivalentBestDirections = dependencyProvider.getEquivalentBestDirections();
+        this.filteredDirections = dependencyProvider.getFilteredDirections();
+
+        this.printer = dependencyProvider.getPrinter();
+    }
+
+    public static Direction processNewDirection(DependencyProvider dependencyProvider) {
         Direction newDirection = null;
 
         /**
@@ -41,19 +47,9 @@ public abstract class NewDirectionProcessor
         return newDirection;
     }
 
-    public NewDirectionProcessor(DependencyProvider dependencyProvider)
-    {
-        this.blockingDirections = dependencyProvider.getBlockingDirectionsDataHandler();
-        this.equivalentBestDirections = dependencyProvider.getEquivalentBestDirections();
-        this.filteredDirections = dependencyProvider.getFilteredDirections();
-
-        this.printer = dependencyProvider.getPrinter();
-    }
-
     public abstract Direction getNewDirection();
 
-    protected Direction processFinalDirection(SimpleDirectionContainer directionContainer)
-    {
+    protected Direction processFinalDirection(SimpleDirectionContainer directionContainer) {
         return directionContainer.getRandomElement();
     }
 }

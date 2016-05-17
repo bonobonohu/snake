@@ -5,11 +5,9 @@ import java.util.Map;
 import model.Direction;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
-public class MinimumsExceptZerosAndZerosStrategy extends ClosedDirectionsProcessor
-{
+public class MinimumsExceptZerosAndZerosStrategy extends ClosedDirectionsProcessor {
     @Override
-    public SimpleDirectionContainer getClosedDirections(Map<Direction, Integer> freeCoordinatesCountByDirection)
-    {
+    public SimpleDirectionContainer getClosedDirections(Map<Direction, Integer> freeCoordinatesCountByDirection) {
         SimpleDirectionContainer minimumExceptZeroAndZeroDirections = new SimpleDirectionContainer();
 
         SimpleDirectionContainer zeroDirections = getZeroDirections(freeCoordinatesCountByDirection);
@@ -26,8 +24,7 @@ public class MinimumsExceptZerosAndZerosStrategy extends ClosedDirectionsProcess
         return minimumExceptZeroAndZeroDirections;
     }
 
-    private SimpleDirectionContainer getZeroDirections(Map<Direction, Integer> freeCoordinatesCountByDirection)
-    {
+    private SimpleDirectionContainer getZeroDirections(Map<Direction, Integer> freeCoordinatesCountByDirection) {
         SimpleDirectionContainer zeroDirections = new SimpleDirectionContainer();
 
         for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
@@ -40,8 +37,7 @@ public class MinimumsExceptZerosAndZerosStrategy extends ClosedDirectionsProcess
     }
 
     private SimpleDirectionContainer getMinimumExceptZeroDirections(
-            Map<Direction, Integer> freeCoordinatesCountByDirection)
-    {
+            Map<Direction, Integer> freeCoordinatesCountByDirection) {
         SimpleDirectionContainer minimumExceptZeroDirections = new SimpleDirectionContainer();
 
         Integer minCount = Integer.MAX_VALUE;

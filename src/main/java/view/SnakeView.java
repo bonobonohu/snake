@@ -1,29 +1,24 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 
 import model.Coordinate;
 import model.Snake;
 
-public class SnakeView
-{
+public class SnakeView {
     private Snake snake;
     private Color color;
 
-    public SnakeView(Snake snake, Color color)
-    {
+    public SnakeView(Snake snake, Color color) {
         this.snake = snake;
         this.color = color;
     }
 
-    public Snake getSnake()
-    {
+    public Snake getSnake() {
         return snake;
     }
 
-    public void draw(Graphics g)
-    {
+    public void draw(Graphics g) {
         g.setColor(color);
         boolean first = true;
         for (Coordinate bodyItem : snake.getBodyItems()) {

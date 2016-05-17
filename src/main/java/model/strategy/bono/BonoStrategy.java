@@ -20,8 +20,11 @@ import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 import model.strategy.bono.newdirectionprocessors.DependencyProvider;
 import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
 
-public class BonoStrategy implements SnakeStrategy
-{
+/**
+ * BonoStrategy.
+ * @author v-dsarossi
+ */
+public class BonoStrategy implements SnakeStrategy {
     private static final boolean PRINT_LOGS = true;
 
     private Arena arena;
@@ -36,8 +39,7 @@ public class BonoStrategy implements SnakeStrategy
     private Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
 
     @Override
-    public Direction nextMove(Snake snakeArgument, Arena arenaArgument)
-    {
+    public Direction nextMove(Snake snakeArgument, Arena arenaArgument) {
         arena = arenaArgument;
         snake = snakeArgument;
 
@@ -59,8 +61,7 @@ public class BonoStrategy implements SnakeStrategy
         return newDirection;
     }
 
-    private Direction process()
-    {
+    private Direction process() {
         SimpleDirectionContainer freeDirections = getFreeDirections();
         SimpleDirectionContainer closedDirections = getClosedDirections();
         SimpleDirectionContainer filteredDirections = getFilteredDirections(freeDirections, closedDirections);
@@ -82,8 +83,7 @@ public class BonoStrategy implements SnakeStrategy
     }
 
     private SimpleDirectionContainer getFilteredDirections(SimpleDirectionContainer freeDirections,
-            SimpleDirectionContainer closedDirections)
-    {
+            SimpleDirectionContainer closedDirections) {
         SimpleDirectionContainer filteredDirections = freeDirections.getAsNewObject();
         filteredDirections.removeAll(closedDirections);
 
@@ -92,8 +92,7 @@ public class BonoStrategy implements SnakeStrategy
         return filteredDirections;
     }
 
-    private SimpleDirectionContainer getFreeDirections()
-    {
+    private SimpleDirectionContainer getFreeDirections() {
         SimpleDirectionContainer freeDirections = new SimpleDirectionContainer();
 
         for (Direction actualDirection : Direction.values()) {
@@ -109,8 +108,7 @@ public class BonoStrategy implements SnakeStrategy
         return freeDirections;
     }
 
-    private SimpleDirectionContainer getClosedDirections()
-    {
+    private SimpleDirectionContainer getClosedDirections() {
         SimpleDirectionContainer closedDirections = new SimpleDirectionContainer();
 
         Map<Direction, Integer> freeCoordinatesCountByDirection = getFreeCoordinatesCountByDirection();
@@ -127,8 +125,7 @@ public class BonoStrategy implements SnakeStrategy
         return closedDirections;
     }
 
-    private Map<Direction, Integer> getFreeCoordinatesCountByDirection()
-    {
+    private Map<Direction, Integer> getFreeCoordinatesCountByDirection() {
         Map<Direction, Integer> freeCoordinatesCountByDirection = new HashMap<>();
 
         SimpleDirectionContainer randomizableDirections = new SimpleDirectionContainer();
@@ -149,8 +146,7 @@ public class BonoStrategy implements SnakeStrategy
         return freeCoordinatesCountByDirection;
     }
 
-    private Integer getFreeCoordinatesCountForADirection(Coordinate headCoordinate)
-    {
+    private Integer getFreeCoordinatesCountForADirection(Coordinate headCoordinate) {
         freeCoordinatesTemp.clear();
 
         for (Direction actualDirection : Direction.values()) {
@@ -164,8 +160,7 @@ public class BonoStrategy implements SnakeStrategy
         return freeCoordinatesTemp.size();
     }
 
-    private void processFreeCoordinatesTemp(Coordinate freeCoordinate)
-    {
+    private void processFreeCoordinatesTemp(Coordinate freeCoordinate) {
         if (freeCoordinatesTemp.contains(freeCoordinate)) {
             return;
         } else {
@@ -181,8 +176,7 @@ public class BonoStrategy implements SnakeStrategy
         }
     }
 
-    private boolean allAreTheSame(Map<Direction, Integer> freeCoordinatesCountByDirection)
-    {
+    private boolean allAreTheSame(Map<Direction, Integer> freeCoordinatesCountByDirection) {
         boolean allTheSame = true;
 
         Integer theCount = Integer.MIN_VALUE;
@@ -198,8 +192,7 @@ public class BonoStrategy implements SnakeStrategy
         return allTheSame;
     }
 
-    private Map<Integer, SimpleDirectionContainer> getDistancesToFood(SimpleDirectionContainer filteredDirections)
-    {
+    private Map<Integer, SimpleDirectionContainer> getDistancesToFood(SimpleDirectionContainer filteredDirections) {
         Map<Integer, SimpleDirectionContainer> distancesToFood = new TreeMap<>();
 
         for (Direction actualDirection : filteredDirections) {
@@ -227,8 +220,7 @@ public class BonoStrategy implements SnakeStrategy
         return distancesToFood;
     }
 
-    private SimpleDirectionContainer getEquivalentBestDirections(Map<Integer, SimpleDirectionContainer> distancesToFood)
-    {
+    private SimpleDirectionContainer getEquivalentBestDirections(Map<Integer, SimpleDirectionContainer> distancesToFood) {
         List<SimpleDirectionContainer> directionContainers = new ArrayList<>();
 
         if (!distancesToFood.isEmpty()) {
@@ -244,8 +236,7 @@ public class BonoStrategy implements SnakeStrategy
         return equivalentBestDirections;
     }
 
-    private Direction getNewDirection(DependencyProvider dependencyProvider)
-    {
+    private Direction getNewDirection(DependencyProvider dependencyProvider) {
         Direction newDirection = NewDirectionProcessor.processNewDirection(dependencyProvider);
 
         printer.print("The Processed Direction: " + newDirection);

@@ -10,8 +10,7 @@ import model.strategy.bono.directioncontainers.BlockingDirectionContainer;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 import model.strategy.bono.distanceprocessors.DistanceProcessor;
 
-public class BlockingDirectionProcessor
-{
+public class BlockingDirectionProcessor {
     private Arena arena;
     private Snake snake;
 
@@ -19,8 +18,7 @@ public class BlockingDirectionProcessor
 
     private Coordinate maxCoordinate;
 
-    public BlockingDirectionProcessor(Snake snake, Arena arena, Printer printer)
-    {
+    public BlockingDirectionProcessor(Snake snake, Arena arena, Printer printer) {
         this.arena = arena;
         this.snake = snake;
 
@@ -30,8 +28,7 @@ public class BlockingDirectionProcessor
     }
 
     public BlockingDirectionContainer process(Coordinate actualHeadCoordinate,
-            SimpleDirectionContainer filteredDirections)
-    {
+            SimpleDirectionContainer filteredDirections) {
         /**
          * @todo avoid magic constant, make two fors (what if not 50x50 but 25x32 arena?), split into smaller methods!
          */
@@ -69,8 +66,7 @@ public class BlockingDirectionProcessor
         return blockingDirections;
     }
 
-    private Snake getBlockingSnake(Coordinate blockingCoordinate)
-    {
+    private Snake getBlockingSnake(Coordinate blockingCoordinate) {
         Snake blockingSnake = null;
 
         List<Snake> snakes = arena.getSnakes();
@@ -87,8 +83,7 @@ public class BlockingDirectionProcessor
         return blockingSnake;
     }
 
-    private boolean isValidBlock(Coordinate actualHeadCoordinate, Snake blockingSnake)
-    {
+    private boolean isValidBlock(Coordinate actualHeadCoordinate, Snake blockingSnake) {
         boolean validBlock = false;
 
         if (blockingSnake.equals(snake)) {
@@ -115,8 +110,7 @@ public class BlockingDirectionProcessor
         return validBlock;
     }
 
-    private int getBlockingTailLength(Snake blockingSnake, Coordinate nextCoordinateToInvestigate)
-    {
+    private int getBlockingTailLength(Snake blockingSnake, Coordinate nextCoordinateToInvestigate) {
         boolean reachedTheBlockingPart = false;
         int blockingTailLength = 0;
 
@@ -133,8 +127,7 @@ public class BlockingDirectionProcessor
         return blockingTailLength;
     }
 
-    private boolean isBlockingRisk(int blockingTailLength, int distanceToBlock)
-    {
+    private boolean isBlockingRisk(int blockingTailLength, int distanceToBlock) {
         return blockingTailLength >= distanceToBlock;
     }
 }

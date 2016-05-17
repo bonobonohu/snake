@@ -9,15 +9,13 @@ import java.util.TreeMap;
 import model.Coordinate;
 import model.Direction;
 
-public class BlockingDirectionContainer
-{
+public class BlockingDirectionContainer {
     private Map<Direction, Integer> distanceToDirection = new HashMap<>();
     private Map<Direction, Coordinate> coordinateToDirection = new HashMap<>();
     private Map<Coordinate, Integer> distanceToCoordinate = new HashMap<>();
     private Map<Coordinate, Direction> directionToCoordinate = new HashMap<>();
 
-    public void putData(Direction direction, Coordinate coordinate, int distance)
-    {
+    public void putData(Direction direction, Coordinate coordinate, int distance) {
         if (directionHasDistance(direction)) {
             int storedDistanceToDirection = getDistanceByDirection(direction);
             if (distance < storedDistanceToDirection) {
@@ -60,8 +58,7 @@ public class BlockingDirectionContainer
         }
     }
 
-    private void removeDataByCoordinate(Coordinate coordinate)
-    {
+    private void removeDataByCoordinate(Coordinate coordinate) {
         Direction directionToCoordinate = getDirectionByCoordinate(coordinate);
 
         removeFromDistanceToDirection(directionToCoordinate);
@@ -71,83 +68,67 @@ public class BlockingDirectionContainer
 
     }
 
-    private void removeFromDistanceToDirection(Direction direction)
-    {
+    private void removeFromDistanceToDirection(Direction direction) {
         distanceToDirection.remove(direction);
     }
 
-    private void removeFromCoordinateToDirection(Direction direction)
-    {
+    private void removeFromCoordinateToDirection(Direction direction) {
         coordinateToDirection.remove(direction);
     }
 
-    private void removeFromDistanceToCoordinate(Coordinate coordinate)
-    {
+    private void removeFromDistanceToCoordinate(Coordinate coordinate) {
         distanceToCoordinate.remove(coordinate);
     }
 
-    private void removeFromDirectionToCoordinate(Coordinate coordinate)
-    {
+    private void removeFromDirectionToCoordinate(Coordinate coordinate) {
         directionToCoordinate.remove(coordinate);
     }
 
-    private void putDistanceToDirection(Direction direction, int distance)
-    {
+    private void putDistanceToDirection(Direction direction, int distance) {
         distanceToDirection.put(direction, distance);
     }
 
-    private void putCoordinateToDirection(Direction direction, Coordinate coordinate)
-    {
+    private void putCoordinateToDirection(Direction direction, Coordinate coordinate) {
         coordinateToDirection.put(direction, coordinate);
     }
 
-    private void putDistanceToCoordinate(Coordinate coordinate, int distance)
-    {
+    private void putDistanceToCoordinate(Coordinate coordinate, int distance) {
         distanceToCoordinate.put(coordinate, distance);
     }
 
-    private void putDirectionToCoordinate(Coordinate coordinate, Direction direction)
-    {
+    private void putDirectionToCoordinate(Coordinate coordinate, Direction direction) {
         directionToCoordinate.put(coordinate, direction);
     }
 
-    private int getDistanceByDirection(Direction direction)
-    {
+    private int getDistanceByDirection(Direction direction) {
         return distanceToDirection.get(direction);
     }
 
-    private int getDistanceByCoordinate(Coordinate coordinate)
-    {
+    private int getDistanceByCoordinate(Coordinate coordinate) {
         return distanceToCoordinate.get(coordinate);
     }
 
-    private Direction getDirectionByCoordinate(Coordinate coordinate)
-    {
+    private Direction getDirectionByCoordinate(Coordinate coordinate) {
         return directionToCoordinate.get(coordinate);
     }
 
-    public Set<Direction> getDirections()
-    {
+    public Set<Direction> getDirections() {
         return distanceToDirection.keySet();
     }
 
-    private boolean directionHasDistance(Direction direction)
-    {
+    private boolean directionHasDistance(Direction direction) {
         return distanceToDirection.containsKey(direction);
     }
 
-    private boolean coordinateHasDirection(Coordinate coordinate)
-    {
+    private boolean coordinateHasDirection(Coordinate coordinate) {
         return coordinateToDirection.containsValue(coordinate);
     }
 
-    public int size()
-    {
+    public int size() {
         return distanceToDirection.size();
     }
 
-    public Map<Integer, SimpleDirectionContainer> getOrderedBlockings()
-    {
+    public Map<Integer, SimpleDirectionContainer> getOrderedBlockings() {
         Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());
 
         for (Map.Entry<Direction, Integer> entry : distanceToDirection.entrySet()) {
@@ -167,8 +148,7 @@ public class BlockingDirectionContainer
         return orderedBlockings;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return "DirectionData [distanceToDirection=" + distanceToDirection + ", coordinateToDirection="
                 + coordinateToDirection + "]";
     }

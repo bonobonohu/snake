@@ -1,43 +1,35 @@
 package model;
 
-public final class Coordinate
-{
+public final class Coordinate {
     private final int x;
     private final int y;
 
-    public Coordinate(int x, int y)
-    {
+    public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public int getX()
-    {
+    public int getX() {
         return x;
     }
 
-    public int getY()
-    {
+    public int getY() {
         return y;
     }
 
-    public Coordinate nextCoordinate(Direction direction)
-    {
+    public Coordinate nextCoordinate(Direction direction) {
         return new Coordinate(x + direction.getDiffX(), y + direction.getDiffY());
     }
 
-    public Coordinate truncLimits(Coordinate maxCoordinates)
-    {
+    public Coordinate truncLimits(Coordinate maxCoordinates) {
         return new Coordinate((x + maxCoordinates.x) % maxCoordinates.x, (y + maxCoordinates.y) % maxCoordinates.y);
     }
 
-    public int standardDistance(Coordinate otherCoordinate)
-    {
+    public int standardDistance(Coordinate otherCoordinate) {
         return Math.abs(x - otherCoordinate.x) + Math.abs(y - otherCoordinate.y);
     }
 
-    public int minDistance(Coordinate otherCoordinate, Coordinate maxCoordinate)
-    {
+    public int minDistance(Coordinate otherCoordinate, Coordinate maxCoordinate) {
         int normalDistanceX = Math.abs(x - otherCoordinate.x);
         int normalDistanceY = Math.abs(y - otherCoordinate.y);
         return Math.min(normalDistanceX, maxCoordinate.x - normalDistanceX)
@@ -45,8 +37,7 @@ public final class Coordinate
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + x;
@@ -55,8 +46,7 @@ public final class Coordinate
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -72,8 +62,7 @@ public final class Coordinate
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Coordinate [x=" + x + ", y=" + y + "]";
     }
 }

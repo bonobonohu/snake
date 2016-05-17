@@ -28,7 +28,7 @@ public class AllButMaximumsStrategy extends ClosedDirectionsProcessor
             }
         }
 
-        allButMaximumDirections.addAll(Arrays.asList(Direction.values()));
+        allButMaximumDirections.addAll(freeCoordinatesCountByDirection.keySet());
         allButMaximumDirections.removeAll(maxDirections);
 
         return allButMaximumDirections;

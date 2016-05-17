@@ -20,10 +20,6 @@ import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 import model.strategy.bono.newdirectionprocessors.DependencyProvider;
 import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
 
-/**
- * BonoStrategy.
- * @author v-dsarossi
- */
 public class BonoStrategy implements SnakeStrategy {
     private static final boolean PRINT_LOGS = true;
 

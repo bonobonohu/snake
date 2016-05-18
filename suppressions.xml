@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<suppressions>
+
+  <!-- relax rules in unit tests, we need less docs and magic numbers are commonplace in tests -->
+  <suppress id="ParameterNumber_Error" files="com.hcomemea.booking.configuration.destination.DestinationConfigProviderTest.java"/>
+  <suppress checks="JavadocMethod|IllegalInstantiation|IllegalThrows|MagicNumber|ClassFanOutComplexity|ClassDataAbstractionCoupling|FileLength"
+            files=".*Mock.*java|.*Test.java|.*TestDataProvider.java"/>
+
+  <!-- relax rules in package info files, they are not real classes -->
+  <suppress checks="RegexpHeader" files=".*package-info.java"/>
+
+  <!-- relax parameter numbers in Spring MVC the framework build on parameters heavily -->
+  <suppress id="ParameterNumber_Warning" files=".*Controller.java"/>
+  <suppress id="ParameterNumber_Error" files=".*Controller.java"/>
+  <suppress id="ParameterNumber_Severe_Error" files="com.hcomemea.fastbooking.controller.BookingController.java"/>
+  <suppress id="ParameterNumber_Severe_Error" files="com.hcomemea.mobile.onestepbooking.controller.BookingController.java"/>
+  <suppress id="ParameterNumber_Severe_Error" files="com.hcomemea.mobile.onestepbooking.controller.MobileBookingInitController.java"/>
+
+  <!-- proxy code needs to throw Throwable -->
+  <suppress checks="IllegalThrows" files="com.hcomemea.common.errorwrapper.ErrorHandlerMethodInterceptor.java"/>
+
+  <!-- instances of this class may be serialized on jms brokers, changing this class may cause incompatibility issues between different versions -->
+  <suppress id="SerialVersionUIDDeclared_Error" files="com.hcomemea.fastbooking.data.BookingConfirmationNotificationMessage.java"/>
+  <suppress checks="MethodCount" files="com.hcomemea.fastbooking.data.configuration.BookingBaseConfiguration.java"/>
+
+  <!-- Subsequent section is listing files that should ideally be CheckStyle compliant but are not.
+       For practicality some error level rules are suppressed for them until they are properly refactored. -->
+  <suppress id="FileLength_Error" files="com.hcomemea.common.advertiser.data.AdvertiserInfoVO.java"/>
+  <suppress id="MethodCount" files="com.hcomemea.common.advertiser.data.AdvertiserInfoVO.java"/>
+  <suppress id="MethodCountTotal_Error" files="com.hcomemea.common.advertiser.data.AdvertiserInfoVO.java"/>
+  <suppress id="MethodCountPrivate_Error" files="com.hcomemea.common.advertiser.data.AdvertiserInfoVO.java"/>
+  <suppress id="MethodCountProtected_Error" files="com.hcomemea.common.advertiser.data.AdvertiserInfoVO.java"/>
+  <suppress id="MethodLength_Error" files="com.hcomemea.common.advertiser.service.BookingAdvertiserService.java"/>
+  <suppress id="NPathComplexity_Error" files="com.hcomemea.common.advertiser.service.BookingAdvertiserService.java"/>
+  <suppress id="MethodLength_Error" files="com.hcomemea.common.advertiser.service.BookingAdvertiserService.java"/>
+  <suppress id="NPathComplexity_Error" files="com.hcomemea.common.advertiser.service.BookingAdvertiserService.java"/>
+  <suppress id="CyclomaticComplexity_Error" files="com.hcomemea.common.advertiser.service.BookingAdvertiserService.java"/>
+  <suppress id="FileLength_Error" files="com.hcomemea.common.advertiser.service.BookingAdvertiserService.java"/>
+  <suppress id="MethodCountTotal_Error" files="com.hcomemea.confirmation.controller.context.ConfirmationContext.java"/>
+  <suppress checks="MethodCount" files="com.hcomemea.customercare.controller.configuration.BookingDetailsViewContext"/>
+  <suppress id="MethodCountTotal_Error" files="com.hcomemea.fastbooking.controller.booking.BookingFormSubmitter"/>
+  <suppress id="FileLength_Error" files="com.hcomemea.fastbooking.controller.booking.BookingFormSubmitter"/>
+  <suppress id="FileLength_Error" files="com.hcomemea.fastbooking.controller.booking.BookingHandler"/>
+  <suppress checks="MethodCount|ClassFanOutComplexity" files="com.hcomemea.fastbooking.controller.context.FastBookingContext.java"/>
+  <suppress checks="FileLength" files="com.hcomemea.fastbooking.controller.context.FastBookingContext.java"/>
+  <suppress checks="MethodLength|ParameterNumber" files="com.hcomemea.pricecheck.facade.DefaultPriceCheckBookingFacadeMicoTest"/>
+
+  <!-- need to refer to AbstractBookingErrorHandlerCommand in the test of this type -->
+  <suppress checks="IllegalType" files="com.hcomemea.fastbooking.controller.errorhandler.AbstractBookingErrorHandlerCommandTest.java"/>
+  <suppress checks="MethodCount" files="com.hcomemea.fastbooking.data.configuration.BookingBaseConfiguration.java"/>
+  <suppress checks="MethodCount" files="com.hcomemea.fastbooking.data.configuration.BookingOrderConfiguration.java"/>
+  <suppress id="ParameterNumber_Error" files="com.hcomemea.fastbooking.facade.BookingDataPopulatorFacade"/>
+  <suppress checks="MethodCount" files="com.hcomemea.fastbooking.facade.BookingDataPopulatorFacade.java"/>
+  <suppress checks="MethodCount|ClassFanOutComplexity|FileLength|ClassDataAbstractionCoupling"
+            files="com.hcomemea.fastbooking.form.BookingOrder.java"/>
+  <suppress id="CyclomaticComplexity_Error" files="com.hcomemea.loyalty.service.impl.FaultHandlingLoyaltyServiceInvocationHandler.java"/>
+  <suppress id="ParameterNumber_Error"
+            files="com.hcomemea.oms.integration.createorder.transformer.DefaultOmsRequestedProductListTypeTransformer.java"/>
+  <suppress id="ParameterNumber_Error" files="com.hcomemea.fastbooking.facade.FastBookingContextBuilderFacade.java"/>
+  <suppress id="ParameterNumber_Error" files="com.hcomemea.booking.payment.data.GoogleWalletPaymentOption.java"/>
+  <suppress checks="IllegalInstantiation" files="com.hcomemea.fastbooking.partner.security.CryptographyService.java"/>
+  <suppress checks="MethodCount" files="com.hcomemea.customercare.controller.builder.DefaultBookingDetailsViewContextBuilder"/>
+  <suppress id="FileLength_Error" files="com.hcomemea.fastbooking.controller.booking.sitecatalyst.SiteCatalystUtils.java"/>
+  <suppress id="ParameterNumber_Error" files="com.hcomemea.sfsearch.service.impl.BookingHotelDetailsUrlBuilder.java"/>
+  <suppress id="ParameterNumber_Severe_Error" files="com.hcomemea.sfsearch.service.impl.BookingHotelDetailsUrlBuilder.java"/>
+  <suppress id="NPathComplexity_Error" files="com.hcomemea.sfsearch.service.impl.BookingHotelDetailsUrlBuilder.java"/>
+  <suppress checks="FinalClass" files="com.hcomemea.booking.attachment.resolver.BookingAttachmentPopulatorData.java"/>
+  <suppress id="FileLength_Error" files="com.hcomemea.fastbooking.data.configuration.BookingBaseConfiguration.java"/>
+  <suppress id="FileLength_Error" files="com.hcomemea.customercare.controller.configuration.BookingDetailsViewContext"/>
+  <suppress checks="MethodCount" files="com.hcomemea.confirmation.BookingConfirmationMailContext.java"/>
+  <suppress checks="MethodCount" files="com.hotels.booking.integration.deposit.domain.BookingDepositsConfig.java"/>
+  <suppress checks="MethodCount" files="com.hcomemea.oms.integration.createorder.BookingOmsInventoryMediator.java" />
+  <suppress id="MethodLength_Error" files="com.hcomemea.fastbooking.facade.FastBookingContextBuilderFacade.java"/>
+  <suppress checks="MethodCount" files="com.hcomemea.fastbooking.dio.model.bookingform.BookingFormBody.java"/>
+  <suppress checks="MethodCount" files="com.hcomemea.fastbooking.controller.booking.BookingHandler" />
+  <suppress checks="MethodCount" files="com.hcomemea.fastbooking.controller.sitecatalyst.ConfirmationSiteCatalystPropertiesProvider"/>
+  <suppress checks="MethodCount" files="com.hcomemea.confirmation.service.SendMailContent"/>
+  <!-- Suppress all checks for unnecessary files -->
+  <suppress checks="[a-zA-Z0-9]*" files=".*.properties"/>
+  <suppress checks="[a-zA-Z0-9]*" files=".*.xml"/>
+  <suppress checks="[a-zA-Z0-9]*" files=".*.jsp*"/>
+  <suppress checks="[a-zA-Z0-9]*" files="[\\/]target[\\/]"/>
+
+</suppressions>

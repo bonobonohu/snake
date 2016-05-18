@@ -37,14 +37,6 @@ public class SimpleDirectionContainer extends HashSet<Direction> {
         return elements;
     }
 
-    public List<Direction> getAllAsList() {
-        List<Direction> elements = new ArrayList<>();
-
-        elements.addAll(this);
-
-        return elements;
-    }
-
     public SimpleDirectionContainer getAsNewObject() {
         SimpleDirectionContainer newDirectionsContainer = new SimpleDirectionContainer();
 

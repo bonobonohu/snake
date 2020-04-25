@@ -4,9 +4,9 @@ import co.electric.snake.model.ModifiableArena;
 import co.electric.snake.model.ModifiableSnake;
 import co.electric.snake.model.strategy.bono.BonoStrategy;
 
-public class Application {
+public class SnakeApplication {
 
-    public static void main(String[] args) {
+    public static void start() {
         System.setSecurityManager(new SecurityManager());
 
         ModifiableArena arena = new ModifiableArena();

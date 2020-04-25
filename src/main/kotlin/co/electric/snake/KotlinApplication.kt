@@ -8,7 +8,6 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 
-
 @SpringBootApplication
 class KotlinApplication : CommandLineRunner {
 

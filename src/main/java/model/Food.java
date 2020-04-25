@@ -8,13 +8,13 @@ public class Food implements Member {
         this.coordinate = coordinate;
     }
 
-    public Coordinate getCoordinate() {
-        return coordinate;
-    }
-
     @Override
     public boolean occupies(Coordinate nextCoordinate) {
         return coordinate.equals(nextCoordinate);
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
     @Override

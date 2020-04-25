@@ -10,14 +10,6 @@ public final class Coordinate {
         this.y = y;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public Coordinate nextCoordinate(Direction direction) {
         return new Coordinate(x + direction.getDiffX(), y + direction.getDiffY());
     }
@@ -37,13 +29,12 @@ public final class Coordinate {
                 + Math.min(normalDistanceY, maxCoordinate.y - normalDistanceY);
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + x;
-        result = prime * result + y;
-        return result;
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     @Override
@@ -60,6 +51,15 @@ public final class Coordinate {
         if (y != other.y)
             return false;
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + x;
+        result = prime * result + y;
+        return result;
     }
 
     @Override

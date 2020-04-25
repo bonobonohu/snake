@@ -29,14 +29,6 @@ public class SnakeController {
         frame.setVisible(true);
     }
 
-    private void initView(Arena arena) {
-        this.arenaView = new ArenaView(arena);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(arenaView);
-        frame.setSize(FRAME_SIZE);
-        frame.setLocationRelativeTo(null);
-    }
-
     public void start() {
         timer.start();
     }
@@ -49,6 +41,14 @@ public class SnakeController {
     public void stop() {
         timer.stop();
         arenaView.repaint();
+    }
+
+    private void initView(Arena arena) {
+        this.arenaView = new ArenaView(arena);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(arenaView);
+        frame.setSize(FRAME_SIZE);
+        frame.setLocationRelativeTo(null);
     }
 
 }

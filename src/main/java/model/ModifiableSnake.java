@@ -9,7 +9,7 @@ public class ModifiableSnake extends Snake {
     }
 
     public void move() {
-        Coordinate nextCoordinate = decideNextCoordinate();
+        final Coordinate nextCoordinate = decideNextCoordinate();
         moveTo(nextCoordinate);
     }
 

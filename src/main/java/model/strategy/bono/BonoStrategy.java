@@ -35,7 +35,7 @@ public class BonoStrategy implements SnakeStrategy {
 
         printer.print("--- BEGIN " + snake.getName() + "---");
 
-        printer.print("Length: " + snake.length());
+        printer.print("Length: " + snake.getLength());
 
         actualHeadCoordinate = snake.getHeadCoordinate();
         foodCoordinate = arena.getFood().get(0).getCoordinate();

@@ -100,8 +100,8 @@ public class BlockingDirectionProcessor {
                 }
             }
 
-            if ((!allXsAreTheSame && !allYsAreTheSame) || (allXsAreTheSame && snake.length() == maxCoordinate.getY())
-                    || (allYsAreTheSame && snake.length() == maxCoordinate.getX())) {
+            if ((!allXsAreTheSame && !allYsAreTheSame) || (allXsAreTheSame && snake.getLength() == maxCoordinate.getY())
+                    || (allYsAreTheSame && snake.getLength() == maxCoordinate.getX())) {
                 validBlock = true;
             }
         } else {

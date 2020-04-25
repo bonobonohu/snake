@@ -12,23 +12,51 @@ public class Arena {
 
     protected List<ModifiableSnake> snakes = new ArrayList<>();
     protected int round = 0;
-    private List<Food> food = new ArrayList<>();
-    private Coordinate maxCoordinate = MAX_COORDINATE;
+
+    private final List<Food> food = new ArrayList<>();
+    private final Coordinate maxCoordinate = MAX_COORDINATE;
 
     public Arena() {
         generateNewFood();
     }
 
+    public Coordinate nextCoordinate(Coordinate coordinate, Direction direction) {
+        return coordinate.nextCoordinate(direction).truncLimits(maxCoordinate);
+    }
+
+    public Coordinate generateRandomFreeCoordinate() {
+        Coordinate coordinate;
+        final Random random = new Random();
+        do {
+            int x = random.nextInt(MAX_COORDINATE.getX());
+            int y = random.nextInt(MAX_COORDINATE.getY());
+            coordinate = new Coordinate(x, y);
+        } while (isOccupied(coordinate) && !isFood(coordinate));
+        return coordinate;
+    }
+
     protected void printResultsIfNeeded() {
         if (round == MAX_ROUND) {
             for (Snake snake : snakes) {
-                System.out.println(snake.getName() + ": " + snake.length());
+                System.out.println(snake.getName() + ": " + snake.getLength());
             }
         }
     }
 
-    public Coordinate nextCoordinate(Coordinate coordinate, Direction direction) {
-        return coordinate.nextCoordinate(direction).truncLimits(maxCoordinate);
+    protected void generateNewFood() {
+        final Coordinate coordinate = generateRandomFreeCoordinate();
+        food.add(new Food(coordinate));
+    }
+
+    protected void removeFoodFromCollection(Coordinate nextCoordinate) {
+        final Iterator<Food> foodIterator = food.iterator();
+        while (foodIterator.hasNext()) {
+            Food food = foodIterator.next();
+            Coordinate foodCoordinate = food.getCoordinate();
+            if (foodCoordinate.equals(nextCoordinate)) {
+                foodIterator.remove();
+            }
+        }
     }
 
     public boolean isOccupied(Coordinate nextCoordinate) {
@@ -37,16 +65,6 @@ public class Arena {
 
     public boolean isFood(Coordinate nextCoordinate) {
         return occupies(nextCoordinate, food);
-    }
-
-    private boolean occupies(Coordinate nextCoordinate, List<? extends Member> members) {
-        boolean isOccupied = false;
-        for (int i = 0; i < members.size() && !isOccupied; i++) {
-            if (members.get(i).occupies(nextCoordinate)) {
-                isOccupied = true;
-            }
-        }
-        return isOccupied;
     }
 
     public Coordinate getMaxCoordinate() {
@@ -61,31 +79,14 @@ public class Arena {
         return new ArrayList<>(food);
     }
 
-    protected void generateNewFood() {
-        Coordinate coordinate = generateRandomFreeCoordinate();
-        food.add(new Food(coordinate));
-    }
-
-    protected void removeFoodFromCollection(Coordinate nextCoordinate) {
-        Iterator<Food> foodIterator = food.iterator();
-        while (foodIterator.hasNext()) {
-            Food food = foodIterator.next();
-            Coordinate foodCoordinate = food.getCoordinate();
-            if (foodCoordinate.equals(nextCoordinate)) {
-                foodIterator.remove();
+    private boolean occupies(Coordinate nextCoordinate, List<? extends Member> members) {
+        boolean isOccupied = false;
+        for (int i = 0; i < members.size() && !isOccupied; i++) {
+            if (members.get(i).occupies(nextCoordinate)) {
+                isOccupied = true;
             }
         }
-    }
-
-    public Coordinate generateRandomFreeCoordinate() {
-        Random random = new Random();
-        Coordinate coordinate;
-        do {
-            int x = random.nextInt(MAX_COORDINATE.getX());
-            int y = random.nextInt(MAX_COORDINATE.getY());
-            coordinate = new Coordinate(x, y);
-        } while (isOccupied(coordinate) && !isFood(coordinate));
-        return coordinate;
+        return isOccupied;
     }
 
     @Override

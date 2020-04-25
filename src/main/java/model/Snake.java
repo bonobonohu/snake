@@ -9,10 +9,11 @@ import java.util.List;
 
 public class Snake implements Member {
 
-    private Deque<Coordinate> bodyItems = new LinkedList<>();
-    private SnakeStrategy strategy;
-    private ModifiableArena arena;
-    private String name;
+    private final Deque<Coordinate> bodyItems = new LinkedList<>();
+
+    private final ModifiableArena arena;
+    private final SnakeStrategy strategy;
+    private final String name;
 
     public Snake(ModifiableArena arena, SnakeStrategy strategy, String name) {
         this.arena = arena;
@@ -21,16 +22,13 @@ public class Snake implements Member {
         this.bodyItems.add(arena.generateRandomFreeCoordinate());
     }
 
-    public List<Coordinate> getBodyItems() {
-        return new ArrayList<>(bodyItems);
-    }
-
-    public Coordinate getHeadCoordinate() {
-        return bodyItems.getFirst();
+    @Override
+    public boolean occupies(Coordinate nextCoordinate) {
+        return bodyItems.contains(nextCoordinate);
     }
 
     protected Coordinate decideNextCoordinate() {
-        Direction direction = strategy.nextMove(this, arena);
+        final Direction direction = strategy.nextMove(this, arena);
         Coordinate nextCoordinate = arena.nextCoordinate(bodyItems.getFirst(), direction);
         return nextCoordinate;
     }
@@ -48,16 +46,19 @@ public class Snake implements Member {
         bodyItems.addFirst(nextCoordinate);
     }
 
+    public List<Coordinate> getBodyItems() {
+        return new ArrayList<>(bodyItems);
+    }
+
+    public Coordinate getHeadCoordinate() {
+        return bodyItems.getFirst();
+    }
+
     public Coordinate getTailCoordinate() {
         return bodyItems.getLast();
     }
 
-    @Override
-    public boolean occupies(Coordinate nextCoordinate) {
-        return bodyItems.contains(nextCoordinate);
-    }
-
-    public int length() {
+    public int getLength() {
         return bodyItems.size();
     }
 

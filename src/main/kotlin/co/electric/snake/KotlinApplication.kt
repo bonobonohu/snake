@@ -16,7 +16,6 @@ class KotlinApplication : CommandLineRunner {
 }
 
 fun main(args: Array<String>) {
-//    runApplication<KotlinApplication>(*args)
     SpringApplicationBuilder(KotlinApplication::class.java)
         .headless(false)
         .run(*args)

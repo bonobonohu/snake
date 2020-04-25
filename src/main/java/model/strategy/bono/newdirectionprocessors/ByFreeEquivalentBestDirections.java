@@ -4,6 +4,7 @@ import model.Direction;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
 public class ByFreeEquivalentBestDirections extends NewDirectionProcessor {
+
     public ByFreeEquivalentBestDirections(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
     }

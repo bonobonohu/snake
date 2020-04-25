@@ -4,6 +4,7 @@ import model.Direction;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
 public class ByKispalEsABorz extends NewDirectionProcessor {
+
     public ByKispalEsABorz(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
     }

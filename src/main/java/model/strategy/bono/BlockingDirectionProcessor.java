@@ -1,7 +1,5 @@
 package model.strategy.bono;
 
-import java.util.List;
-
 import model.Arena;
 import model.Coordinate;
 import model.Direction;
@@ -10,7 +8,10 @@ import model.strategy.bono.directioncontainers.BlockingDirectionContainer;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 import model.strategy.bono.distanceprocessors.DistanceProcessor;
 
+import java.util.List;
+
 public class BlockingDirectionProcessor {
+
     private Arena arena;
     private Snake snake;
 
@@ -28,7 +29,7 @@ public class BlockingDirectionProcessor {
     }
 
     public BlockingDirectionContainer process(Coordinate actualHeadCoordinate,
-            SimpleDirectionContainer filteredDirections) {
+                                              SimpleDirectionContainer filteredDirections) {
         /**
          * @todo avoid magic constant, make two fors (what if not 50x50 but 25x32 arena?), split into smaller methods!
          */
@@ -130,4 +131,5 @@ public class BlockingDirectionProcessor {
     private boolean isBlockingRisk(int blockingTailLength, int distanceToBlock) {
         return blockingTailLength >= distanceToBlock;
     }
+
 }

@@ -1,6 +1,7 @@
 package model.strategy.bono;
 
 public class Printer {
+
     private boolean doPrint = true;
 
     public Printer(boolean doPrint) {
@@ -26,4 +27,5 @@ public class Printer {
     public void setDoPrint(boolean doPrint) {
         this.doPrint = doPrint;
     }
+
 }

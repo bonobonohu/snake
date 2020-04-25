@@ -4,6 +4,7 @@ import model.Direction;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
 public class ByFreeFilteredDirections extends NewDirectionProcessor {
+
     public ByFreeFilteredDirections(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
     }
@@ -23,4 +24,5 @@ public class ByFreeFilteredDirections extends NewDirectionProcessor {
 
         return newDirection;
     }
+
 }

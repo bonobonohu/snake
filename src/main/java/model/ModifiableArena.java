@@ -1,6 +1,7 @@
 package model;
 
 public class ModifiableArena extends Arena {
+
     public void addSnake(ModifiableSnake snake) {
         this.snakes.add(snake);
     }
@@ -17,4 +18,5 @@ public class ModifiableArena extends Arena {
         removeFoodFromCollection(nextCoordinate);
         generateNewFood();
     }
+
 }

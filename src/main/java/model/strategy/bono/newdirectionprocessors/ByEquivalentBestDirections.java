@@ -3,6 +3,7 @@ package model.strategy.bono.newdirectionprocessors;
 import model.Direction;
 
 public class ByEquivalentBestDirections extends NewDirectionProcessor {
+
     public ByEquivalentBestDirections(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
     }

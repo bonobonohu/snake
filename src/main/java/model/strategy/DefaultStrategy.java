@@ -1,14 +1,15 @@
 package model.strategy;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 import model.Arena;
 import model.Coordinate;
 import model.Direction;
 import model.Snake;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 public class DefaultStrategy implements SnakeStrategy {
+
     @Override
     public Direction nextMove(Snake snake, Arena arena) {
         int minDistance = Integer.MAX_VALUE;
@@ -34,4 +35,5 @@ public class DefaultStrategy implements SnakeStrategy {
 
         return bestDirection;
     }
+
 }

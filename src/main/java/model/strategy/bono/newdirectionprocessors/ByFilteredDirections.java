@@ -3,6 +3,7 @@ package model.strategy.bono.newdirectionprocessors;
 import model.Direction;
 
 public class ByFilteredDirections extends NewDirectionProcessor {
+
     public ByFilteredDirections(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
     }
@@ -19,4 +20,5 @@ public class ByFilteredDirections extends NewDirectionProcessor {
 
         return newDirection;
     }
+
 }

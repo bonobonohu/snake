@@ -1,14 +1,5 @@
 package model.strategy.bono;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
 import model.Arena;
 import model.Coordinate;
 import model.Direction;
@@ -20,7 +11,10 @@ import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 import model.strategy.bono.newdirectionprocessors.DependencyProvider;
 import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
 
+import java.util.*;
+
 public class BonoStrategy implements SnakeStrategy {
+
     private static final boolean PRINT_LOGS = true;
 
     private Arena arena;
@@ -79,7 +73,7 @@ public class BonoStrategy implements SnakeStrategy {
     }
 
     private SimpleDirectionContainer getFilteredDirections(SimpleDirectionContainer freeDirections,
-            SimpleDirectionContainer closedDirections) {
+                                                           SimpleDirectionContainer closedDirections) {
         SimpleDirectionContainer filteredDirections = freeDirections.getAsNewObject();
         filteredDirections.removeAll(closedDirections);
 
@@ -239,4 +233,5 @@ public class BonoStrategy implements SnakeStrategy {
 
         return newDirection;
     }
+
 }

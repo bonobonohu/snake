@@ -1,19 +1,17 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JPanel;
-
 import model.Arena;
 import model.Coordinate;
 import model.Food;
 import model.Snake;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ArenaView extends JPanel {
+
     public static final int PADDING = 10;
     public static final int POINT_SIZE = 10;
     private static final long serialVersionUID = 1L;
@@ -53,4 +51,5 @@ public class ArenaView extends JPanel {
         }
         repaint();
     }
+
 }

@@ -1,14 +1,15 @@
 package model.strategy.bono.newdirectionprocessors;
 
+import model.Direction;
+import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-import model.Direction;
-import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
-
 public class ByBlockingDistances extends NewDirectionProcessor {
+
     public ByBlockingDistances(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
     }
@@ -48,4 +49,5 @@ public class ByBlockingDistances extends NewDirectionProcessor {
 
         return newDirection;
     }
+
 }

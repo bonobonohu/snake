@@ -1,15 +1,12 @@
 package model.strategy.bono.directioncontainers;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
 import model.Coordinate;
 import model.Direction;
 
+import java.util.*;
+
 public class BlockingDirectionContainer {
+
     private Map<Direction, Integer> distanceToDirection = new HashMap<>();
     private Map<Direction, Coordinate> coordinateToDirection = new HashMap<>();
     private Map<Coordinate, Integer> distanceToCoordinate = new HashMap<>();
@@ -152,4 +149,5 @@ public class BlockingDirectionContainer {
         return "DirectionData [distanceToDirection=" + distanceToDirection + ", coordinateToDirection="
                 + coordinateToDirection + "]";
     }
+
 }

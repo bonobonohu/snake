@@ -1,11 +1,12 @@
 package model.strategy.bono.closeddirectionsprocessors;
 
-import java.util.Map;
-
 import model.Direction;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
+import java.util.Map;
+
 public class MinimumsExceptZerosAndZerosStrategy extends ClosedDirectionsProcessor {
+
     @Override
     public SimpleDirectionContainer getClosedDirections(Map<Direction, Integer> freeCoordinatesCountByDirection) {
         SimpleDirectionContainer minimumExceptZeroAndZeroDirections = new SimpleDirectionContainer();
@@ -57,4 +58,5 @@ public class MinimumsExceptZerosAndZerosStrategy extends ClosedDirectionsProcess
 
         return minimumExceptZeroDirections;
     }
+
 }

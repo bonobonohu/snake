@@ -1,6 +1,7 @@
 package model;
 
 public final class Coordinate {
+
     private final int x;
     private final int y;
 
@@ -65,4 +66,5 @@ public final class Coordinate {
     public String toString() {
         return "Coordinate [x=" + x + ", y=" + y + "]";
     }
+
 }

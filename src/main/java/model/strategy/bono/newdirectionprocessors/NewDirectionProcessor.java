@@ -1,14 +1,15 @@
 package model.strategy.bono.newdirectionprocessors;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import model.Direction;
 import model.strategy.bono.Printer;
 import model.strategy.bono.directioncontainers.BlockingDirectionContainer;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class NewDirectionProcessor {
+
     protected BlockingDirectionContainer blockingDirections;
     protected SimpleDirectionContainer equivalentBestDirections;
     protected SimpleDirectionContainer filteredDirections;
@@ -52,4 +53,5 @@ public abstract class NewDirectionProcessor {
     protected Direction processFinalDirection(SimpleDirectionContainer directionContainer) {
         return directionContainer.getRandomElement();
     }
+
 }

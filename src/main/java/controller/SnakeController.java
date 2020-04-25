@@ -1,15 +1,14 @@
 package controller;
 
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-import javax.swing.Timer;
-
 import model.Arena;
 import model.ModifiableArena;
 import view.ArenaView;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class SnakeController {
+
     private static final String TITLE = "Snake";
     private static final int DELAY_BETWEEN_STEPS = 1;
     private static final Dimension FRAME_SIZE = new Dimension(550, 570);
@@ -46,4 +45,5 @@ public class SnakeController {
         timer.stop();
         arenaView.repaint();
     }
+
 }

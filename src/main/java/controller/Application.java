@@ -5,6 +5,7 @@ import model.ModifiableSnake;
 import model.strategy.bono.BonoStrategy;
 
 public class Application {
+
     public static void main(String[] args) {
         System.setSecurityManager(new SecurityManager());
 
@@ -18,4 +19,5 @@ public class Application {
 
         new SnakeController(arena).start();
     }
+
 }

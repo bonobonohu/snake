@@ -1,6 +1,7 @@
 package model;
 
 public class Food implements Member {
+
     private final Coordinate coordinate;
 
     public Food(final Coordinate coordinate) {
@@ -20,4 +21,5 @@ public class Food implements Member {
     public String toString() {
         return "Food [coordinate=" + coordinate + "]";
     }
+
 }

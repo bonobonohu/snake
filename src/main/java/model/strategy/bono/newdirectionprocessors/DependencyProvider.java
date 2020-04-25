@@ -7,6 +7,7 @@ import model.strategy.bono.directioncontainers.BlockingDirectionContainer;
 import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
 
 public class DependencyProvider {
+
     private Arena arena;
     private Snake snake;
 
@@ -17,8 +18,8 @@ public class DependencyProvider {
     private Printer printer;
 
     public DependencyProvider(Arena arena, Snake snake, BlockingDirectionContainer blockingDirectionsDataHandler,
-            SimpleDirectionContainer filteredDirections, SimpleDirectionContainer equivalentBestDirections,
-            Printer printer) {
+                              SimpleDirectionContainer filteredDirections, SimpleDirectionContainer equivalentBestDirections,
+                              Printer printer) {
         this.arena = arena;
         this.snake = snake;
 
@@ -52,4 +53,5 @@ public class DependencyProvider {
     public Printer getPrinter() {
         return printer;
     }
+
 }

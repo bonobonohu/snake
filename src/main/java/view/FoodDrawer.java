@@ -1,12 +1,12 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 import model.Coordinate;
 import model.Food;
 
+import java.awt.*;
+
 public class FoodDrawer {
+
     public void draw(Food food, Graphics g) {
         Coordinate coordinate = food.getCoordinate();
         g.setColor(Color.RED);
@@ -14,4 +14,5 @@ public class FoodDrawer {
         int y = ArenaView.PADDING + 1 + ArenaView.POINT_SIZE * coordinate.getY();
         g.fillRect(x, y, ArenaView.POINT_SIZE, ArenaView.POINT_SIZE);
     }
+
 }

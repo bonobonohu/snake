@@ -1,13 +1,14 @@
 package model;
 
+import model.strategy.SnakeStrategy;
+
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.strategy.SnakeStrategy;
-
 public class Snake implements Member {
+
     private Deque<Coordinate> bodyItems = new LinkedList<>();
     private SnakeStrategy strategy;
     private ModifiableArena arena;
@@ -68,4 +69,5 @@ public class Snake implements Member {
     public String toString() {
         return "Snake [bodyItems=" + bodyItems + ", strategy=" + strategy + "]";
     }
+
 }

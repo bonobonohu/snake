@@ -1,12 +1,12 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 import model.Coordinate;
 import model.Snake;
 
+import java.awt.*;
+
 public class SnakeView {
+
     private Snake snake;
     private Color color;
 
@@ -34,4 +34,5 @@ public class SnakeView {
             first = false;
         }
     }
+
 }

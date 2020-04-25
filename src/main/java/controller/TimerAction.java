@@ -1,9 +1,9 @@
 package controller;
 
+import model.SnakeDeadException;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import model.SnakeDeadException;
 
 public class TimerAction implements ActionListener {
 

@@ -7,8 +7,9 @@ import java.awt.event.ActionListener;
 
 public class TimerAction implements ActionListener {
 
-    private SnakeController snakeController;
     private boolean stop = false;
+
+    private final SnakeController snakeController;
 
     public TimerAction(SnakeController snakeController) {
         this.snakeController = snakeController;

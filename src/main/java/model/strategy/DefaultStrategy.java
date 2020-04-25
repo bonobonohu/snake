@@ -5,20 +5,15 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 public class DefaultStrategy implements SnakeStrategy {
 
     @Override
     public Direction nextMove(Snake snake, Arena arena) {
+        final Coordinate startCoordinate = snake.getHeadCoordinate();
+        final Coordinate foodCoordinate = arena.getFood().get(0).getCoordinate();
+
         int minDistance = Integer.MAX_VALUE;
         Direction bestDirection = Direction.WEST;
-
-        Coordinate startCoordinate = snake.getHeadCoordinate();
-        Coordinate foodCoordinate = arena.getFood().get(0).getCoordinate();
-
-        Map<Direction, Integer> distances = new TreeMap<>();
 
         for (Direction direction : Direction.values()) {
             Coordinate nextCoordinate = arena.nextCoordinate(startCoordinate, direction);
@@ -29,8 +24,6 @@ public class DefaultStrategy implements SnakeStrategy {
                 minDistance = actualDistance;
                 bestDirection = direction;
             }
-
-            distances.put(direction, actualDistance);
         }
 
         return bestDirection;

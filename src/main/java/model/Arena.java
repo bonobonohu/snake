@@ -5,24 +5,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class Arena
-{
+public class Arena {
 
     private static final Coordinate MAX_COORDINATE = new Coordinate(50, 50);
     private static final int MAX_ROUND = 5000;
 
     protected List<ModifiableSnake> snakes = new ArrayList<>();
+    protected int round = 0;
     private List<Food> food = new ArrayList<>();
     private Coordinate maxCoordinate = MAX_COORDINATE;
-    protected int round = 0;
 
-    public Arena()
-    {
+    public Arena() {
         generateNewFood();
     }
 
-    protected void printResultsIfNeeded()
-    {
+    protected void printResultsIfNeeded() {
         if (round == MAX_ROUND) {
             for (Snake snake : snakes) {
                 System.out.println(snake.getName() + ": " + snake.length());
@@ -30,24 +27,19 @@ public class Arena
         }
     }
 
-    public Coordinate nextCoordinate(Coordinate coordinate, Direction direction)
-    {
+    public Coordinate nextCoordinate(Coordinate coordinate, Direction direction) {
         return coordinate.nextCoordinate(direction).truncLimits(maxCoordinate);
     }
 
-    public boolean isOccupied(Coordinate nextCoordinate)
-    {
+    public boolean isOccupied(Coordinate nextCoordinate) {
         return occupies(nextCoordinate, snakes);
     }
 
-    public boolean isFood(Coordinate nextCoordinate)
-    {
+    public boolean isFood(Coordinate nextCoordinate) {
         return occupies(nextCoordinate, food);
     }
 
-    private boolean occupies(Coordinate nextCoordinate,
-            List<? extends Member> members)
-    {
+    private boolean occupies(Coordinate nextCoordinate, List<? extends Member> members) {
         boolean isOccupied = false;
         for (int i = 0; i < members.size() && !isOccupied; i++) {
             if (members.get(i).occupies(nextCoordinate)) {
@@ -57,29 +49,24 @@ public class Arena
         return isOccupied;
     }
 
-    public Coordinate getMaxCoordinate()
-    {
+    public Coordinate getMaxCoordinate() {
         return maxCoordinate;
     }
 
-    public List<Snake> getSnakes()
-    {
+    public List<Snake> getSnakes() {
         return new ArrayList<>(snakes);
     }
 
-    public List<Food> getFood()
-    {
+    public List<Food> getFood() {
         return new ArrayList<>(food);
     }
 
-    protected void generateNewFood()
-    {
+    protected void generateNewFood() {
         Coordinate coordinate = generateRandomFreeCoordinate();
         food.add(new Food(coordinate));
     }
 
-    protected void removeFoodFromCollection(Coordinate nextCoordinate)
-    {
+    protected void removeFoodFromCollection(Coordinate nextCoordinate) {
         Iterator<Food> foodIterator = food.iterator();
         while (foodIterator.hasNext()) {
             Food food = foodIterator.next();
@@ -90,8 +77,7 @@ public class Arena
         }
     }
 
-    public Coordinate generateRandomFreeCoordinate()
-    {
+    public Coordinate generateRandomFreeCoordinate() {
         Random random = new Random();
         Coordinate coordinate;
         do {
@@ -103,10 +89,8 @@ public class Arena
     }
 
     @Override
-    public String toString()
-    {
-        return "Arena [snakes=" + snakes + ", food=" + food + ", maxCoordinate="
-                + maxCoordinate + "]";
+    public String toString() {
+        return "Arena [snakes=" + snakes + ", food=" + food + ", maxCoordinate=" + maxCoordinate + "]";
     }
 
 }

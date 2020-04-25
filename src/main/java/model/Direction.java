@@ -1,7 +1,6 @@
 package model;
 
 public enum Direction {
-
     NORTH(0, 1), EAST(1, 0), SOUTH(0, -1), WEST(-1, 0);
 
     private int diffX;
@@ -10,14 +9,6 @@ public enum Direction {
     private Direction(int xDiff, int yDiff) {
         this.diffX = xDiff;
         this.diffY = yDiff;
-    }
-
-    public int getDiffX() {
-        return diffX;
-    }
-
-    public int getDiffY() {
-        return diffY;
     }
 
     public static Direction getDirection(Arena arena, Coordinate start, Coordinate end, Coordinate maxCoordinate) {
@@ -30,7 +21,7 @@ public enum Direction {
             }
         }
         if (result == null) {
-        	throw new IllegalArgumentException("Not a neighbouring cell.");
+            throw new IllegalArgumentException("Not a neighbouring cell.");
         }
         return result;
     }
@@ -48,4 +39,11 @@ public enum Direction {
                 || (maxCoordinate + diff == directionDiff);
     }
 
+    public int getDiffX() {
+        return diffX;
+    }
+
+    public int getDiffY() {
+        return diffY;
+    }
 }

@@ -1,10 +1,12 @@
 package model.strategy.bono;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import model.Arena;
@@ -12,276 +14,229 @@ import model.Coordinate;
 import model.Direction;
 import model.Snake;
 import model.strategy.SnakeStrategy;
+import model.strategy.bono.closeddirectionsprocessors.ClosedDirectionsProcessor;
+import model.strategy.bono.directioncontainers.BlockingDirectionContainer;
+import model.strategy.bono.directioncontainers.SimpleDirectionContainer;
+import model.strategy.bono.newdirectionprocessors.DependencyProvider;
+import model.strategy.bono.newdirectionprocessors.NewDirectionProcessor;
 
-public class BonoStrategy implements SnakeStrategy
-{
-    private Snake snake;
+public class BonoStrategy implements SnakeStrategy {
+    private static final boolean PRINT_LOGS = true;
+
     private Arena arena;
+    private Snake snake;
+
+    private Coordinate actualHeadCoordinate;
+    private Coordinate foodCoordinate;
+    private Coordinate maxCoordinate;
+
+    private Printer printer = new Printer(PRINT_LOGS);
+
+    private Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
 
     @Override
-    public Direction nextMove(Snake snakeArgument, Arena arenaArgument)
-    {
-        // dummy commit for Jenkins testing. sorry.
-        System.out.println("JENKINS HAPPENS.");
-        snake = snakeArgument;
+    public Direction nextMove(Snake snakeArgument, Arena arenaArgument) {
         arena = arenaArgument;
+        snake = snakeArgument;
 
-        System.out.println("--- BEGIN " + snake.getName() + "---");
+        printer.print("--- BEGIN " + snake.getName() + "---");
 
-        Direction newDirection = Direction.SOUTH;
+        printer.print("Length: " + snake.length());
 
-        Coordinate actualHeadCoordinate = snake.getHeadCoordinate();
-        Coordinate foodCoordinate = arena.getFood().get(0).getCoordinate();
-        Coordinate maxCoordinate = arena.getMaxCoordinate();
+        actualHeadCoordinate = snake.getHeadCoordinate();
+        foodCoordinate = arena.getFood().get(0).getCoordinate();
+        maxCoordinate = arena.getMaxCoordinate();
 
-        DirectionData blockingDirectionsData = new DirectionData();
+        printer.print("Food: " + arena.getFood().get(0).getCoordinate());
+        printer.print("Head: " + actualHeadCoordinate);
 
-        Map<Integer, DirectionContainer<Direction>> distancesToFood = new TreeMap<>();
-        DirectionContainer<Direction> allValidDirections = new DirectionContainer<>();
-        DirectionContainer<Direction> equivalentBestDirections = new DirectionContainer<>();
+        Direction newDirection = process();
 
-        System.out.println("Head: " + snake.getHeadCoordinate());
-        System.out.println("Food: " + arena.getFood().get(0).getCoordinate());
-
-        for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena
-                    .nextCoordinate(actualHeadCoordinate, actualDirection);
-
-            if (!arena.isOccupied(nextCoordinate)) {
-                Coordinate coordinateToInvestigate = actualHeadCoordinate;
-                for (int i = 0; i < 49; i++) {
-                    coordinateToInvestigate = arena.nextCoordinate(
-                            coordinateToInvestigate, actualDirection);
-
-                    if (arena.isOccupied(coordinateToInvestigate)) {
-                        Snake blockingSnake = getBlockingSnake(
-                                coordinateToInvestigate);
-
-                        if (isValidBlock(actualHeadCoordinate, blockingSnake)) {
-                            int blockingTailLength = getBlockingTailLength(
-                                    coordinateToInvestigate, blockingSnake);
-
-                            DistanceProcessor distanceProcessor = DistanceProcessor
-                                    .getDistanceProcessor(actualDirection);
-                            int distance = distanceProcessor.getDistance(
-                                    actualHeadCoordinate,
-                                    coordinateToInvestigate, maxCoordinate);
-
-                            if (isBlockingRisk(distance, blockingTailLength)) {
-                                blockingDirectionsData.putData(actualDirection,
-                                        distance, coordinateToInvestigate);
-                            }
-                        }
-                    }
-                }
-
-                int actualDistanceToFood = nextCoordinate
-                        .minDistance(foodCoordinate, maxCoordinate);
-
-                if (distancesToFood.containsKey(actualDistanceToFood)) {
-                    DirectionContainer<Direction> directions = distancesToFood
-                            .get(actualDistanceToFood);
-                    directions.add(actualDirection);
-
-                    distancesToFood.put(actualDistanceToFood, directions);
-                } else {
-                    DirectionContainer<Direction> directions = new DirectionContainer<>();
-                    directions.add(actualDirection);
-
-                    distancesToFood.put(actualDistanceToFood, directions);
-                }
-            }
-        }
-
-        if (distancesToFood.size() > 0) {
-            List<DirectionContainer<Direction>> directionContainers = new ArrayList<>();
-            directionContainers.addAll(distancesToFood.values());
-
-            System.out.println("Directions: " + directionContainers);
-
-            for (DirectionContainer<Direction> directionContainer : directionContainers) {
-                allValidDirections.addAll(directionContainer);
-            }
-
-            System.out.println("All Valid Directions: " + allValidDirections);
-
-            equivalentBestDirections = directionContainers.get(0);
-
-            System.out.println(
-                    "Equivalent Best Directions: " + equivalentBestDirections);
-
-            if (blockingDirectionsData.size() > 0) {
-                System.out.println(
-                        "Blocking Directions: " + blockingDirectionsData);
-
-                DirectionContainer<Direction> freeEquivalentBestDirections = equivalentBestDirections
-                        .getAsNewObject();
-                freeEquivalentBestDirections
-                        .removeAll(blockingDirectionsData.getDirections());
-
-                if (freeEquivalentBestDirections.size() > 0) {
-                    newDirection = freeEquivalentBestDirections
-                            .getRandomElement();
-
-                    System.out.println(
-                            "Random element from the free equivalent best directions: "
-                                    + newDirection);
-                } else {
-                    DirectionContainer<Direction> freeValidDirections = allValidDirections
-                            .getAsNewObject();
-                    freeValidDirections
-                            .removeAll(blockingDirectionsData.getDirections());
-
-                    if (freeValidDirections.size() > 0) {
-                        newDirection = freeValidDirections.getRandomElement();
-
-                        System.out.println(
-                                "Random element from the free valid directions: "
-                                        + newDirection);
-                    } else {
-                        Map<Integer, DirectionContainer<Direction>> orderedBlockings = new TreeMap<>(
-                                Collections.reverseOrder());
-
-                        for (Map.Entry<Direction, Integer> entry : blockingDirectionsData
-                                .getDistanceToDirectionsEntrySet()) {
-                            if (orderedBlockings
-                                    .containsKey(entry.getValue())) {
-                                DirectionContainer<Direction> directionsTemp = orderedBlockings
-                                        .get(entry.getValue());
-                                directionsTemp.add(entry.getKey());
-
-                                orderedBlockings.put(entry.getValue(),
-                                        directionsTemp);
-                            } else {
-                                DirectionContainer<Direction> directionsTemp = new DirectionContainer<>();
-                                directionsTemp.add(entry.getKey());
-
-                                orderedBlockings.put(entry.getValue(),
-                                        directionsTemp);
-                            }
-                        }
-
-                        boolean foundNewDirection = false;
-                        Iterator<Map.Entry<Integer, DirectionContainer<Direction>>> orderedBlockingsEntrySetIterator = orderedBlockings
-                                .entrySet().iterator();
-                        while (!foundNewDirection
-                                && orderedBlockingsEntrySetIterator.hasNext()) {
-                            Map.Entry<Integer, DirectionContainer<Direction>> blockingsTemp = orderedBlockingsEntrySetIterator
-                                    .next();
-
-                            DirectionContainer<Direction> blockingDirectionsTemp = blockingsTemp
-                                    .getValue();
-
-                            int numOfTries = 0;
-                            Direction randomDirection;
-                            do {
-                                randomDirection = blockingDirectionsTemp
-                                        .getRandomElement();
-
-                                if (randomDirection != null) {
-                                    newDirection = randomDirection;
-                                    foundNewDirection = true;
-                                }
-
-                                numOfTries++;
-                            } while (!foundNewDirection || (allValidDirections
-                                    .contains(randomDirection)
-                                    && numOfTries < allValidDirections.size()));
-                        }
-
-                        System.out.println(
-                                "Weighted element by blocking distances: "
-                                        + newDirection);
-                    }
-                }
-            } else {
-                newDirection = equivalentBestDirections.getRandomElement();
-
-                System.out.println(
-                        "Random element from the equivalent best directions: "
-                                + newDirection);
-            }
-        } else {
-            System.out.println(
-                    "All directions are blocked directly. We are in deep shit.");
-        }
-
-        System.out.println("--- END " + snake.getName() + "---");
+        printer.print("--- END " + snake.getName() + "---");
 
         return newDirection;
     }
 
-    private boolean isBlockingRisk(int distance, int blockingTailLength)
-    {
-        return blockingTailLength >= distance;
+    private Direction process() {
+        SimpleDirectionContainer freeDirections = getFreeDirections();
+        SimpleDirectionContainer closedDirections = getClosedDirections();
+        SimpleDirectionContainer filteredDirections = getFilteredDirections(freeDirections, closedDirections);
+
+        BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(snake, arena, printer);
+        BlockingDirectionContainer blockingDirections = blockingDirectionProcessor.process(actualHeadCoordinate,
+                filteredDirections);
+
+        Map<Integer, SimpleDirectionContainer> distancesToFood = getDistancesToFood(filteredDirections);
+        SimpleDirectionContainer equivalentBestDirections = getEquivalentBestDirections(distancesToFood);
+
+        /**
+         * @todo implement Builder pattern.
+         */
+        DependencyProvider dependencyProvider = new DependencyProvider(arena, snake, blockingDirections,
+                filteredDirections, equivalentBestDirections, printer);
+
+        return getNewDirection(dependencyProvider);
     }
 
-    private int getBlockingTailLength(Coordinate nextCoordinateToInvestigate,
-            Snake blockingSnake)
-    {
-        boolean reachedTheBlockingPart = false;
-        int blockingTailLength = 0;
+    private SimpleDirectionContainer getFilteredDirections(SimpleDirectionContainer freeDirections,
+            SimpleDirectionContainer closedDirections) {
+        SimpleDirectionContainer filteredDirections = freeDirections.getAsNewObject();
+        filteredDirections.removeAll(closedDirections);
 
-        for (Coordinate actualBodyItem : blockingSnake.getBodyItems()) {
-            if (actualBodyItem.equals(nextCoordinateToInvestigate)) {
-                reachedTheBlockingPart = true;
-            }
+        printer.print("Filtered Directions: " + filteredDirections);
 
-            if (reachedTheBlockingPart) {
-                blockingTailLength++;
+        return filteredDirections;
+    }
+
+    private SimpleDirectionContainer getFreeDirections() {
+        SimpleDirectionContainer freeDirections = new SimpleDirectionContainer();
+
+        for (Direction actualDirection : Direction.values()) {
+            Coordinate nextCoordinate = arena.nextCoordinate(actualHeadCoordinate, actualDirection);
+
+            if (!arena.isOccupied(nextCoordinate)) {
+                freeDirections.add(actualDirection);
             }
         }
 
-        return blockingTailLength;
+        printer.print("Free Directions: " + freeDirections);
+
+        return freeDirections;
     }
 
-    private boolean isValidBlock(Coordinate actualHeadCoordinate,
-            Snake blockingSnake)
-    {
-        boolean validBlock = false;
+    private SimpleDirectionContainer getClosedDirections() {
+        SimpleDirectionContainer closedDirections = new SimpleDirectionContainer();
 
-        if (blockingSnake.equals(snake)) {
-            boolean allXsAreTheSame = true;
-            boolean allYsAreTheSame = true;
+        Map<Direction, Integer> freeCoordinatesCountByDirection = getFreeCoordinatesCountByDirection();
 
-            for (Coordinate actualBodyItem : snake.getBodyItems()) {
-                if (actualBodyItem.getX() != actualHeadCoordinate.getX()) {
-                    allXsAreTheSame = false;
-                }
-                if (actualBodyItem.getY() != actualHeadCoordinate.getY()) {
-                    allYsAreTheSame = false;
-                }
+        if (allAreTheSame(freeCoordinatesCountByDirection)) {
+            freeCoordinatesCountByDirection.clear();
+        }
+
+        closedDirections
+                .addAll(ClosedDirectionsProcessor.getStrategy().getClosedDirections(freeCoordinatesCountByDirection));
+
+        printer.print("Closed Directions: " + closedDirections);
+
+        return closedDirections;
+    }
+
+    private Map<Direction, Integer> getFreeCoordinatesCountByDirection() {
+        Map<Direction, Integer> freeCoordinatesCountByDirection = new HashMap<>();
+
+        SimpleDirectionContainer randomizableDirections = new SimpleDirectionContainer();
+        randomizableDirections.addAll(Arrays.asList(Direction.values()));
+
+        for (Direction actualDirection : randomizableDirections.getRandomizedElementsAsList()) {
+            Coordinate nextCoordinate = arena.nextCoordinate(actualHeadCoordinate, actualDirection);
+
+            if (!arena.isOccupied(nextCoordinate)) {
+                Integer freeCoordinatesCountForADirection = getFreeCoordinatesCountForADirection(nextCoordinate);
+
+                freeCoordinatesCountByDirection.put(actualDirection, freeCoordinatesCountForADirection);
             }
+        }
 
-            if ((!allXsAreTheSame && !allYsAreTheSame)
-                    || (allXsAreTheSame && snake.length() == arena
-                            .getMaxCoordinate().getY())
-                    || (allYsAreTheSame && snake.length() == arena
-                            .getMaxCoordinate().getX())) {
-                validBlock = true;
+        printer.print("Free Coordinates Count By Direction " + freeCoordinatesCountByDirection);
+
+        return freeCoordinatesCountByDirection;
+    }
+
+    private Integer getFreeCoordinatesCountForADirection(Coordinate headCoordinate) {
+        freeCoordinatesTemp.clear();
+
+        for (Direction actualDirection : Direction.values()) {
+            Coordinate nextCoordinate = arena.nextCoordinate(headCoordinate, actualDirection);
+
+            if (!arena.isOccupied(nextCoordinate)) {
+                processFreeCoordinatesTemp(nextCoordinate);
             }
+        }
+
+        return freeCoordinatesTemp.size();
+    }
+
+    private void processFreeCoordinatesTemp(Coordinate freeCoordinate) {
+        if (freeCoordinatesTemp.contains(freeCoordinate)) {
+            return;
         } else {
-            validBlock = true;
+            freeCoordinatesTemp.add(freeCoordinate);
         }
 
-        return validBlock;
+        for (Direction actualDirection : Direction.values()) {
+            Coordinate nextCoordinate = arena.nextCoordinate(freeCoordinate, actualDirection);
+
+            if (!arena.isOccupied(nextCoordinate)) {
+                processFreeCoordinatesTemp(nextCoordinate);
+            }
+        }
     }
 
-    private Snake getBlockingSnake(Coordinate blockingCoordinate)
-    {
-        Snake blockingSnake = null;
+    private boolean allAreTheSame(Map<Direction, Integer> freeCoordinatesCountByDirection) {
+        boolean allTheSame = true;
 
-        List<Snake> snakes = arena.getSnakes();
-        for (Snake actualSnake : snakes) {
-            List<Coordinate> bodyItems = actualSnake.getBodyItems();
+        Integer theCount = Integer.MIN_VALUE;
+        for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
+            if (theCount == Integer.MIN_VALUE) {
+                theCount = freeCoordinatesCountByDirection.get(direction);
+            } else if (!theCount.equals(freeCoordinatesCountByDirection.get(direction))) {
+                allTheSame = false;
+                break;
+            }
+        }
 
-            for (Coordinate bodyItem : bodyItems) {
-                if (bodyItem.equals(blockingCoordinate)) {
-                    blockingSnake = actualSnake;
+        return allTheSame;
+    }
+
+    private Map<Integer, SimpleDirectionContainer> getDistancesToFood(SimpleDirectionContainer filteredDirections) {
+        Map<Integer, SimpleDirectionContainer> distancesToFood = new TreeMap<>();
+
+        for (Direction actualDirection : filteredDirections) {
+            Coordinate nextCoordinate = arena.nextCoordinate(actualHeadCoordinate, actualDirection);
+
+            if (!arena.isOccupied(nextCoordinate)) {
+                int actualDistanceToFood = nextCoordinate.minDistance(foodCoordinate, maxCoordinate);
+
+                if (distancesToFood.containsKey(actualDistanceToFood)) {
+                    SimpleDirectionContainer directions = distancesToFood.get(actualDistanceToFood);
+                    directions.add(actualDirection);
+
+                    distancesToFood.put(actualDistanceToFood, directions);
+                } else {
+                    SimpleDirectionContainer directions = new SimpleDirectionContainer();
+                    directions.add(actualDirection);
+
+                    distancesToFood.put(actualDistanceToFood, directions);
                 }
             }
         }
 
-        return blockingSnake;
+        printer.print("Distances To Food: " + distancesToFood);
+
+        return distancesToFood;
+    }
+
+    private SimpleDirectionContainer getEquivalentBestDirections(Map<Integer, SimpleDirectionContainer> distancesToFood) {
+        List<SimpleDirectionContainer> directionContainers = new ArrayList<>();
+
+        if (!distancesToFood.isEmpty()) {
+            directionContainers.addAll(distancesToFood.values());
+        } else {
+            directionContainers.add(null);
+        }
+
+        SimpleDirectionContainer equivalentBestDirections = directionContainers.get(0);
+
+        printer.print("Equivalent Best Directions: " + equivalentBestDirections);
+
+        return equivalentBestDirections;
+    }
+
+    private Direction getNewDirection(DependencyProvider dependencyProvider) {
+        Direction newDirection = NewDirectionProcessor.processNewDirection(dependencyProvider);
+
+        printer.print("The Processed Direction: " + newDirection);
+
+        return newDirection;
     }
 }

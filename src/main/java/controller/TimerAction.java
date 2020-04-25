@@ -7,22 +7,22 @@ import model.SnakeDeadException;
 
 public class TimerAction implements ActionListener {
 
-	private SnakeController snakeController;
-	private boolean stop = false;
+    private SnakeController snakeController;
+    private boolean stop = false;
 
-	public TimerAction(SnakeController snakeController) {
-		this.snakeController = snakeController;
-	}
+    public TimerAction(SnakeController snakeController) {
+        this.snakeController = snakeController;
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		try {
-			if (!stop) {
-				snakeController.step();
-			}
-		} catch (SnakeDeadException ex) {
-			stop = true;
-			snakeController.stop();
-		}
-	}
+    public void actionPerformed(ActionEvent e) {
+        try {
+            if (!stop) {
+                snakeController.step();
+            }
+        } catch (SnakeDeadException ex) {
+            stop = true;
+            snakeController.stop();
+        }
+    }
 
 }

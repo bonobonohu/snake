@@ -5,7 +5,5 @@ import model.Direction;
 import model.Snake;
 
 public interface SnakeStrategy {
-
-	Direction nextMove(Snake snake, Arena arena);
-
+    Direction nextMove(Snake snake, Arena arena);
 }

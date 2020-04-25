@@ -1,7 +1,5 @@
 package model;
 
 public interface Member {
-
-	boolean occupies(Coordinate coordinate);
-	
+    boolean occupies(Coordinate coordinate);
 }

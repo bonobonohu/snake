@@ -1,12 +1,10 @@
-package model.strategy.bono;
+package model.strategy.bono.distanceprocessors;
 
 import model.Coordinate;
 
-public class EastLookingDistanceProcessor extends DistanceProcessor
-{
+public class EastLookingDistanceStrategy extends DistanceProcessor {
     public int getDistance(Coordinate actualCoordinate,
-            Coordinate blockingCoordinate, Coordinate maxCoordinate)
-    {
+            Coordinate blockingCoordinate, Coordinate maxCoordinate) {
         int distance = 0;
 
         if (actualCoordinate.getX() < blockingCoordinate.getX()) {

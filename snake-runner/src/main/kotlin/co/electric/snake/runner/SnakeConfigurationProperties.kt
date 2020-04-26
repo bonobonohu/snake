@@ -5,6 +5,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 @ConfigurationProperties(prefix = "snake")
 class SnakeConfigurationProperties {
 
-    var maxRound: Int = 5000
+    var maxRound: Int = 10000
 
 }

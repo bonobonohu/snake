@@ -1,7 +1,7 @@
 Snake Contest 2020
 
 Rules
-- The Snake that collects most food within 5000 rounds - wins
+- The Snake that collects most food within 10,000 (ten thousand) rounds - wins
 - Which Snake dies - loses, regardless of how much food it has collected
 - Which Snake throws an Exception - is disqualified
 

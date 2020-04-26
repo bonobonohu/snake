@@ -27,7 +27,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <snake-framework.version>1.0.0</snake-framework.version>
-        <snake-strategy-default.version>1.0.0</snake-strategy-default.version>
         <snake-strategy-bono.version>1.0.0</snake-strategy-bono.version>
 
         <argLine/>
@@ -83,11 +82,6 @@
             <groupId>co.electric.snake</groupId>
             <artifactId>snake-framework</artifactId>
             <version>${snake-framework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>co.electric.snake</groupId>
-            <artifactId>snake-strategy-default</artifactId>
-            <version>${snake-strategy-default.version}</version>
         </dependency>
         <dependency>
             <groupId>co.electric.snake</groupId>

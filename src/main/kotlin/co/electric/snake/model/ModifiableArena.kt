@@ -7,7 +7,7 @@ class ModifiableArena : Arena() {
     }
 
     fun move() {
-        printResultsIfNeeded()
+        logResultsIfNeeded()
         snakes.stream().forEach(ModifiableSnake::move)
         round++
     }

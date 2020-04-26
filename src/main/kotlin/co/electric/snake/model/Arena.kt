@@ -1,10 +1,13 @@
 package co.electric.snake.model
 
+import org.slf4j.LoggerFactory
 import java.util.*
 
 open class Arena {
 
     companion object {
+
+        private val LOG = LoggerFactory.getLogger(Arena::class.java)
 
         private const val MAX_ROUND = 5000
         private val MAX_COORDINATE = Coordinate(50, 50)
@@ -38,10 +41,10 @@ open class Arena {
         return coordinate
     }
 
-    protected fun printResultsIfNeeded() {
+    protected fun logResultsIfNeeded() {
         if (round == MAX_ROUND) {
             snakes.stream().forEach { snake ->
-                println(snake.name + ": " + snake.getLength())
+                LOG.info(snake.name + ": " + snake.getLength())
             }
         }
     }

@@ -1,9 +1,16 @@
 package co.electric.snake.model
 
 import co.electric.snake.model.strategy.SnakeStrategy
+import org.slf4j.LoggerFactory
 import java.util.*
 
 open class Snake(private val arena: ModifiableArena, private val strategy: SnakeStrategy, val name: String) : Member {
+
+    companion object {
+        private val LOG = LoggerFactory.getLogger(Snake::class.java)
+
+        private const val SNAKE_DIED_LOG_MESSAGE = "Snake died: {}"
+    }
 
     private val bodyItems: Deque<Coordinate> = LinkedList()
 
@@ -27,7 +34,7 @@ open class Snake(private val arena: ModifiableArena, private val strategy: Snake
             arena.removeFood(nextCoordinate)
         }
         if (arena.isOccupied(nextCoordinate)) {
-            println("Snake died: $name")
+            LOG.info(SNAKE_DIED_LOG_MESSAGE, name)
             throw SnakeDeadException()
         }
         bodyItems.addFirst(nextCoordinate)

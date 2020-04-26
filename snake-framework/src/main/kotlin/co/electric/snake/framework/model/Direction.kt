@@ -20,7 +20,7 @@ enum class Direction(val diffX: Int, val diffY: Int) {
             return check(xDiff, direction.diffX, maxCoordinate.x)
         }
 
-        fun getDirection(arena: Arena, start: Coordinate, end: Coordinate, maxCoordinate: Coordinate): Direction {
+        fun getDirection(start: Coordinate, end: Coordinate, maxCoordinate: Coordinate): Direction {
             var result: Direction? = null
             var i = 0
             while (i < values().size && result == null) {

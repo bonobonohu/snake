@@ -1,1 +1,4 @@
+debug: true
 
+snake:
+  max-round: 5000

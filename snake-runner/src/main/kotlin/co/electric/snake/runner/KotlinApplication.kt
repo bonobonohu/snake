@@ -1,23 +1,15 @@
 package co.electric.snake.runner
 
 import co.electric.snake.framework.controller.SnakeController
-import co.electric.snake.framework.model.ModifiableArena
-import co.electric.snake.framework.model.ModifiableSnake
-import co.electric.snake.strategy.bonostrategy.BonoStrategy
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 
 @SpringBootApplication
-class KotlinApplication : CommandLineRunner {
+class KotlinApplication(private val snakeController: SnakeController) : CommandLineRunner {
 
     override fun run(vararg args: String?) {
-        val arena = ModifiableArena()
-        val jack = ModifiableSnake(arena, BonoStrategy(), "Jack")
-        val jill = ModifiableSnake(arena, BonoStrategy(), "Jill")
-        arena.addSnake(jack)
-        arena.addSnake(jill)
-        SnakeController(arena).start()
+        snakeController.start()
     }
 
 }

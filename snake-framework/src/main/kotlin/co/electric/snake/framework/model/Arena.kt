@@ -1,15 +1,11 @@
 package co.electric.snake.framework.model
 
-import org.slf4j.LoggerFactory
 import java.util.*
 
 open class Arena {
 
     companion object {
 
-        private val LOG = LoggerFactory.getLogger(Arena::class.java)
-
-        private const val MAX_ROUND = 5000
         private val MAX_COORDINATE = Coordinate(50, 50)
 
     }
@@ -17,8 +13,6 @@ open class Arena {
     val maxCoordinate = MAX_COORDINATE
 
     protected val snakes: MutableList<ModifiableSnake> = ArrayList()
-
-    protected var round = 0
 
     private val food: MutableList<Food> = ArrayList()
 
@@ -39,14 +33,6 @@ open class Arena {
             coordinate = Coordinate(x, y)
         } while (isOccupied(coordinate) && !isFood(coordinate))
         return coordinate
-    }
-
-    protected fun logResultsIfNeeded() {
-        if (round == MAX_ROUND) {
-            snakes.stream().forEach { snake ->
-                LOG.info(snake.name + ": " + snake.getLength())
-            }
-        }
     }
 
     protected fun generateNewFood() {

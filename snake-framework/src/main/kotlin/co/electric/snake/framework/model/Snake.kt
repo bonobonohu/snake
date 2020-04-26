@@ -1,43 +1,18 @@
 package co.electric.snake.framework.model
 
 import co.electric.snake.framework.strategy.SnakeStrategy
-import org.slf4j.LoggerFactory
 import java.util.*
 
-open class Snake(private val arena: ModifiableArena, private val strategy: SnakeStrategy, val name: String) : Member {
+open class Snake(modifiableArena: ModifiableArena, private val snakeStrategy: SnakeStrategy, val name: String) : Member {
 
-    companion object {
-        private val LOG = LoggerFactory.getLogger(Snake::class.java)
-
-        private const val SNAKE_DIED_LOG_MESSAGE = "Snake died: {}"
-    }
-
-    private val bodyItems: Deque<Coordinate> = LinkedList()
+    protected val bodyItems: Deque<Coordinate> = LinkedList()
 
     init {
-        bodyItems.add(arena.generateRandomFreeCoordinate())
+        bodyItems.add(modifiableArena.generateRandomFreeCoordinate())
     }
 
     override fun occupies(coordinate: Coordinate): Boolean {
         return bodyItems.contains(coordinate)
-    }
-
-    protected fun decideNextCoordinate(): Coordinate {
-        val direction = strategy.nextMove(this, arena)
-        return arena.nextCoordinate(bodyItems.first, direction)
-    }
-
-    protected fun moveTo(coordinate: Coordinate) {
-        if (!arena.isFood(coordinate)) {
-            bodyItems.removeLast()
-        } else {
-            arena.removeFood(coordinate)
-        }
-        if (arena.isOccupied(coordinate)) {
-            LOG.info(SNAKE_DIED_LOG_MESSAGE, name)
-            throw SnakeDeadException()
-        }
-        bodyItems.addFirst(coordinate)
     }
 
     fun getBodyItemsInNewList(): List<Coordinate> {
@@ -57,7 +32,7 @@ open class Snake(private val arena: ModifiableArena, private val strategy: Snake
     }
 
     override fun toString(): String {
-        return "Snake [bodyItems=$bodyItems, strategy=$strategy]"
+        return "Snake [bodyItems=$bodyItems, snakeStrategy=$snakeStrategy]"
     }
 
 }

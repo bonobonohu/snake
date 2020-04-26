@@ -2,14 +2,12 @@ package co.electric.snake.framework.model
 
 class ModifiableArena : Arena() {
 
-    fun addSnake(snake: ModifiableSnake) {
-        snakes.add(snake)
+    fun addSnake(modifiableSnake: ModifiableSnake) {
+        snakes.add(modifiableSnake)
     }
 
     fun move() {
-        logResultsIfNeeded()
-        snakes.stream().forEach(ModifiableSnake::move)
-        round++
+        snakes.forEach(ModifiableSnake::move)
     }
 
     fun removeFood(coordinate: Coordinate) {

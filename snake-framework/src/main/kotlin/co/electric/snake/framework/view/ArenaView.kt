@@ -19,6 +19,9 @@ class ArenaView(private val arena: Arena) : JPanel() {
 
         private const val FONT = "SansSerif"
         private const val FONT_SIZE = 20
+        private const val SNAKE_NAME_X_COORDINATE = 30
+        private const val SNAKE_NAME_Y_COORDINATE = 30
+        private const val SNAKE_NAME_Y_OFFSET = 20
         private val AVAILABLE_COLORS = arrayOf(Color.BLUE, Color.MAGENTA, Color.YELLOW)
 
     }
@@ -37,9 +40,9 @@ class ArenaView(private val arena: Arena) : JPanel() {
         graphics.drawRect(PADDING, PADDING, POINT_SIZE * (maxCoordinate.x + 1), POINT_SIZE * (maxCoordinate.y + 1))
         for ((i, snake) in snakeViews.withIndex()) {
             snake.draw(graphics)
-            graphics.drawString(snake.snake.name + ": " + snake.snake.getBodyItemsInNewList().size, 30, 30 + 20 * i)
+            graphics.drawString(snake.snake.name + ": " + snake.snake.getBodyItemsInNewList().size, SNAKE_NAME_X_COORDINATE, SNAKE_NAME_Y_COORDINATE + SNAKE_NAME_Y_OFFSET * i)
         }
-        arena.getFoodInNewList().stream().forEach { food ->
+        arena.getFoodInNewList().forEach { food ->
             drawFood(food, graphics)
         }
         repaint()
@@ -47,7 +50,7 @@ class ArenaView(private val arena: Arena) : JPanel() {
 
     private fun generateSnakeViews() {
         var colorIndex = 0
-        arena.getSnakesInNewList().stream().forEach { snake ->
+        arena.getSnakesInNewList().forEach { snake ->
             snakeViews.add(SnakeView(snake, AVAILABLE_COLORS[colorIndex]))
             colorIndex = (colorIndex + 1) % AVAILABLE_COLORS.size
         }

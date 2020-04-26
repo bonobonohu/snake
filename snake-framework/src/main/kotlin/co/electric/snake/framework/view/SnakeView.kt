@@ -9,7 +9,7 @@ class SnakeView(val snake: Snake, private val color: Color) {
     fun draw(graphics: Graphics) {
         graphics.color = color
         var first = true
-        snake.getBodyItemsInNewList().stream().forEach { bodyItem ->
+        snake.getBodyItemsInNewList().forEach { bodyItem ->
             val x = ArenaView.PADDING + 1 + ArenaView.POINT_SIZE * bodyItem.x
             val y = ArenaView.PADDING + 1 + ArenaView.POINT_SIZE * bodyItem.y
             if (first) {

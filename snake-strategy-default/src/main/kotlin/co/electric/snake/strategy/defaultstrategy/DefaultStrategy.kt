@@ -4,7 +4,6 @@ import co.electric.snake.framework.model.Arena
 import co.electric.snake.framework.model.Direction
 import co.electric.snake.framework.model.Snake
 import co.electric.snake.framework.strategy.SnakeStrategy
-import java.util.*
 
 class DefaultStrategy : SnakeStrategy {
 
@@ -13,7 +12,7 @@ class DefaultStrategy : SnakeStrategy {
         val foodCoordinate = arena.getFoodInNewList()[0].coordinate
         var minDistance = Int.MAX_VALUE
         var bestDirection: Direction = Direction.WEST
-        Arrays.stream(Direction.values()).forEach { direction ->
+        Direction.values().forEach { direction ->
             val nextCoordinate = arena.nextCoordinate(startCoordinate, direction)
             val actualDistance = nextCoordinate.minDistance(foodCoordinate, arena.maxCoordinate)
             if (minDistance > actualDistance && !arena.isOccupied(nextCoordinate)) {

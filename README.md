@@ -8,6 +8,6 @@ Rules
 Your job
 - Implement SnakeStrategy interface (specifies direction of next move)
 - Set up your solution to auto-configure a ModifiableSnake Spring Bean with your SnakeStrategy in it
-- You can use any JVM language/framework you want
+- You can use any JVM language you want
 
 Good luck!

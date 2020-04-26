@@ -13,7 +13,6 @@
     <groupId>co.electric</groupId>
     <artifactId>snake</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
     <name>Snake</name>
     <description>Snake Project</description>

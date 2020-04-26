@@ -27,17 +27,17 @@ open class Snake(private val arena: ModifiableArena, private val strategy: Snake
         return arena.nextCoordinate(bodyItems.first, direction)
     }
 
-    protected fun moveTo(nextCoordinate: Coordinate) {
-        if (!arena.isFood(nextCoordinate)) {
+    protected fun moveTo(coordinate: Coordinate) {
+        if (!arena.isFood(coordinate)) {
             bodyItems.removeLast()
         } else {
-            arena.removeFood(nextCoordinate)
+            arena.removeFood(coordinate)
         }
-        if (arena.isOccupied(nextCoordinate)) {
+        if (arena.isOccupied(coordinate)) {
             LOG.info(SNAKE_DIED_LOG_MESSAGE, name)
             throw SnakeDeadException()
         }
-        bodyItems.addFirst(nextCoordinate)
+        bodyItems.addFirst(coordinate)
     }
 
     fun getBodyItemsInNewList(): List<Coordinate> {

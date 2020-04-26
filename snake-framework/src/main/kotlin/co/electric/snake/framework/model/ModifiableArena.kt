@@ -12,8 +12,8 @@ class ModifiableArena : Arena() {
         round++
     }
 
-    fun removeFood(nextCoordinate: Coordinate) {
-        removeFoodFromCollection(nextCoordinate)
+    fun removeFood(coordinate: Coordinate) {
+        removeFoodFromCollection(coordinate)
         generateNewFood()
     }
 

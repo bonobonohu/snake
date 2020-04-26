@@ -33,7 +33,7 @@ open class Snake(private val arena: ModifiableArena, private val strategy: Snake
         bodyItems.addFirst(nextCoordinate)
     }
 
-    fun getBodyItems(): List<Coordinate> {
+    fun getBodyItemsInNewList(): List<Coordinate> {
         return ArrayList(bodyItems)
     }
 

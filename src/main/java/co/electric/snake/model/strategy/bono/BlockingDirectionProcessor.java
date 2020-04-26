@@ -70,9 +70,9 @@ public class BlockingDirectionProcessor {
     private Snake getBlockingSnake(Coordinate blockingCoordinate) {
         Snake blockingSnake = null;
 
-        List<Snake> snakes = arena.getSnakes();
+        List<Snake> snakes = arena.getSnakesInNewList();
         for (Snake actualSnake : snakes) {
-            List<Coordinate> bodyItems = actualSnake.getBodyItems();
+            List<Coordinate> bodyItems = actualSnake.getBodyItemsInNewList();
 
             for (Coordinate bodyItem : bodyItems) {
                 if (bodyItem.equals(blockingCoordinate)) {
@@ -91,7 +91,7 @@ public class BlockingDirectionProcessor {
             boolean allXsAreTheSame = true;
             boolean allYsAreTheSame = true;
 
-            for (Coordinate actualBodyItem : snake.getBodyItems()) {
+            for (Coordinate actualBodyItem : snake.getBodyItemsInNewList()) {
                 if (actualBodyItem.getX() != actualHeadCoordinate.getX()) {
                     allXsAreTheSame = false;
                 }
@@ -115,7 +115,7 @@ public class BlockingDirectionProcessor {
         boolean reachedTheBlockingPart = false;
         int blockingTailLength = 0;
 
-        for (Coordinate actualBodyItem : blockingSnake.getBodyItems()) {
+        for (Coordinate actualBodyItem : blockingSnake.getBodyItemsInNewList()) {
             if (actualBodyItem.equals(nextCoordinateToInvestigate)) {
                 reachedTheBlockingPart = true;
             }

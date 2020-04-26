@@ -9,7 +9,7 @@ class DefaultStrategy : SnakeStrategy {
 
     override fun nextMove(snake: Snake, arena: Arena): Direction {
         val startCoordinate = snake.getHeadCoordinate()
-        val foodCoordinate = arena.food[0].coordinate
+        val foodCoordinate = arena.getFoodInNewList()[0].coordinate
         var minDistance = Int.MAX_VALUE
         var bestDirection: Direction = Direction.WEST
         Arrays.stream(Direction.values()).forEach { direction ->

@@ -18,7 +18,7 @@ public class SnakeView {
     public void draw(Graphics graphics) {
         graphics.setColor(color);
         boolean first = true;
-        for (Coordinate bodyItem : snake.getBodyItems()) {
+        for (Coordinate bodyItem : snake.getBodyItemsInNewList()) {
             int x = ArenaView.PADDING + 1 + ArenaView.POINT_SIZE * bodyItem.getX();
             int y = ArenaView.PADDING + 1 + ArenaView.POINT_SIZE * bodyItem.getY();
             if (first) {

@@ -38,9 +38,9 @@ public class ArenaView extends JPanel {
         int i = 0;
         for (SnakeView snake : snakeViews) {
             snake.draw(graphics);
-            graphics.drawString(snake.getSnake().getName() + ": " + snake.getSnake().getBodyItems().size(), 30, 30 + 20 * i++);
+            graphics.drawString(snake.getSnake().getName() + ": " + snake.getSnake().getBodyItemsInNewList().size(), 30, 30 + 20 * i++);
         }
-        for (Food food : arena.getFood()) {
+        for (Food food : arena.getFoodInNewList()) {
             drawFood(food, graphics);
         }
         repaint();
@@ -48,7 +48,7 @@ public class ArenaView extends JPanel {
 
     private void generateSnakeViews() {
         int colorIndex = 0;
-        for (Snake snake : arena.getSnakes()) {
+        for (Snake snake : arena.getSnakesInNewList()) {
             snakeViews.add(new SnakeView(snake, AVAILABLE_COLORS[colorIndex]));
             colorIndex = (colorIndex + 1) % AVAILABLE_COLORS.length;
         }

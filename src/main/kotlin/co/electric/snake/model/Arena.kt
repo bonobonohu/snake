@@ -5,8 +5,10 @@ import java.util.*
 open class Arena {
 
     companion object {
+
         private const val MAX_ROUND = 5000
         private val MAX_COORDINATE = Coordinate(50, 50)
+
     }
 
     val maxCoordinate = MAX_COORDINATE

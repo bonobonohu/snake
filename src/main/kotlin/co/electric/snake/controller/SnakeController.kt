@@ -10,12 +10,14 @@ import javax.swing.Timer
 class SnakeController(private val arena: ModifiableArena) {
 
     companion object {
+
         private const val WIDTH = 550
         private const val HEIGHT = 570
         private const val TITLE = "Snake"
         private const val DELAY_BETWEEN_STEPS = 1
 
         private val FRAME_SIZE = Dimension(WIDTH, HEIGHT)
+
     }
 
     private val frame = JFrame(TITLE)

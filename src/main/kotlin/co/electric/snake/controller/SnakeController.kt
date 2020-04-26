@@ -26,7 +26,7 @@ class SnakeController(private val arena: ModifiableArena) {
     private lateinit var arenaView: ArenaView
 
     init {
-        initArenaView(arena)
+        initView(arena)
         frame.isVisible = true
     }
 
@@ -44,7 +44,7 @@ class SnakeController(private val arena: ModifiableArena) {
         arenaView.repaint()
     }
 
-    private fun initArenaView(arena: Arena) {
+    private fun initView(arena: Arena) {
         arenaView = ArenaView(arena)
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         frame.add(arenaView)

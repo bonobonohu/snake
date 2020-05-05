@@ -16,42 +16,30 @@ public class BlockingDirectionContainer {
         if (directionHasDistance(direction)) {
             int storedDistanceToDirection = getDistanceByDirection(direction);
             if (distance < storedDistanceToDirection) {
-                if (coordinateHasDirection(coordinate)) {
-                    int storedDistanceToCoordinate = getDistanceByCoordinate(coordinate);
-
-                    if (distance <= storedDistanceToCoordinate) {
-                        removeDataByCoordinate(coordinate);
-
-                        putDistanceToDirection(direction, distance);
-                        putCoordinateToDirection(direction, coordinate);
-                        putDistanceToCoordinate(coordinate, distance);
-                        putDirectionToCoordinate(coordinate, direction);
-                    }
-                } else {
-                    putDistanceToDirection(direction, distance);
-                    putCoordinateToDirection(direction, coordinate);
-                    putDistanceToCoordinate(coordinate, distance);
-                    putDirectionToCoordinate(coordinate, direction);
-                }
+                doPut(direction, coordinate, distance);
             }
         } else {
-            if (coordinateHasDirection(coordinate)) {
-                int storedDistanceToCoordinate = getDistanceByCoordinate(coordinate);
+            doPut(direction, coordinate, distance);
+        }
+    }
 
-                if (distance <= storedDistanceToCoordinate) {
-                    removeDataByCoordinate(coordinate);
+    private void doPut(Direction direction, Coordinate coordinate, int distance) {
+        if (coordinateHasDirection(coordinate)) {
+            int storedDistanceToCoordinate = getDistanceByCoordinate(coordinate);
 
-                    putDistanceToDirection(direction, distance);
-                    putCoordinateToDirection(direction, coordinate);
-                    putDistanceToCoordinate(coordinate, distance);
-                    putDirectionToCoordinate(coordinate, direction);
-                }
-            } else {
+            if (distance <= storedDistanceToCoordinate) {
+                removeDataByCoordinate(coordinate);
+
                 putDistanceToDirection(direction, distance);
                 putCoordinateToDirection(direction, coordinate);
                 putDistanceToCoordinate(coordinate, distance);
                 putDirectionToCoordinate(coordinate, direction);
             }
+        } else {
+            putDistanceToDirection(direction, distance);
+            putCoordinateToDirection(direction, coordinate);
+            putDistanceToCoordinate(coordinate, distance);
+            putDirectionToCoordinate(coordinate, direction);
         }
     }
 

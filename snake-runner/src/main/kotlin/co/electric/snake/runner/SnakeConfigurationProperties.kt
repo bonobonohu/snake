@@ -6,5 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 class SnakeConfigurationProperties {
 
     var maxRound: Int = 10000
+    var stopWhenReachedMaxRound: Boolean = true
 
 }

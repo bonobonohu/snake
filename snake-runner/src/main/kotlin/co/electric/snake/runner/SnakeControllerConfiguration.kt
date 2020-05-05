@@ -16,7 +16,7 @@ class SnakeControllerConfiguration(private val snakeConfigurationProperties: Sna
         modifiableSnakes.forEach { modifiableSnake ->
             modifiableArena.addSnake(modifiableSnake)
         }
-        return SnakeController(modifiableArena, snakeConfigurationProperties.maxRound)
+        return SnakeController(modifiableArena, snakeConfigurationProperties.maxRound, snakeConfigurationProperties.stopWhenReachedMaxRound)
     }
 
 }

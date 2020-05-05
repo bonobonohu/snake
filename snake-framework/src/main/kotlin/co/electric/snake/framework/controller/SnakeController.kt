@@ -9,7 +9,7 @@ import java.awt.Dimension
 import javax.swing.JFrame
 import javax.swing.Timer
 
-class SnakeController(private val modifiableArena: ModifiableArena, private val maxRound: Int) {
+class SnakeController(private val modifiableArena: ModifiableArena, private val maxRound: Int, private val stopWhenReachedMaxRound: Boolean) {
 
     companion object {
 
@@ -68,7 +68,9 @@ class SnakeController(private val modifiableArena: ModifiableArena, private val 
             modifiableArena.getSnakesInNewList().forEach { snake ->
                 LOG.info("${snake.name}: ${snake.getLength()}")
             }
-            throw MaxRoundReachedException()
+            if (stopWhenReachedMaxRound) {
+                throw MaxRoundReachedException()
+            }
         }
     }
 

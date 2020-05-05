@@ -74,7 +74,7 @@ public class BonoStrategy implements SnakeStrategy {
 
     private SimpleDirectionContainer getFilteredDirections(SimpleDirectionContainer freeDirections,
                                                            SimpleDirectionContainer closedDirections) {
-        SimpleDirectionContainer filteredDirections = freeDirections.getAsNewObject();
+        SimpleDirectionContainer filteredDirections = freeDirections.getElementsInANewInstance();
         filteredDirections.removeAll(closedDirections);
 
         LOG.info("Filtered Directions: " + filteredDirections);
@@ -118,10 +118,7 @@ public class BonoStrategy implements SnakeStrategy {
     private Map<Direction, Integer> getFreeCoordinatesCountByDirection() {
         Map<Direction, Integer> freeCoordinatesCountByDirection = new HashMap<>();
 
-        SimpleDirectionContainer randomizableDirections = new SimpleDirectionContainer();
-        randomizableDirections.addAll(Arrays.asList(Direction.values()));
-
-        for (Direction actualDirection : randomizableDirections.getRandomizedElementsAsList()) {
+        for (Direction actualDirection : Direction.values()) {
             Coordinate nextCoordinate = arena.nextCoordinate(actualHeadCoordinate, actualDirection);
 
             if (!arena.isOccupied(nextCoordinate)) {
@@ -191,17 +188,14 @@ public class BonoStrategy implements SnakeStrategy {
             if (!arena.isOccupied(nextCoordinate)) {
                 int actualDistanceToFood = nextCoordinate.minDistance(foodCoordinate, maxCoordinate);
 
-                if (distancesToFood.containsKey(actualDistanceToFood)) {
-                    SimpleDirectionContainer directions = distancesToFood.get(actualDistanceToFood);
-                    directions.add(actualDirection);
-
-                    distancesToFood.put(actualDistanceToFood, directions);
+                SimpleDirectionContainer directions;
+                if (!distancesToFood.containsKey(actualDistanceToFood)) {
+                    directions = new SimpleDirectionContainer();
                 } else {
-                    SimpleDirectionContainer directions = new SimpleDirectionContainer();
-                    directions.add(actualDirection);
-
-                    distancesToFood.put(actualDistanceToFood, directions);
+                    directions = distancesToFood.get(actualDistanceToFood);
                 }
+                directions.add(actualDirection);
+                distancesToFood.put(actualDistanceToFood, directions);
             }
         }
 

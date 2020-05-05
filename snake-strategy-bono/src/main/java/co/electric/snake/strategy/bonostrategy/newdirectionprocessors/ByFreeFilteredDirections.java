@@ -18,7 +18,7 @@ public class ByFreeFilteredDirections extends NewDirectionProcessor {
         Direction newDirection = null;
 
         if (filteredDirections != null && !filteredDirections.isEmpty()) {
-            SimpleDirectionContainer freeFilteredDirections = filteredDirections.getAsNewObject();
+            SimpleDirectionContainer freeFilteredDirections = filteredDirections.getElementsInANewInstance();
             freeFilteredDirections.removeAll(blockingDirections.getDirections());
 
             newDirection = processFinalDirection(freeFilteredDirections);

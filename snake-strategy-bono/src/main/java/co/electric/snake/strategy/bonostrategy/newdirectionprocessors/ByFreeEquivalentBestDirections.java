@@ -18,7 +18,7 @@ public class ByFreeEquivalentBestDirections extends NewDirectionProcessor {
         Direction newDirection = null;
 
         if (equivalentBestDirections != null && !equivalentBestDirections.isEmpty()) {
-            SimpleDirectionContainer freeEquivalentBestDirections = equivalentBestDirections.getAsNewObject();
+            SimpleDirectionContainer freeEquivalentBestDirections = equivalentBestDirections.getElementsInANewInstance();
             freeEquivalentBestDirections.removeAll(blockingDirections.getDirections());
 
             newDirection = processFinalDirection(freeEquivalentBestDirections);

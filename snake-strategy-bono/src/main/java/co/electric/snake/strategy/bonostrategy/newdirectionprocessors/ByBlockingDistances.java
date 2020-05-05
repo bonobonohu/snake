@@ -3,10 +3,8 @@ package co.electric.snake.strategy.bonostrategy.newdirectionprocessors;
 import co.electric.snake.framework.model.Direction;
 import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirectionContainer;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class ByBlockingDistances extends NewDirectionProcessor {
 
@@ -18,9 +16,7 @@ public class ByBlockingDistances extends NewDirectionProcessor {
     public Direction getNewDirection() {
         Direction newDirection = null;
 
-        Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());
-
-        orderedBlockings = blockingDirections.getOrderedBlockings();
+        Map<Integer, SimpleDirectionContainer> orderedBlockings = blockingDirections.getOrderedBlockings();
 
         boolean foundNewDirection = false;
         Iterator<Map.Entry<Integer, SimpleDirectionContainer>> orderedBlockingsEntrySetIterator = orderedBlockings

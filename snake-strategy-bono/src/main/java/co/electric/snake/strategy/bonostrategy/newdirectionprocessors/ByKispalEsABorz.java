@@ -11,10 +11,10 @@ public class ByKispalEsABorz extends NewDirectionProcessor {
 
     @Override
     public Direction getNewDirection() {
-        Direction newDirection = null;
+        Direction newDirection;
 
         SimpleDirectionContainer kispalDirections = new SimpleDirectionContainer();
-        kispalDirections.add(Direction.NORTH);
+        kispalDirections.add(Direction.SOUTH);
 
         newDirection = processFinalDirection(kispalDirections);
 

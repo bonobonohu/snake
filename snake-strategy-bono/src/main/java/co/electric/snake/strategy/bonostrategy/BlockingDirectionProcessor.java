@@ -1,29 +1,29 @@
 package co.electric.snake.strategy.bonostrategy;
 
-import co.electric.snake.framework.model.Direction;
 import co.electric.snake.framework.model.Arena;
 import co.electric.snake.framework.model.Coordinate;
+import co.electric.snake.framework.model.Direction;
 import co.electric.snake.framework.model.Snake;
 import co.electric.snake.strategy.bonostrategy.directioncontainers.BlockingDirectionContainer;
 import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirectionContainer;
 import co.electric.snake.strategy.bonostrategy.distanceprocessors.DistanceProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class BlockingDirectionProcessor {
 
+    private static final Logger LOG = LoggerFactory.getLogger(BlockingDirectionProcessor.class);
+
     private Arena arena;
     private Snake snake;
 
-    private Printer printer;
-
     private Coordinate maxCoordinate;
 
-    public BlockingDirectionProcessor(Snake snake, Arena arena, Printer printer) {
+    public BlockingDirectionProcessor(Snake snake, Arena arena) {
         this.arena = arena;
         this.snake = snake;
-
-        this.printer = printer;
 
         maxCoordinate = arena.getMaxCoordinate();
     }
@@ -62,7 +62,7 @@ public class BlockingDirectionProcessor {
             }
         }
 
-        printer.print("Blocking Directions: " + blockingDirections);
+        LOG.info("Blocking Directions: " + blockingDirections);
 
         return blockingDirections;
     }

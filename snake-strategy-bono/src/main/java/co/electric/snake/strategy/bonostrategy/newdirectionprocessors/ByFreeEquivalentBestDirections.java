@@ -2,8 +2,12 @@ package co.electric.snake.strategy.bonostrategy.newdirectionprocessors;
 
 import co.electric.snake.framework.model.Direction;
 import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirectionContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ByFreeEquivalentBestDirections extends NewDirectionProcessor {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ByFreeEquivalentBestDirections.class);
 
     public ByFreeEquivalentBestDirections(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
@@ -19,7 +23,7 @@ public class ByFreeEquivalentBestDirections extends NewDirectionProcessor {
 
             newDirection = processFinalDirection(freeEquivalentBestDirections);
 
-            printer.print("Random element from the free equivalent best directions: " + newDirection);
+            LOG.info("Random element from the free equivalent best directions: " + newDirection);
         }
 
         return newDirection;

@@ -2,11 +2,15 @@ package co.electric.snake.strategy.bonostrategy.newdirectionprocessors;
 
 import co.electric.snake.framework.model.Direction;
 import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirectionContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.Map;
 
 public class ByBlockingDistances extends NewDirectionProcessor {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ByBlockingDistances.class);
 
     public ByBlockingDistances(DependencyProvider dependencyProvider) {
         super(dependencyProvider);
@@ -41,7 +45,7 @@ public class ByBlockingDistances extends NewDirectionProcessor {
                     && (filteredDirections.contains(finalDirection) && numOfTries < filteredDirections.size()));
         }
 
-        printer.print("Weighted element by blocking distances: " + newDirection);
+        LOG.info("Weighted element by blocking distances: " + newDirection);
 
         return newDirection;
     }

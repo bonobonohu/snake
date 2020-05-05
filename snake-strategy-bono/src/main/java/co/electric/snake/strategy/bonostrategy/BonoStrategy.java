@@ -1,21 +1,23 @@
 package co.electric.snake.strategy.bonostrategy;
 
+import co.electric.snake.framework.model.Arena;
 import co.electric.snake.framework.model.Coordinate;
 import co.electric.snake.framework.model.Direction;
-import co.electric.snake.framework.strategy.SnakeStrategy;
-import co.electric.snake.framework.model.Arena;
 import co.electric.snake.framework.model.Snake;
+import co.electric.snake.framework.strategy.SnakeStrategy;
 import co.electric.snake.strategy.bonostrategy.closeddirectionsprocessors.ClosedDirectionsProcessor;
 import co.electric.snake.strategy.bonostrategy.directioncontainers.BlockingDirectionContainer;
 import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirectionContainer;
 import co.electric.snake.strategy.bonostrategy.newdirectionprocessors.DependencyProvider;
 import co.electric.snake.strategy.bonostrategy.newdirectionprocessors.NewDirectionProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class BonoStrategy implements SnakeStrategy {
 
-    private static final boolean PRINT_LOGS = true;
+    private static final Logger LOG = LoggerFactory.getLogger(BonoStrategy.class);
 
     private Arena arena;
     private Snake snake;
@@ -24,8 +26,6 @@ public class BonoStrategy implements SnakeStrategy {
     private Coordinate foodCoordinate;
     private Coordinate maxCoordinate;
 
-    private Printer printer = new Printer(PRINT_LOGS);
-
     private Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
 
     @Override
@@ -33,20 +33,20 @@ public class BonoStrategy implements SnakeStrategy {
         arena = arenaArgument;
         snake = snakeArgument;
 
-        printer.print("--- BEGIN " + snake.getName() + "---");
+        LOG.info("--- BEGIN " + snake.getName() + "---");
 
-        printer.print("Length: " + snake.getLength());
+        LOG.info("Length: " + snake.getLength());
 
         actualHeadCoordinate = snake.getHeadCoordinate();
         foodCoordinate = arena.getFoodInNewList().get(0).getCoordinate();
         maxCoordinate = arena.getMaxCoordinate();
 
-        printer.print("Food: " + arena.getFoodInNewList().get(0).getCoordinate());
-        printer.print("Head: " + actualHeadCoordinate);
+        LOG.info("Food: " + arena.getFoodInNewList().get(0).getCoordinate());
+        LOG.info("Head: " + actualHeadCoordinate);
 
         Direction newDirection = process();
 
-        printer.print("--- END " + snake.getName() + "---");
+        LOG.info("--- END " + snake.getName() + "---");
 
         return newDirection;
     }
@@ -56,7 +56,7 @@ public class BonoStrategy implements SnakeStrategy {
         SimpleDirectionContainer closedDirections = getClosedDirections();
         SimpleDirectionContainer filteredDirections = getFilteredDirections(freeDirections, closedDirections);
 
-        BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(snake, arena, printer);
+        BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(snake, arena);
         BlockingDirectionContainer blockingDirections = blockingDirectionProcessor.process(actualHeadCoordinate,
                 filteredDirections);
 
@@ -67,7 +67,7 @@ public class BonoStrategy implements SnakeStrategy {
          * @todo implement Builder pattern.
          */
         DependencyProvider dependencyProvider = new DependencyProvider(arena, snake, blockingDirections,
-                filteredDirections, equivalentBestDirections, printer);
+                filteredDirections, equivalentBestDirections);
 
         return getNewDirection(dependencyProvider);
     }
@@ -77,7 +77,7 @@ public class BonoStrategy implements SnakeStrategy {
         SimpleDirectionContainer filteredDirections = freeDirections.getAsNewObject();
         filteredDirections.removeAll(closedDirections);
 
-        printer.print("Filtered Directions: " + filteredDirections);
+        LOG.info("Filtered Directions: " + filteredDirections);
 
         return filteredDirections;
     }
@@ -93,7 +93,7 @@ public class BonoStrategy implements SnakeStrategy {
             }
         }
 
-        printer.print("Free Directions: " + freeDirections);
+        LOG.info("Free Directions: " + freeDirections);
 
         return freeDirections;
     }
@@ -110,7 +110,7 @@ public class BonoStrategy implements SnakeStrategy {
         closedDirections
                 .addAll(ClosedDirectionsProcessor.getStrategy().getClosedDirections(freeCoordinatesCountByDirection));
 
-        printer.print("Closed Directions: " + closedDirections);
+        LOG.info("Closed Directions: " + closedDirections);
 
         return closedDirections;
     }
@@ -131,7 +131,7 @@ public class BonoStrategy implements SnakeStrategy {
             }
         }
 
-        printer.print("Free Coordinates Count By Direction " + freeCoordinatesCountByDirection);
+        LOG.info("Free Coordinates Count By Direction " + freeCoordinatesCountByDirection);
 
         return freeCoordinatesCountByDirection;
     }
@@ -205,7 +205,7 @@ public class BonoStrategy implements SnakeStrategy {
             }
         }
 
-        printer.print("Distances To Food: " + distancesToFood);
+        LOG.info("Distances To Food: " + distancesToFood);
 
         return distancesToFood;
     }
@@ -221,7 +221,7 @@ public class BonoStrategy implements SnakeStrategy {
 
         SimpleDirectionContainer equivalentBestDirections = directionContainers.get(0);
 
-        printer.print("Equivalent Best Directions: " + equivalentBestDirections);
+        LOG.info("Equivalent Best Directions: " + equivalentBestDirections);
 
         return equivalentBestDirections;
     }
@@ -229,7 +229,7 @@ public class BonoStrategy implements SnakeStrategy {
     private Direction getNewDirection(DependencyProvider dependencyProvider) {
         Direction newDirection = NewDirectionProcessor.processNewDirection(dependencyProvider);
 
-        printer.print("The Processed Direction: " + newDirection);
+        LOG.info("The Processed Direction: " + newDirection);
 
         return newDirection;
     }

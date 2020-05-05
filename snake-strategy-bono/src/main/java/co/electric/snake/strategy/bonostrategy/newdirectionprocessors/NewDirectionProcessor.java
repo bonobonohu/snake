@@ -1,7 +1,6 @@
 package co.electric.snake.strategy.bonostrategy.newdirectionprocessors;
 
 import co.electric.snake.framework.model.Direction;
-import co.electric.snake.strategy.bonostrategy.Printer;
 import co.electric.snake.strategy.bonostrategy.directioncontainers.BlockingDirectionContainer;
 import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirectionContainer;
 
@@ -14,14 +13,10 @@ public abstract class NewDirectionProcessor {
     protected SimpleDirectionContainer equivalentBestDirections;
     protected SimpleDirectionContainer filteredDirections;
 
-    protected Printer printer;
-
     public NewDirectionProcessor(DependencyProvider dependencyProvider) {
         this.blockingDirections = dependencyProvider.getBlockingDirectionsDataHandler();
         this.equivalentBestDirections = dependencyProvider.getEquivalentBestDirections();
         this.filteredDirections = dependencyProvider.getFilteredDirections();
-
-        this.printer = dependencyProvider.getPrinter();
     }
 
     public static Direction processNewDirection(DependencyProvider dependencyProvider) {

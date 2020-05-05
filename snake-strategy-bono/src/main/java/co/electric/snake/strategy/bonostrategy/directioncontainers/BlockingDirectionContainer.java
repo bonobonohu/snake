@@ -121,10 +121,6 @@ public class BlockingDirectionContainer {
         return coordinateToDirection.containsValue(coordinate);
     }
 
-    public int size() {
-        return distanceToDirection.size();
-    }
-
     public Map<Integer, SimpleDirectionContainer> getOrderedBlockings() {
         Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());
 

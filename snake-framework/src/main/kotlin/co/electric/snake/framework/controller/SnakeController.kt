@@ -48,6 +48,7 @@ class SnakeController(private val modifiableArena: ModifiableArena, private val 
     }
 
     fun step() {
+        LOG.info("___ Round: $round ___")
         checkIfMaxRoundReached()
         modifiableArena.move()
         round++

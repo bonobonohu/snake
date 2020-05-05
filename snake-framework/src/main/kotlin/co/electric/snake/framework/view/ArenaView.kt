@@ -15,8 +15,6 @@ class ArenaView(private val arena: Arena) : JPanel() {
         const val PADDING = 10
         const val POINT_SIZE = 10
 
-        private const val serialVersionUID = 1L
-
         private const val FONT = "SansSerif"
         private const val FONT_SIZE = 20
         private const val SNAKE_NAME_X_COORDINATE = 30

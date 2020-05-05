@@ -9,8 +9,6 @@ import java.util.Random;
 
 public class SimpleDirectionContainer extends HashSet<Direction> {
 
-    private static final long serialVersionUID = -7360462751577910244L;
-
     public Direction getRandomElement() {
         List<Direction> elements = new ArrayList<>(this);
         Random randomIndex = new Random();

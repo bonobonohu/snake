@@ -31,8 +31,6 @@ public abstract class NewDirectionProcessor {
          * @todo implement real Chain of Responsibility pattern, in which every link says which one is the next following it!
          */
         List<NewDirectionProcessor> newDirectionProcessors = new ArrayList<>();
-        // newDirectionProcessors
-        // .add(new ByEquivalentBestDirections(dependencyProvider));
         newDirectionProcessors.add(new ByFreeEquivalentBestDirections(dependencyProvider));
         newDirectionProcessors.add(new ByFreeFilteredDirections(dependencyProvider));
         newDirectionProcessors.add(new ByBlockingDistances(dependencyProvider));

@@ -29,6 +29,10 @@ public class BlockingDirectionContainer {
         return orderedBlockings;
     }
 
+    public Set<Direction> getDirections() {
+        return distanceToDirection.keySet();
+    }
+
     public void putData(Direction direction, Coordinate coordinate, int distance) {
         if (directionHasDistance(direction)) {
             int storedDistanceToDirection = getDistanceByDirection(direction);
@@ -111,10 +115,6 @@ public class BlockingDirectionContainer {
 
     private Direction getDirectionByCoordinate(Coordinate coordinate) {
         return directionToCoordinate.get(coordinate);
-    }
-
-    public Set<Direction> getDirections() {
-        return distanceToDirection.keySet();
     }
 
     private boolean directionHasDistance(Direction direction) {

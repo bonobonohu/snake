@@ -16,17 +16,14 @@ public class BlockingDirectionContainer {
         Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());
 
         for (Map.Entry<Direction, Integer> entry : distanceToDirection.entrySet()) {
+            SimpleDirectionContainer directionsTemp;
             if (orderedBlockings.containsKey(entry.getValue())) {
-                SimpleDirectionContainer directionsTemp = orderedBlockings.get(entry.getValue());
-                directionsTemp.add(entry.getKey());
-
-                orderedBlockings.put(entry.getValue(), directionsTemp);
+                directionsTemp = orderedBlockings.get(entry.getValue());
             } else {
-                SimpleDirectionContainer directionsTemp = new SimpleDirectionContainer();
-                directionsTemp.add(entry.getKey());
-
-                orderedBlockings.put(entry.getValue(), directionsTemp);
+                directionsTemp = new SimpleDirectionContainer();
             }
+            directionsTemp.add(entry.getKey());
+            orderedBlockings.put(entry.getValue(), directionsTemp);
         }
 
         return orderedBlockings;

@@ -17,10 +17,10 @@ public class BlockingDirectionContainer {
 
         for (Map.Entry<Direction, Integer> entry : distanceToDirection.entrySet()) {
             SimpleDirectionContainer directionsTemp;
-            if (orderedBlockings.containsKey(entry.getValue())) {
-                directionsTemp = orderedBlockings.get(entry.getValue());
-            } else {
+            if (!orderedBlockings.containsKey(entry.getValue())) {
                 directionsTemp = new SimpleDirectionContainer();
+            } else {
+                directionsTemp = orderedBlockings.get(entry.getValue());
             }
             directionsTemp.add(entry.getKey());
             orderedBlockings.put(entry.getValue(), directionsTemp);
@@ -41,7 +41,12 @@ public class BlockingDirectionContainer {
     }
 
     private void doPut(Direction direction, Coordinate coordinate, int distance) {
-        if (coordinateHasDirection(coordinate)) {
+        if (!coordinateHasDirection(coordinate)) {
+            putDistanceToDirection(direction, distance);
+            putCoordinateToDirection(direction, coordinate);
+            putDistanceToCoordinate(coordinate, distance);
+            putDirectionToCoordinate(coordinate, direction);
+        } else {
             int storedDistanceToCoordinate = getDistanceByCoordinate(coordinate);
 
             if (distance <= storedDistanceToCoordinate) {
@@ -52,11 +57,6 @@ public class BlockingDirectionContainer {
                 putDistanceToCoordinate(coordinate, distance);
                 putDirectionToCoordinate(coordinate, direction);
             }
-        } else {
-            putDistanceToDirection(direction, distance);
-            putCoordinateToDirection(direction, coordinate);
-            putDistanceToCoordinate(coordinate, distance);
-            putDirectionToCoordinate(coordinate, direction);
         }
     }
 
@@ -67,7 +67,6 @@ public class BlockingDirectionContainer {
         removeFromCoordinateToDirection(directionToCoordinate);
         removeFromDistanceToCoordinate(coordinate);
         removeFromDirectionToCoordinate(coordinate);
-
     }
 
     private void removeFromDistanceToDirection(Direction direction) {

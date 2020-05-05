@@ -12,14 +12,9 @@ public class SimpleDirectionContainer extends HashSet<Direction> {
     private static final long serialVersionUID = -7360462751577910244L;
 
     public Direction getRandomElement() {
-        List<Direction> elements = new ArrayList<>();
+        List<Direction> elements = new ArrayList<>(this);
         Random randomIndex = new Random();
-
-        elements.addAll(this);
-
-        Direction returnElement = !elements.isEmpty() ? elements.get(randomIndex.nextInt(elements.size())) : null;
-
-        return returnElement;
+        return !elements.isEmpty() ? elements.get(randomIndex.nextInt(elements.size())) : null;
     }
 
     public List<Direction> getRandomizedElementsAsList() {

@@ -7,10 +7,30 @@ import java.util.*;
 
 public class BlockingDirectionContainer {
 
-    private Map<Direction, Integer> distanceToDirection = new HashMap<>();
-    private Map<Direction, Coordinate> coordinateToDirection = new HashMap<>();
-    private Map<Coordinate, Integer> distanceToCoordinate = new HashMap<>();
-    private Map<Coordinate, Direction> directionToCoordinate = new HashMap<>();
+    private final Map<Direction, Integer> distanceToDirection = new HashMap<>();
+    private final Map<Direction, Coordinate> coordinateToDirection = new HashMap<>();
+    private final Map<Coordinate, Integer> distanceToCoordinate = new HashMap<>();
+    private final Map<Coordinate, Direction> directionToCoordinate = new HashMap<>();
+
+    public Map<Integer, SimpleDirectionContainer> getOrderedBlockings() {
+        Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());
+
+        for (Map.Entry<Direction, Integer> entry : distanceToDirection.entrySet()) {
+            if (orderedBlockings.containsKey(entry.getValue())) {
+                SimpleDirectionContainer directionsTemp = orderedBlockings.get(entry.getValue());
+                directionsTemp.add(entry.getKey());
+
+                orderedBlockings.put(entry.getValue(), directionsTemp);
+            } else {
+                SimpleDirectionContainer directionsTemp = new SimpleDirectionContainer();
+                directionsTemp.add(entry.getKey());
+
+                orderedBlockings.put(entry.getValue(), directionsTemp);
+            }
+        }
+
+        return orderedBlockings;
+    }
 
     public void putData(Direction direction, Coordinate coordinate, int distance) {
         if (directionHasDistance(direction)) {
@@ -109,26 +129,7 @@ public class BlockingDirectionContainer {
         return coordinateToDirection.containsValue(coordinate);
     }
 
-    public Map<Integer, SimpleDirectionContainer> getOrderedBlockings() {
-        Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());
-
-        for (Map.Entry<Direction, Integer> entry : distanceToDirection.entrySet()) {
-            if (orderedBlockings.containsKey(entry.getValue())) {
-                SimpleDirectionContainer directionsTemp = orderedBlockings.get(entry.getValue());
-                directionsTemp.add(entry.getKey());
-
-                orderedBlockings.put(entry.getValue(), directionsTemp);
-            } else {
-                SimpleDirectionContainer directionsTemp = new SimpleDirectionContainer();
-                directionsTemp.add(entry.getKey());
-
-                orderedBlockings.put(entry.getValue(), directionsTemp);
-            }
-        }
-
-        return orderedBlockings;
-    }
-
+    @Override
     public String toString() {
         return "DirectionData [distanceToDirection=" + distanceToDirection + ", coordinateToDirection="
                 + coordinateToDirection + "]";

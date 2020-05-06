@@ -5,16 +5,15 @@ import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirecti
 
 import java.util.Map;
 
-public class MinimumsExceptZerosAndZerosStrategy extends ClosedDirectionsProcessor {
+public class MinimumsExceptZerosAndZerosClosedDirectionsProcessor extends ClosedDirectionsProcessor {
 
     @Override
-    public SimpleDirectionContainer getClosedDirections(Map<Direction, Integer> freeCoordinatesCountByDirection) {
+    SimpleDirectionContainer getClosedDirections(Map<Direction, Integer> freeCoordinatesCountByDirection) {
         SimpleDirectionContainer minimumExceptZeroAndZeroDirections = new SimpleDirectionContainer();
 
         SimpleDirectionContainer zeroDirections = getZeroDirections(freeCoordinatesCountByDirection);
 
-        SimpleDirectionContainer minimumExceptZeroDirections = getMinimumExceptZeroDirections(
-                freeCoordinatesCountByDirection);
+        SimpleDirectionContainer minimumExceptZeroDirections = getMinimumExceptZeroDirections(freeCoordinatesCountByDirection);
 
         minimumExceptZeroAndZeroDirections.addAll(zeroDirections);
 

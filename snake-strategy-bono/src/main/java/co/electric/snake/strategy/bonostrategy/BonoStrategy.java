@@ -26,7 +26,11 @@ public class BonoStrategy implements SnakeStrategy {
     private Coordinate foodCoordinate;
     private Coordinate maxCoordinate;
 
-    private Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
+    private ClosedDirectionsProcessor closedDirectionsProcessor;
+
+    public BonoStrategy(ClosedDirectionsProcessor closedDirectionsProcessor) {
+        this.closedDirectionsProcessor = closedDirectionsProcessor;
+    }
 
     @Override
     public Direction nextMove(Snake snakeArgument, Arena arenaArgument) {
@@ -53,7 +57,7 @@ public class BonoStrategy implements SnakeStrategy {
 
     private Direction process() {
         SimpleDirectionContainer freeDirections = getFreeDirections();
-        SimpleDirectionContainer closedDirections = getClosedDirections();
+        SimpleDirectionContainer closedDirections = closedDirectionsProcessor.getClosedDirections(arena, actualHeadCoordinate);
         SimpleDirectionContainer filteredDirections = getFilteredDirections(freeDirections, closedDirections);
 
         BlockingDirectionProcessor blockingDirectionProcessor = new BlockingDirectionProcessor(snake, arena);
@@ -96,87 +100,6 @@ public class BonoStrategy implements SnakeStrategy {
         LOG.info("Free Directions: " + freeDirections);
 
         return freeDirections;
-    }
-
-    private SimpleDirectionContainer getClosedDirections() {
-        SimpleDirectionContainer closedDirections = new SimpleDirectionContainer();
-
-        Map<Direction, Integer> freeCoordinatesCountByDirection = getFreeCoordinatesCountByDirection();
-
-        if (allAreTheSame(freeCoordinatesCountByDirection)) {
-            freeCoordinatesCountByDirection.clear();
-        }
-
-        closedDirections
-                .addAll(ClosedDirectionsProcessor.getStrategy().getClosedDirections(freeCoordinatesCountByDirection));
-
-        LOG.info("Closed Directions: " + closedDirections);
-
-        return closedDirections;
-    }
-
-    private Map<Direction, Integer> getFreeCoordinatesCountByDirection() {
-        Map<Direction, Integer> freeCoordinatesCountByDirection = new HashMap<>();
-
-        for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena.nextCoordinate(actualHeadCoordinate, actualDirection);
-
-            if (!arena.isOccupied(nextCoordinate)) {
-                Integer freeCoordinatesCountForADirection = getFreeCoordinatesCountForADirection(nextCoordinate);
-
-                freeCoordinatesCountByDirection.put(actualDirection, freeCoordinatesCountForADirection);
-            }
-        }
-
-        LOG.info("Free Coordinates Count By Direction " + freeCoordinatesCountByDirection);
-
-        return freeCoordinatesCountByDirection;
-    }
-
-    private Integer getFreeCoordinatesCountForADirection(Coordinate headCoordinate) {
-        freeCoordinatesTemp.clear();
-
-        for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena.nextCoordinate(headCoordinate, actualDirection);
-
-            if (!arena.isOccupied(nextCoordinate)) {
-                processFreeCoordinatesTemp(nextCoordinate);
-            }
-        }
-
-        return freeCoordinatesTemp.size();
-    }
-
-    private void processFreeCoordinatesTemp(Coordinate freeCoordinate) {
-        if (freeCoordinatesTemp.contains(freeCoordinate)) {
-            return;
-        } else {
-            freeCoordinatesTemp.add(freeCoordinate);
-        }
-
-        for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena.nextCoordinate(freeCoordinate, actualDirection);
-
-            if (!arena.isOccupied(nextCoordinate)) {
-                processFreeCoordinatesTemp(nextCoordinate);
-            }
-        }
-    }
-
-    private boolean allAreTheSame(Map<Direction, Integer> freeCoordinatesCountByDirection) {
-        boolean allTheSame = true;
-
-        Integer theCount = Integer.MIN_VALUE;
-        for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
-            if (theCount == Integer.MIN_VALUE) {
-                theCount = freeCoordinatesCountByDirection.get(direction);
-            } else if (!theCount.equals(freeCoordinatesCountByDirection.get(direction))) {
-                allTheSame = false;
-                break;
-            }
-        }
-
-        return allTheSame;
     }
 
     private Map<Integer, SimpleDirectionContainer> getDistancesToFood(SimpleDirectionContainer filteredDirections) {

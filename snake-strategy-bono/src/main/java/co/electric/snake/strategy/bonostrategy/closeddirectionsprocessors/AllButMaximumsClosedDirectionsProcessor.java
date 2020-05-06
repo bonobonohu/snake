@@ -5,10 +5,10 @@ import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirecti
 
 import java.util.Map;
 
-public class AllButMaximumsStrategy extends ClosedDirectionsProcessor {
+public class AllButMaximumsClosedDirectionsProcessor extends ClosedDirectionsProcessor {
 
     @Override
-    public SimpleDirectionContainer getClosedDirections(Map<Direction, Integer> freeCoordinatesCountByDirection) {
+    SimpleDirectionContainer getClosedDirections(Map<Direction, Integer> freeCoordinatesCountByDirection) {
         SimpleDirectionContainer allButMaximumDirections = new SimpleDirectionContainer();
 
         Integer maxCount = Integer.MIN_VALUE;

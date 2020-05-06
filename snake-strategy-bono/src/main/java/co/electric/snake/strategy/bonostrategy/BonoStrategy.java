@@ -67,9 +67,6 @@ public class BonoStrategy implements SnakeStrategy {
         Map<Integer, SimpleDirectionContainer> distancesToFood = getDistancesToFood(filteredDirections);
         SimpleDirectionContainer equivalentBestDirections = getEquivalentBestDirections(distancesToFood);
 
-        /**
-         * @todo implement Builder pattern.
-         */
         DependencyProvider dependencyProvider = new DependencyProvider(arena, snake, blockingDirections,
                 filteredDirections, equivalentBestDirections);
 

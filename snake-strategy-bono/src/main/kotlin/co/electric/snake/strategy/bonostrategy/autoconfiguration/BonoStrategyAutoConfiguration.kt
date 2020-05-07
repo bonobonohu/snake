@@ -3,26 +3,42 @@ package co.electric.snake.strategy.bonostrategy.autoconfiguration
 import co.electric.snake.framework.model.ModifiableArena
 import co.electric.snake.framework.model.ModifiableSnake
 import co.electric.snake.strategy.bonostrategy.BonoStrategy
-import co.electric.snake.strategy.bonostrategy.closeddirectionsprocessors.AllButMaximumsClosedDirectionsProcessor
-import co.electric.snake.strategy.bonostrategy.closeddirectionsprocessors.ClosedDirectionsProcessor
+import co.electric.snake.strategy.bonostrategy.directionprocessor.BlockingDirectionsProcessor
+import co.electric.snake.strategy.bonostrategy.directionprocessor.BlockingDirectionsProcessorConfiguration
+import co.electric.snake.strategy.bonostrategy.directionprocessor.EquivalentBestDirectionsProcessor
+import co.electric.snake.strategy.bonostrategy.directionprocessor.EquivalentBestDirectionsProcessorConfiguration
+import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.FilteredDirectionsProcessor
+import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.FilteredDirectionsProcessorConfiguration
+import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessor
+import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorChain
+import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorsConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 
 @Configuration
+@Import(
+        FilteredDirectionsProcessorConfiguration::class,
+        EquivalentBestDirectionsProcessorConfiguration::class,
+        BlockingDirectionsProcessorConfiguration::class,
+        NewDirectionProcessorsConfiguration::class
+)
 class BonoStrategyAutoConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
-    fun closedDirectionsProcessor(): ClosedDirectionsProcessor {
-        return AllButMaximumsClosedDirectionsProcessor()
-    }
-
-    @ConditionalOnMissingBean
-    @Bean
-    fun bonoStrategy(closedDirectionsProcessor: ClosedDirectionsProcessor): BonoStrategy {
-        return BonoStrategy(closedDirectionsProcessor)
+    fun bonoStrategy(
+            filteredDirectionsProcessor: FilteredDirectionsProcessor,
+            equivalentBestDirectionsProcessor: EquivalentBestDirectionsProcessor,
+            blockingDirectionsProcessor: BlockingDirectionsProcessor,
+            newDirectionProcessorChain: NewDirectionProcessorChain
+    ): BonoStrategy {
+        return BonoStrategy(
+                filteredDirectionsProcessor, equivalentBestDirectionsProcessor, blockingDirectionsProcessor,
+                newDirectionProcessorChain
+        )
     }
 
     @ConditionalOnBean(name = ["modifiableArena"])

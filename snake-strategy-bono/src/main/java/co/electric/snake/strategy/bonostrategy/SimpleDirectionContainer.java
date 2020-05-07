@@ -1,4 +1,4 @@
-package co.electric.snake.strategy.bonostrategy.directioncontainers;
+package co.electric.snake.strategy.bonostrategy;
 
 import co.electric.snake.framework.model.Direction;
 

@@ -1,14 +1,14 @@
-package co.electric.snake.strategy.bonostrategy.closeddirectionsprocessors;
+package co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.closeddirections;
 
 import co.electric.snake.framework.model.Direction;
-import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirectionContainer;
+import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer;
 
 import java.util.Map;
 
 public class AllButMaximumsClosedDirectionsProcessor extends ClosedDirectionsProcessor {
 
     @Override
-    SimpleDirectionContainer getClosedDirections(Map<Direction, Integer> freeCoordinatesCountByDirection) {
+    SimpleDirectionContainer getDirections(Map<Direction, Integer> freeCoordinatesCountByDirection) {
         SimpleDirectionContainer allButMaximumDirections = new SimpleDirectionContainer();
 
         Integer maxCount = Integer.MIN_VALUE;

@@ -1,8 +1,8 @@
-package co.electric.snake.strategy.bonostrategy.distanceprocessors;
+package co.electric.snake.strategy.bonostrategy.distanceprocessor;
 
 import co.electric.snake.framework.model.Coordinate;
 
-public class SouthLookingDistanceStrategy extends DistanceProcessor {
+public class SouthLookingDistanceProcessor extends DistanceProcessor {
 
     public int getDistance(Coordinate actualCoordinate,
                            Coordinate blockingCoordinate, Coordinate maxCoordinate) {

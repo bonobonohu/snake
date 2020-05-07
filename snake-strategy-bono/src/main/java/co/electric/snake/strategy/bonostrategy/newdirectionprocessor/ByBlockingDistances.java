@@ -1,24 +1,24 @@
-package co.electric.snake.strategy.bonostrategy.newdirectionprocessors;
+package co.electric.snake.strategy.bonostrategy.newdirectionprocessor;
 
 import co.electric.snake.framework.model.Direction;
-import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirectionContainer;
+import co.electric.snake.strategy.bonostrategy.BlockingDirectionContainer;
+import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.Map;
 
-public class ByBlockingDistances extends NewDirectionProcessor {
+public class ByBlockingDistances implements NewDirectionProcessor {
+
+    private static final int ORDER = 3;
 
     private static final Logger LOG = LoggerFactory.getLogger(ByBlockingDistances.class);
 
-    public ByBlockingDistances(DependencyProvider dependencyProvider) {
-        super(dependencyProvider);
-    }
-
     @Override
-    public Direction getNewDirection() {
+    public Direction process(SimpleDirectionContainer filteredDirections, SimpleDirectionContainer equivalentBestDirections, BlockingDirectionContainer blockingDirections) {
         Direction newDirection = null;
+        SimpleDirectionContainer foundNewDirections = new SimpleDirectionContainer();
 
         Map<Integer, SimpleDirectionContainer> orderedBlockings = blockingDirections.getOrderedBlockings();
 
@@ -33,10 +33,10 @@ public class ByBlockingDistances extends NewDirectionProcessor {
             int numOfTries = 0;
             Direction finalDirection;
             do {
-                finalDirection = processFinalDirection(blockingDirectionsTemp);
+                finalDirection = blockingDirectionsTemp.getRandomElement();
 
                 if (finalDirection != null) {
-                    newDirection = finalDirection;
+                    foundNewDirections.add(finalDirection);
                     foundNewDirection = true;
                 }
 
@@ -45,9 +45,16 @@ public class ByBlockingDistances extends NewDirectionProcessor {
                     && (filteredDirections.contains(finalDirection) && numOfTries < filteredDirections.size()));
         }
 
-        LOG.info("Weighted element by blocking distances: " + newDirection);
+        if (!foundNewDirections.isEmpty()) {
+            newDirection = processFinalDirection(foundNewDirections, LOG);
+        }
 
         return newDirection;
+    }
+
+    @Override
+    public int getOrder() {
+        return ORDER;
     }
 
 }

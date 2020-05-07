@@ -1,4 +1,4 @@
-package co.electric.snake.strategy.bonostrategy.distanceprocessors;
+package co.electric.snake.strategy.bonostrategy.distanceprocessor;
 
 import co.electric.snake.framework.model.Coordinate;
 import co.electric.snake.framework.model.Direction;
@@ -8,15 +8,15 @@ public abstract class DistanceProcessor {
     public static DistanceProcessor getStrategy(Direction direction) {
         switch (direction) {
             case NORTH:
-                return new NorthLookingDistanceStrategy();
+                return new NorthLookingDistanceProcessor();
             case SOUTH:
-                return new SouthLookingDistanceStrategy();
+                return new SouthLookingDistanceProcessor();
             case EAST:
-                return new EastLookingDistanceStrategy();
+                return new EastLookingDistanceProcessor();
             case WEST:
-                return new WestLookingDistanceStrategy();
+                return new WestLookingDistanceProcessor();
             default:
-                return new NorthLookingDistanceStrategy();
+                return new NorthLookingDistanceProcessor();
         }
     }
 

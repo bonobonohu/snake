@@ -1,9 +1,9 @@
-package co.electric.snake.strategy.bonostrategy.closeddirectionsprocessors;
+package co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.closeddirections;
 
 import co.electric.snake.framework.model.Arena;
 import co.electric.snake.framework.model.Coordinate;
 import co.electric.snake.framework.model.Direction;
-import co.electric.snake.strategy.bonostrategy.directioncontainers.SimpleDirectionContainer;
+import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ public abstract class ClosedDirectionsProcessor {
 
     private final Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
 
-    public SimpleDirectionContainer getClosedDirections(Arena arena, Coordinate actualHeadCoordinate) {
+    public SimpleDirectionContainer getDirections(Arena arena, Coordinate actualHeadCoordinate) {
         SimpleDirectionContainer closedDirections = new SimpleDirectionContainer();
 
         Map<Direction, Integer> freeCoordinatesCountByDirection = getFreeCoordinatesCountByDirection(arena, actualHeadCoordinate);
@@ -27,7 +27,7 @@ public abstract class ClosedDirectionsProcessor {
             freeCoordinatesCountByDirection.clear();
         }
 
-        closedDirections.addAll(getClosedDirections(freeCoordinatesCountByDirection));
+        closedDirections.addAll(getDirections(freeCoordinatesCountByDirection));
 
         LOG.info("Closed Directions: " + closedDirections);
 
@@ -98,6 +98,6 @@ public abstract class ClosedDirectionsProcessor {
         return allTheSame;
     }
 
-    abstract SimpleDirectionContainer getClosedDirections(Map<Direction, Integer> freeCoordinatesCountByDirection);
+    abstract SimpleDirectionContainer getDirections(Map<Direction, Integer> freeCoordinatesCountByDirection);
 
 }

@@ -12,7 +12,7 @@ public class BlockingDirectionContainer {
     private final Map<Coordinate, Integer> distanceToCoordinate = new HashMap<>();
     private final Map<Coordinate, Direction> directionToCoordinate = new HashMap<>();
 
-    public Map<Integer, SimpleDirectionContainer> getOrderedBlockings() {
+    public Map<Integer, SimpleDirectionContainer> getBlockingsOrdered() {
         Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());
 
         for (Map.Entry<Direction, Integer> entry : distanceToDirection.entrySet()) {

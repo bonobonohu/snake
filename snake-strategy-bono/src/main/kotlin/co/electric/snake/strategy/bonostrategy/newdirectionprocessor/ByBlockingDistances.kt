@@ -16,7 +16,7 @@ class ByBlockingDistances : NewDirectionProcessor {
     override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Direction? {
         var newDirection: Direction? = null
         val foundNewDirections = SimpleDirectionContainer()
-        val orderedBlockings = blockingDirections.orderedBlockings
+        val orderedBlockings = blockingDirections.getBlockingsOrdered()
         var foundNewDirection = false
         val orderedBlockingsEntrySetIterator: Iterator<Map.Entry<Int, SimpleDirectionContainer>> = orderedBlockings.entries.iterator()
         while (!foundNewDirection && orderedBlockingsEntrySetIterator.hasNext()) {

@@ -23,9 +23,9 @@ class ByBlockingDistances : NewDirectionProcessor {
             val blockingsTemp = orderedBlockingsEntrySetIterator.next()
             val blockingDirectionsTemp = blockingsTemp.value
             var numOfTries = 0
-            var finalDirection: Direction
+            var finalDirection: Direction?
             do {
-                finalDirection = blockingDirectionsTemp.randomElement
+                finalDirection = blockingDirectionsTemp.getRandomElement()
                 if (finalDirection != null) {
                     foundNewDirections.add(finalDirection)
                     foundNewDirection = true

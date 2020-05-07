@@ -12,7 +12,7 @@ interface NewDirectionProcessor : Comparable<NewDirectionProcessor> {
     fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Direction?
 
     fun processFinalDirection(directionContainer: SimpleDirectionContainer, log: Logger): Direction? {
-        val direction = directionContainer.randomElement
+        val direction = directionContainer.getRandomElement()
         if (direction != null) {
             log.info("Final Direction: $direction")
         }

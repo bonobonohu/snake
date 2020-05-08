@@ -45,9 +45,7 @@ public class BlockingDirectionsProcessor {
                     }
                 }
         );
-
         LOG.info("Blocking Directions: " + blockingDirections);
-
         return blockingDirections;
     }
 

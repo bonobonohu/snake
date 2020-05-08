@@ -21,7 +21,7 @@ public class AllButMaximumsClosedDirectionsProcessor extends ClosedDirectionsPro
         }
 
         for (Direction direction : freeCoordinatesCountByDirection.keySet()) {
-            if (freeCoordinatesCountByDirection.get(direction) == maxCount) {
+            if (maxCount.equals(freeCoordinatesCountByDirection.get(direction))) {
                 maxDirections.add(direction);
             }
         }

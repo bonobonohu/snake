@@ -28,21 +28,23 @@ public class BlockingDirectionsProcessor {
         final BlockingDirectionContainer blockingDirections = new BlockingDirectionContainer();
         final Coordinate headCoordinate = snake.getHeadCoordinate();
         final Coordinate maxCoordinate = arena.getMaxCoordinate();
-        for (Direction direction : filteredDirections) {
-            Coordinate coordinateToInvestigate = headCoordinate;
-            final int maxCoordinateForDirection = getMaxCoordinateForDirection(maxCoordinate, direction);
-            for (int i = 0; i < maxCoordinateForDirection; i++) {
-                coordinateToInvestigate = arena.nextCoordinate(coordinateToInvestigate, direction);
-                if (arena.isOccupied(coordinateToInvestigate)) {
-                    final Snake blockingSnake = getBlockingSnake(arena, coordinateToInvestigate);
-                    final int blockingTailLength = getBlockingTailLength(blockingSnake, coordinateToInvestigate);
-                    final int distanceToBlock = getDistanceToBlock(direction, headCoordinate, coordinateToInvestigate, maxCoordinate);
-                    if (isBlockingRisk(blockingTailLength, distanceToBlock)) {
-                        blockingDirections.putData(direction, coordinateToInvestigate, distanceToBlock);
+        filteredDirections.forEach(
+                direction -> {
+                    Coordinate coordinateToInvestigate = headCoordinate;
+                    final int maxCoordinateForDirection = getMaxCoordinateForDirection(maxCoordinate, direction);
+                    for (int i = 0; i < maxCoordinateForDirection; i++) {
+                        coordinateToInvestigate = arena.nextCoordinate(coordinateToInvestigate, direction);
+                        if (arena.isOccupied(coordinateToInvestigate)) {
+                            final Snake blockingSnake = getBlockingSnake(arena, coordinateToInvestigate);
+                            final int blockingTailLength = getBlockingTailLength(blockingSnake, coordinateToInvestigate);
+                            final int distanceToBlock = getDistanceToBlock(direction, headCoordinate, coordinateToInvestigate, maxCoordinate);
+                            if (isBlockingRisk(blockingTailLength, distanceToBlock)) {
+                                blockingDirections.putData(direction, coordinateToInvestigate, distanceToBlock);
+                            }
+                        }
                     }
                 }
-            }
-        }
+        );
 
         LOG.info("Blocking Directions: " + blockingDirections);
 

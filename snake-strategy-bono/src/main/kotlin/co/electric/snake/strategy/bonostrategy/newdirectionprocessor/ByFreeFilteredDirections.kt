@@ -16,7 +16,7 @@ class ByFreeFilteredDirections : NewDirectionProcessor {
 
     override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
         val freeFilteredDirections = filteredDirections.getElementsInANewInstance()
-        freeFilteredDirections.removeAll(blockingDirections.directions)
+        freeFilteredDirections.removeAll(blockingDirections.getDirections())
         return processFinalDirection(freeFilteredDirections, LOG)
     }
 

@@ -18,10 +18,10 @@ public abstract class ClosedDirectionsProcessor {
 
     private final Set<Coordinate> freeCoordinatesTemp = new HashSet<>();
 
-    public SimpleDirectionContainer getDirections(Arena arena, Coordinate actualHeadCoordinate) {
+    public SimpleDirectionContainer getDirections(Arena arena, Coordinate headCoordinate) {
         SimpleDirectionContainer closedDirections = new SimpleDirectionContainer();
 
-        Map<Direction, Integer> freeCoordinatesCountByDirection = getFreeCoordinatesCountByDirection(arena, actualHeadCoordinate);
+        Map<Direction, Integer> freeCoordinatesCountByDirection = getFreeCoordinatesCountByDirection(arena, headCoordinate);
 
         if (allAreTheSame(freeCoordinatesCountByDirection)) {
             freeCoordinatesCountByDirection.clear();
@@ -34,16 +34,16 @@ public abstract class ClosedDirectionsProcessor {
         return closedDirections;
     }
 
-    private Map<Direction, Integer> getFreeCoordinatesCountByDirection(Arena arena, Coordinate actualHeadCoordinate) {
+    private Map<Direction, Integer> getFreeCoordinatesCountByDirection(Arena arena, Coordinate headCoordinate) {
         Map<Direction, Integer> freeCoordinatesCountByDirection = new HashMap<>();
 
-        for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena.nextCoordinate(actualHeadCoordinate, actualDirection);
+        for (Direction direction : Direction.values()) {
+            Coordinate nextCoordinate = arena.nextCoordinate(headCoordinate, direction);
 
             if (!arena.isOccupied(nextCoordinate)) {
                 Integer freeCoordinatesCountForADirection = getFreeCoordinatesCountForADirection(arena, nextCoordinate);
 
-                freeCoordinatesCountByDirection.put(actualDirection, freeCoordinatesCountForADirection);
+                freeCoordinatesCountByDirection.put(direction, freeCoordinatesCountForADirection);
             }
         }
 
@@ -55,8 +55,8 @@ public abstract class ClosedDirectionsProcessor {
     private Integer getFreeCoordinatesCountForADirection(Arena arena, Coordinate headCoordinate) {
         freeCoordinatesTemp.clear();
 
-        for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena.nextCoordinate(headCoordinate, actualDirection);
+        for (Direction direction : Direction.values()) {
+            Coordinate nextCoordinate = arena.nextCoordinate(headCoordinate, direction);
 
             if (!arena.isOccupied(nextCoordinate)) {
                 processFreeCoordinatesTemp(arena, nextCoordinate);
@@ -73,8 +73,8 @@ public abstract class ClosedDirectionsProcessor {
             freeCoordinatesTemp.add(freeCoordinate);
         }
 
-        for (Direction actualDirection : Direction.values()) {
-            Coordinate nextCoordinate = arena.nextCoordinate(freeCoordinate, actualDirection);
+        for (Direction direction : Direction.values()) {
+            Coordinate nextCoordinate = arena.nextCoordinate(freeCoordinate, direction);
 
             if (!arena.isOccupied(nextCoordinate)) {
                 processFreeCoordinatesTemp(arena, nextCoordinate);

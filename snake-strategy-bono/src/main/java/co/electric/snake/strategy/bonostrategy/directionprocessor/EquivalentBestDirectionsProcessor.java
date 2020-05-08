@@ -20,8 +20,8 @@ public class EquivalentBestDirectionsProcessor {
     public SimpleDirectionContainer getDirections(Snake snake, Arena arena, SimpleDirectionContainer filteredDirections) {
         SimpleDirectionContainer equivalentBestDirections = new SimpleDirectionContainer();
 
-        Coordinate actualHeadCoordinate = snake.getHeadCoordinate();
-        Map<Integer, SimpleDirectionContainer> distancesToFood = getDistancesToFood(arena, actualHeadCoordinate, filteredDirections);
+        Coordinate headCoordinate = snake.getHeadCoordinate();
+        Map<Integer, SimpleDirectionContainer> distancesToFood = getDistancesToFood(arena, headCoordinate, filteredDirections);
 
         if (!distancesToFood.isEmpty()) {
             List<SimpleDirectionContainer> directionContainers = new ArrayList<>(distancesToFood.values());
@@ -34,26 +34,26 @@ public class EquivalentBestDirectionsProcessor {
         return equivalentBestDirections;
     }
 
-    private Map<Integer, SimpleDirectionContainer> getDistancesToFood(Arena arena, Coordinate actualHeadCoordinate, SimpleDirectionContainer filteredDirections) {
+    private Map<Integer, SimpleDirectionContainer> getDistancesToFood(Arena arena, Coordinate headCoordinate, SimpleDirectionContainer filteredDirections) {
         Coordinate foodCoordinate = arena.getFoodInNewList().get(0).getCoordinate();
         Coordinate maxCoordinate = arena.getMaxCoordinate();
 
         Map<Integer, SimpleDirectionContainer> distancesToFood = new TreeMap<>();
 
-        for (Direction actualDirection : filteredDirections) {
-            Coordinate nextCoordinate = arena.nextCoordinate(actualHeadCoordinate, actualDirection);
+        for (Direction direction : filteredDirections) {
+            Coordinate nextCoordinate = arena.nextCoordinate(headCoordinate, direction);
 
             if (!arena.isOccupied(nextCoordinate)) {
-                int actualDistanceToFood = nextCoordinate.minDistance(foodCoordinate, maxCoordinate);
+                int distanceToFood = nextCoordinate.minDistance(foodCoordinate, maxCoordinate);
 
                 SimpleDirectionContainer directions;
-                if (!distancesToFood.containsKey(actualDistanceToFood)) {
+                if (!distancesToFood.containsKey(distanceToFood)) {
                     directions = new SimpleDirectionContainer();
                 } else {
-                    directions = distancesToFood.get(actualDistanceToFood);
+                    directions = distancesToFood.get(distanceToFood);
                 }
-                directions.add(actualDirection);
-                distancesToFood.put(actualDistanceToFood, directions);
+                directions.add(direction);
+                distancesToFood.put(distanceToFood, directions);
             }
         }
 

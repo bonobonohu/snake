@@ -21,10 +21,10 @@ public class FilteredDirectionsProcessor {
     }
 
     public SimpleDirectionContainer getDirections(Snake snake, Arena arena) {
-        Coordinate actualHeadCoordinate = snake.getHeadCoordinate();
+        Coordinate headCoordinate = snake.getHeadCoordinate();
 
-        SimpleDirectionContainer freeDirections = freeDirectionsProcessor.getDirections(arena, actualHeadCoordinate);
-        SimpleDirectionContainer closedDirections = closedDirectionsProcessor.getDirections(arena, actualHeadCoordinate);
+        SimpleDirectionContainer freeDirections = freeDirectionsProcessor.getDirections(arena, headCoordinate);
+        SimpleDirectionContainer closedDirections = closedDirectionsProcessor.getDirections(arena, headCoordinate);
 
         SimpleDirectionContainer filteredDirections = freeDirections.getElementsInANewInstance();
         filteredDirections.removeAll(closedDirections);

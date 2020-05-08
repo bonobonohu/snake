@@ -49,10 +49,6 @@ public class BlockingDirectionsProcessor {
         return blockingDirections;
     }
 
-    private int getDistanceToBlock(Direction direction, Coordinate headCoordinate, Coordinate coordinateToInvestigate, Coordinate maxCoordinate) {
-        return distanceProcessorChain.getDistance(direction, headCoordinate, coordinateToInvestigate, maxCoordinate);
-    }
-
     private int getMaxCoordinateForDirection(Coordinate maxCoordinate, Direction direction) {
         final int maxCoordinateForDirection;
         if (Arrays.asList(Direction.NORTH, Direction.SOUTH).contains(direction)) {
@@ -84,6 +80,10 @@ public class BlockingDirectionsProcessor {
                 }
         );
         return blockingTailLength.get();
+    }
+
+    private int getDistanceToBlock(Direction direction, Coordinate headCoordinate, Coordinate coordinateToInvestigate, Coordinate maxCoordinate) {
+        return distanceProcessorChain.getDistance(direction, headCoordinate, coordinateToInvestigate, maxCoordinate);
     }
 
     private boolean isBlockingRisk(int blockingTailLength, int distanceToBlock) {

@@ -12,10 +12,10 @@ class FreeDirectionsProcessor {
         private val LOG = LoggerFactory.getLogger(FreeDirectionsProcessor::class.java)
     }
 
-    fun getDirections(arena: Arena, actualHeadCoordinate: Coordinate): SimpleDirectionContainer {
+    fun getDirections(arena: Arena, headCoordinate: Coordinate): SimpleDirectionContainer {
         val freeDirections = SimpleDirectionContainer()
         Direction.values().forEach {
-            if (!arena.isOccupied(arena.nextCoordinate(actualHeadCoordinate, it))) {
+            if (!arena.isOccupied(arena.nextCoordinate(headCoordinate, it))) {
                 freeDirections.add(it)
             }
         }

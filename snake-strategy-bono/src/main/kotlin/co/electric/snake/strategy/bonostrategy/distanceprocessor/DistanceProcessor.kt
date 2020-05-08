@@ -6,7 +6,7 @@ import java.util.*
 
 interface DistanceProcessor {
 
-    fun getDistance(direction: Direction, actualCoordinate: Coordinate, blockingCoordinate: Coordinate, maxCoordinate: Coordinate): Optional<Int>
+    fun getDistance(direction: Direction, headCoordinate: Coordinate, blockingCoordinate: Coordinate, maxCoordinate: Coordinate): Optional<Int>
 
 }
 

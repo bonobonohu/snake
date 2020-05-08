@@ -6,12 +6,12 @@ import java.util.*
 
 class DistanceProcessorChain(private val distanceProcessors: Set<DistanceProcessor>) {
 
-    fun getDistance(actualDirection: Direction, actualHeadCoordinate: Coordinate, coordinateToInvestigate: Coordinate, maxCoordinate: Coordinate): Int {
+    fun getDistance(direction: Direction, headCoordinate: Coordinate, coordinateToInvestigate: Coordinate, maxCoordinate: Coordinate): Int {
         return Optional.ofNullable(distanceProcessors).orElse(emptySet()).stream()
-                .map { it.getDistance(actualDirection, actualHeadCoordinate, coordinateToInvestigate, maxCoordinate) }
+                .map { it.getDistance(direction, headCoordinate, coordinateToInvestigate, maxCoordinate) }
                 .filter(Optional<Int>::isPresent)
                 .findFirst().map(Optional<Int>::get)
-                .orElse(1000)
+                .orElse(0)
     }
 
 }

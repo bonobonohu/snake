@@ -6,14 +6,14 @@ import java.util.*
 
 class NorthLookingDistanceProcessor : DistanceProcessor {
 
-    override fun getDistance(direction: Direction, actualCoordinate: Coordinate, blockingCoordinate: Coordinate, maxCoordinate: Coordinate): Optional<Int> {
+    override fun getDistance(direction: Direction, headCoordinate: Coordinate, blockingCoordinate: Coordinate, maxCoordinate: Coordinate): Optional<Int> {
         var distance: Optional<Int> = Optional.empty()
         if (direction == Direction.NORTH) {
             val calculatedDistance: Int
-            if (actualCoordinate.y <= blockingCoordinate.y) {
-                calculatedDistance = getDistanceDirectly(blockingCoordinate.y, actualCoordinate.y)
+            if (headCoordinate.y <= blockingCoordinate.y) {
+                calculatedDistance = getDistanceDirectly(blockingCoordinate.y, headCoordinate.y)
             } else {
-                calculatedDistance = getDistanceClipped(blockingCoordinate.y, actualCoordinate.y, maxCoordinate.y)
+                calculatedDistance = getDistanceClipped(blockingCoordinate.y, headCoordinate.y, maxCoordinate.y)
             }
             distance = Optional.of(calculatedDistance)
         }

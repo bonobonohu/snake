@@ -9,8 +9,9 @@ import co.electric.snake.strategy.bonostrategy.directionprocessor.EquivalentBest
 import co.electric.snake.strategy.bonostrategy.directionprocessor.EquivalentBestDirectionsProcessorConfiguration
 import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.FilteredDirectionsProcessor
 import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.FilteredDirectionsProcessorConfiguration
+import co.electric.snake.strategy.bonostrategy.distanceprocessor.DistanceProcessorConfiguration
 import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorChain
-import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorsConfiguration
+import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
@@ -22,7 +23,8 @@ import org.springframework.context.annotation.Import
         FilteredDirectionsProcessorConfiguration::class,
         EquivalentBestDirectionsProcessorConfiguration::class,
         BlockingDirectionsProcessorConfiguration::class,
-        NewDirectionProcessorsConfiguration::class
+        DistanceProcessorConfiguration::class,
+        NewDirectionProcessorConfiguration::class
 )
 class BonoStrategyAutoConfiguration {
 

@@ -15,9 +15,7 @@ class ByFarthestBlockingDirections : NewDirectionProcessor {
     override val order = 3
 
     override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
-        val farthestBlockingDirections = blockingDirections.getBlockingsOrdered().values.stream()
-                .findFirst()
-                .orElse(SimpleDirectionContainer())
+        val farthestBlockingDirections = blockingDirections.getFarthestBlockingDirections()
         return processFinalDirection(farthestBlockingDirections, LOG)
     }
 

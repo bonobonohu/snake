@@ -12,36 +12,31 @@ public class BlockingDirectionContainer {
     private final Map<Coordinate, Integer> distanceToCoordinate = new HashMap<>();
     private final Map<Coordinate, Direction> directionToCoordinate = new HashMap<>();
 
-    public Map<Integer, SimpleDirectionContainer> getBlockingsOrdered() {
-        Map<Integer, SimpleDirectionContainer> orderedBlockings = new TreeMap<>(Collections.reverseOrder());
-
-        for (Map.Entry<Direction, Integer> entry : distanceToDirection.entrySet()) {
-            SimpleDirectionContainer directionsTemp;
-            if (!orderedBlockings.containsKey(entry.getValue())) {
-                directionsTemp = new SimpleDirectionContainer();
-            } else {
-                directionsTemp = orderedBlockings.get(entry.getValue());
+    public void putData(Direction direction, Coordinate coordinate, int distance) {
+        if (!directionHasDistance(direction)) {
+            doPut(direction, coordinate, distance);
+        } else {
+            final int storedDistanceToDirection = getDistanceByDirection(direction);
+            if (distance < storedDistanceToDirection) {
+                doPut(direction, coordinate, distance);
             }
-            directionsTemp.add(entry.getKey());
-            orderedBlockings.put(entry.getValue(), directionsTemp);
         }
-
-        return orderedBlockings;
     }
 
     public Set<Direction> getDirections() {
         return distanceToDirection.keySet();
     }
 
-    public void putData(Direction direction, Coordinate coordinate, int distance) {
-        if (!directionHasDistance(direction)) {
-            doPut(direction, coordinate, distance);
-        } else {
-            int storedDistanceToDirection = getDistanceByDirection(direction);
-            if (distance < storedDistanceToDirection) {
-                doPut(direction, coordinate, distance);
-            }
-        }
+    public SimpleDirectionContainer getFarthestBlockingDirections() {
+        final Map<Integer, SimpleDirectionContainer> directionToDistances = new TreeMap<>(Collections.reverseOrder());
+        distanceToDirection.forEach((direction, distance) -> {
+            final SimpleDirectionContainer simpleDirections = Optional.ofNullable(directionToDistances.get(distance)).orElse(new SimpleDirectionContainer());
+            simpleDirections.add(direction);
+            directionToDistances.put(distance, simpleDirections);
+        });
+        return directionToDistances.values().stream()
+                .findFirst()
+                .orElse(new SimpleDirectionContainer());
     }
 
     private void doPut(Direction direction, Coordinate coordinate, int distance) {
@@ -51,11 +46,9 @@ public class BlockingDirectionContainer {
             putDistanceToCoordinate(coordinate, distance);
             putDirectionToCoordinate(coordinate, direction);
         } else {
-            int storedDistanceToCoordinate = getDistanceByCoordinate(coordinate);
-
+            final int storedDistanceToCoordinate = getDistanceByCoordinate(coordinate);
             if (distance <= storedDistanceToCoordinate) {
                 removeDataByCoordinate(coordinate);
-
                 putDistanceToDirection(direction, distance);
                 putCoordinateToDirection(direction, coordinate);
                 putDistanceToCoordinate(coordinate, distance);
@@ -65,8 +58,7 @@ public class BlockingDirectionContainer {
     }
 
     private void removeDataByCoordinate(Coordinate coordinate) {
-        Direction directionToCoordinate = getDirectionByCoordinate(coordinate);
-
+        final Direction directionToCoordinate = getDirectionByCoordinate(coordinate);
         removeFromDistanceToDirection(directionToCoordinate);
         removeFromCoordinateToDirection(directionToCoordinate);
         removeFromDistanceToCoordinate(coordinate);
@@ -127,8 +119,7 @@ public class BlockingDirectionContainer {
 
     @Override
     public String toString() {
-        return "DirectionData [distanceToDirection=" + distanceToDirection + ", coordinateToDirection="
-                + coordinateToDirection + "]";
+        return "DirectionData [distanceToDirection=" + distanceToDirection + "]";
     }
 
 }

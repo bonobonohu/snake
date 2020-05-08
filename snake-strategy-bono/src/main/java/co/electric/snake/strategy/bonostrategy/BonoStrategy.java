@@ -31,8 +31,8 @@ public class BonoStrategy implements SnakeStrategy {
     public Direction nextMove(Snake snake, Arena arena) {
         LOG.info("--- BEGIN " + snake.getName() + " ---");
         LOG.info("Length: " + snake.getLength());
-        LOG.info("Food: " + arena.getFoodInNewList().get(0).getCoordinate());
         LOG.info("Head: " + snake.getHeadCoordinate());
+        LOG.info("Food: " + arena.getFoodInNewList().get(0).getCoordinate());
 
         Direction newDirection = process(snake, arena);
 

@@ -9,7 +9,6 @@ import co.electric.snake.strategy.bonostrategy.directionprocessor.EquivalentBest
 import co.electric.snake.strategy.bonostrategy.directionprocessor.EquivalentBestDirectionsProcessorConfiguration
 import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.FilteredDirectionsProcessor
 import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.FilteredDirectionsProcessorConfiguration
-import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessor
 import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorChain
 import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorsConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean

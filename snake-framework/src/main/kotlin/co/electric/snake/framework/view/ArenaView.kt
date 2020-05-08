@@ -40,16 +40,16 @@ class ArenaView(private val arena: Arena) : JPanel() {
             snake.draw(graphics)
             graphics.drawString(snake.snake.name + ": " + snake.snake.getBodyItemsInNewList().size, SNAKE_NAME_X_COORDINATE, SNAKE_NAME_Y_COORDINATE + SNAKE_NAME_Y_OFFSET * i)
         }
-        arena.getFoodInNewList().forEach { food ->
-            drawFood(food, graphics)
+        arena.getFoodInNewList().forEach {
+            drawFood(it, graphics)
         }
         repaint()
     }
 
     private fun generateSnakeViews() {
         var colorIndex = 0
-        arena.getSnakesInNewList().forEach { snake ->
-            snakeViews.add(SnakeView(snake, AVAILABLE_COLORS[colorIndex]))
+        arena.getSnakesInNewList().forEach {
+            snakeViews.add(SnakeView(it, AVAILABLE_COLORS[colorIndex]))
             colorIndex = (colorIndex + 1) % AVAILABLE_COLORS.size
         }
     }

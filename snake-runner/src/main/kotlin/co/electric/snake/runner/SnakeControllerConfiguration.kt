@@ -13,8 +13,8 @@ class SnakeControllerConfiguration(private val snakeConfigurationProperties: Sna
 
     @Bean
     fun snakeController(modifiableArena: ModifiableArena, modifiableSnakes: Set<ModifiableSnake>): SnakeController {
-        modifiableSnakes.forEach { modifiableSnake ->
-            modifiableArena.addSnake(modifiableSnake)
+        modifiableSnakes.forEach {
+            modifiableArena.addSnake(it)
         }
         return SnakeController(modifiableArena, snakeConfigurationProperties.maxRound, snakeConfigurationProperties.stopWhenReachedMaxRound)
     }

@@ -4,6 +4,7 @@ import co.electric.snake.framework.model.Direction
 import co.electric.snake.strategy.bonostrategy.BlockingDirectionContainer
 import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer
 import org.slf4j.LoggerFactory
+import java.util.*
 
 class ByFreeFilteredDirections : NewDirectionProcessor {
 
@@ -13,14 +14,10 @@ class ByFreeFilteredDirections : NewDirectionProcessor {
 
     override val order = 2
 
-    override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Direction? {
-        var newDirection: Direction? = null
-        if (!filteredDirections.isEmpty()) {
-            val freeFilteredDirections = filteredDirections.getElementsInANewInstance()
-            freeFilteredDirections.removeAll(blockingDirections.directions)
-            newDirection = processFinalDirection(freeFilteredDirections, LOG)
-        }
-        return newDirection
+    override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
+        val freeFilteredDirections = filteredDirections.getElementsInANewInstance()
+        freeFilteredDirections.removeAll(blockingDirections.directions)
+        return processFinalDirection(freeFilteredDirections, LOG)
     }
 
 }

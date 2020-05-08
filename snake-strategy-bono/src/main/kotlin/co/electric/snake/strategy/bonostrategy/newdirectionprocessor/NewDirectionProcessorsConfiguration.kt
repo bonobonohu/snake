@@ -21,8 +21,14 @@ class NewDirectionProcessorsConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
-    fun byBlockingDistances(): ByBlockingDistances {
-        return ByBlockingDistances()
+    fun byFarthestBlockingDirections(): ByFarthestBlockingDirections {
+        return ByFarthestBlockingDirections()
+    }
+
+    @ConditionalOnMissingBean
+    @Bean
+    fun byEquivalentBestDirections(): ByEquivalentBestDirections {
+        return ByEquivalentBestDirections()
     }
 
     @ConditionalOnMissingBean

@@ -16,8 +16,8 @@ class SimpleDirectionContainer : HashSet<Direction> {
         return SimpleDirectionContainer(this)
     }
 
-    fun getRandomElement(): Direction? {
-        return if (isNotEmpty()) elementAt(RANDOM.nextInt(size)) else null
+    fun getRandomElement(): Optional<Direction> {
+        return Optional.ofNullable(elementAtOrNull(if (size > 0) RANDOM.nextInt(size) else 0))
     }
 
 }

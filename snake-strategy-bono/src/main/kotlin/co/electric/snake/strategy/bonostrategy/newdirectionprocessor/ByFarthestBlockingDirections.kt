@@ -6,18 +6,19 @@ import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer
 import org.slf4j.LoggerFactory
 import java.util.*
 
-class ByKispalEsABorz : NewDirectionProcessor {
+class ByFarthestBlockingDirections : NewDirectionProcessor {
 
     companion object {
-        private val LOG = LoggerFactory.getLogger(ByKispalEsABorz::class.java)
+        private val LOG = LoggerFactory.getLogger(ByFarthestBlockingDirections::class.java)
     }
 
-    override val order = 6
+    override val order = 3
 
     override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
-        val kispalDirections = SimpleDirectionContainer()
-        kispalDirections.add(Direction.SOUTH)
-        return processFinalDirection(kispalDirections, LOG)
+        val farthestBlockingDirections = blockingDirections.getBlockingsOrdered().values.stream()
+                .findFirst()
+                .orElse(SimpleDirectionContainer())
+        return processFinalDirection(farthestBlockingDirections, LOG)
     }
 
 }

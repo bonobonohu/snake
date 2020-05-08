@@ -7,12 +7,12 @@ import java.util.*
 
 class NewDirectionProcessorChain(private val newDirectionProcessors: Set<NewDirectionProcessor>) {
 
-    fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Direction? {
+    fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Direction {
         return Optional.ofNullable(newDirectionProcessors).orElse(emptySet()).stream()
                 .sorted()
-                .map { newDirectionProcessor: NewDirectionProcessor -> newDirectionProcessor.process(filteredDirections, equivalentBestDirections, blockingDirections) }
-                .filter { obj: Direction? -> Objects.nonNull(obj) }
-                .findFirst()
+                .map { it.process(filteredDirections, equivalentBestDirections, blockingDirections) }
+                .filter(Optional<Direction>::isPresent)
+                .findFirst().map(Optional<Direction>::get)
                 .orElse(Direction.SOUTH)
     }
 

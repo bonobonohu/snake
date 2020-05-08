@@ -34,13 +34,13 @@ public class BlockingDirectionContainer {
     }
 
     public void putData(Direction direction, Coordinate coordinate, int distance) {
-        if (directionHasDistance(direction)) {
+        if (!directionHasDistance(direction)) {
+            doPut(direction, coordinate, distance);
+        } else {
             int storedDistanceToDirection = getDistanceByDirection(direction);
             if (distance < storedDistanceToDirection) {
                 doPut(direction, coordinate, distance);
             }
-        } else {
-            doPut(direction, coordinate, distance);
         }
     }
 

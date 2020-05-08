@@ -8,9 +8,8 @@ import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 public class EquivalentBestDirectionsProcessor {
@@ -18,47 +17,29 @@ public class EquivalentBestDirectionsProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(EquivalentBestDirectionsProcessor.class);
 
     public SimpleDirectionContainer getDirections(Snake snake, Arena arena, SimpleDirectionContainer filteredDirections) {
-        SimpleDirectionContainer equivalentBestDirections = new SimpleDirectionContainer();
-
-        Coordinate headCoordinate = snake.getHeadCoordinate();
-        Map<Integer, SimpleDirectionContainer> distancesToFood = getDistancesToFood(arena, headCoordinate, filteredDirections);
-
-        if (!distancesToFood.isEmpty()) {
-            List<SimpleDirectionContainer> directionContainers = new ArrayList<>(distancesToFood.values());
-            equivalentBestDirections = directionContainers.get(0);
-        }
-
-
+        final Coordinate headCoordinate = snake.getHeadCoordinate();
+        final Map<Integer, SimpleDirectionContainer> distancesToFood = getDistancesToFood(arena, headCoordinate, filteredDirections);
+        final SimpleDirectionContainer equivalentBestDirections = distancesToFood.values().stream()
+                .findFirst()
+                .orElse(new SimpleDirectionContainer());
         LOG.info("Equivalent Best Directions: " + equivalentBestDirections);
-
         return equivalentBestDirections;
     }
 
     private Map<Integer, SimpleDirectionContainer> getDistancesToFood(Arena arena, Coordinate headCoordinate, SimpleDirectionContainer filteredDirections) {
-        Coordinate foodCoordinate = arena.getFoodInNewList().get(0).getCoordinate();
-        Coordinate maxCoordinate = arena.getMaxCoordinate();
-
-        Map<Integer, SimpleDirectionContainer> distancesToFood = new TreeMap<>();
-
-        for (Direction direction : filteredDirections) {
-            Coordinate nextCoordinate = arena.nextCoordinate(headCoordinate, direction);
-
-            if (!arena.isOccupied(nextCoordinate)) {
-                int distanceToFood = nextCoordinate.minDistance(foodCoordinate, maxCoordinate);
-
-                SimpleDirectionContainer directions;
-                if (!distancesToFood.containsKey(distanceToFood)) {
-                    directions = new SimpleDirectionContainer();
-                } else {
-                    directions = distancesToFood.get(distanceToFood);
+        final Map<Integer, SimpleDirectionContainer> distancesToFood = new TreeMap<>();
+        final Coordinate foodCoordinate = arena.getFoodInNewList().get(0).getCoordinate();
+        final Coordinate maxCoordinate = arena.getMaxCoordinate();
+        filteredDirections.forEach(
+                direction -> {
+                    final Coordinate nextCoordinate = arena.nextCoordinate(headCoordinate, direction);
+                    final int distanceToFood = nextCoordinate.minDistance(foodCoordinate, maxCoordinate);
+                    final SimpleDirectionContainer directions = Optional.ofNullable(distancesToFood.get(distanceToFood)).orElse(new SimpleDirectionContainer());
+                    directions.add(direction);
+                    distancesToFood.put(distanceToFood, directions);
                 }
-                directions.add(direction);
-                distancesToFood.put(distanceToFood, directions);
-            }
-        }
-
+        );
         LOG.info("Distances To Food: " + distancesToFood);
-
         return distancesToFood;
     }
 

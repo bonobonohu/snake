@@ -82,8 +82,8 @@ public class BlockingDirectionsProcessor {
         return blockingTailLength.get();
     }
 
-    private int getDistanceToBlock(Direction direction, Coordinate headCoordinate, Coordinate coordinateToInvestigate, Coordinate maxCoordinate) {
-        return distanceProcessorChain.getDistance(direction, headCoordinate, coordinateToInvestigate, maxCoordinate);
+    private int getDistanceToBlock(Direction direction, Coordinate headCoordinate, Coordinate blockingCoordinate, Coordinate maxCoordinate) {
+        return distanceProcessorChain.getDistance(direction, headCoordinate, blockingCoordinate, maxCoordinate);
     }
 
     private boolean isBlockingRisk(int blockingTailLength, int distanceToBlock) {

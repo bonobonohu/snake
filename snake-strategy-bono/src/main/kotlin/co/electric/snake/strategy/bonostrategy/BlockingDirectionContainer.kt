@@ -95,17 +95,19 @@ class BlockingDirectionContainer {
 
     private fun removeDataByCoordinate(coordinate: Coordinate) {
         val directionToCoordinate = getDirectionByCoordinate(coordinate)
-        removeFromDistanceToDirection(directionToCoordinate)
-        removeFromCoordinateToDirection(directionToCoordinate)
-        removeFromDistanceToCoordinate(coordinate)
-        removeFromDirectionToCoordinate(coordinate)
+        if (directionToCoordinate != null) {
+            removeFromDistanceToDirection(directionToCoordinate)
+            removeFromCoordinateToDirection(directionToCoordinate)
+            removeFromDistanceToCoordinate(coordinate)
+            removeFromDirectionToCoordinate(coordinate)
+        }
     }
 
-    private fun removeFromDistanceToDirection(direction: Direction?) {
+    private fun removeFromDistanceToDirection(direction: Direction) {
         distanceToDirection.remove(direction)
     }
 
-    private fun removeFromCoordinateToDirection(direction: Direction?) {
+    private fun removeFromCoordinateToDirection(direction: Direction) {
         coordinateToDirection.remove(direction)
     }
 

@@ -1,19 +1,19 @@
-package co.electric.snake.strategy.bonostrategy.distanceprocessor
+package co.electric.snake.strategy.bonostrategy.directionprocessor.distanceprocessor
 
 import co.electric.snake.framework.model.Coordinate
 import co.electric.snake.framework.model.Direction
 import java.util.*
 
-class SouthLookingDistanceProcessor : DistanceProcessor {
+class EastLookingDistanceProcessor : DistanceProcessor {
 
     override fun getDistance(direction: Direction, headCoordinate: Coordinate, blockingCoordinate: Coordinate, maxCoordinate: Coordinate): Optional<Int> {
         var distance: Optional<Int> = Optional.empty()
-        if (direction == Direction.SOUTH) {
+        if (direction == Direction.EAST) {
             val calculatedDistance: Int
-            if (headCoordinate.y >= blockingCoordinate.y) {
-                calculatedDistance = getDistanceDirectly(headCoordinate.y, blockingCoordinate.y)
+            if (headCoordinate.x <= blockingCoordinate.x) {
+                calculatedDistance = getDistanceDirectly(blockingCoordinate.x, headCoordinate.x)
             } else {
-                calculatedDistance = getDistanceClipped(headCoordinate.y, blockingCoordinate.y, maxCoordinate.y)
+                calculatedDistance = getDistanceClipped(blockingCoordinate.x, headCoordinate.x, maxCoordinate.x)
             }
             distance = Optional.of(calculatedDistance)
         }

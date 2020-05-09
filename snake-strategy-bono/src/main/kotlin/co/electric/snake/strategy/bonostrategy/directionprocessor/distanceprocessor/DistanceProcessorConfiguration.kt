@@ -1,4 +1,4 @@
-package co.electric.snake.strategy.bonostrategy.distanceprocessor
+package co.electric.snake.strategy.bonostrategy.directionprocessor.distanceprocessor
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean

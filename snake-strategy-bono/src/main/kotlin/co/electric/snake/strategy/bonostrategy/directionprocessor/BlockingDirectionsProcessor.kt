@@ -6,7 +6,7 @@ import co.electric.snake.framework.model.Direction
 import co.electric.snake.framework.model.Snake
 import co.electric.snake.strategy.bonostrategy.BlockingDirectionContainer
 import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer
-import co.electric.snake.strategy.bonostrategy.distanceprocessor.DistanceProcessorChain
+import co.electric.snake.strategy.bonostrategy.directionprocessor.distanceprocessor.DistanceProcessorChain
 import org.slf4j.LoggerFactory
 
 class BlockingDirectionsProcessor(private val distanceProcessorChain: DistanceProcessorChain) {

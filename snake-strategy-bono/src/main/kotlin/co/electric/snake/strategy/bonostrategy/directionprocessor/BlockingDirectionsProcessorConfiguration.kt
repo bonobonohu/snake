@@ -1,6 +1,6 @@
 package co.electric.snake.strategy.bonostrategy.directionprocessor
 
-import co.electric.snake.strategy.bonostrategy.distanceprocessor.DistanceProcessorChain
+import co.electric.snake.strategy.bonostrategy.directionprocessor.distanceprocessor.DistanceProcessorChain
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

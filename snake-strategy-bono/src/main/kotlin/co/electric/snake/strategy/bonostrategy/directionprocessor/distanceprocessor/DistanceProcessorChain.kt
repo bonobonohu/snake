@@ -1,4 +1,4 @@
-package co.electric.snake.strategy.bonostrategy.distanceprocessor
+package co.electric.snake.strategy.bonostrategy.directionprocessor.distanceprocessor
 
 import co.electric.snake.framework.model.Coordinate
 import co.electric.snake.framework.model.Direction

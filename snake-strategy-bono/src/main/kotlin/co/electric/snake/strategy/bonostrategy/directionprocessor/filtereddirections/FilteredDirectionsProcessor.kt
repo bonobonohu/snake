@@ -13,9 +13,8 @@ class FilteredDirectionsProcessor(private val freeDirectionsProcessor: FreeDirec
     }
 
     fun getDirections(snake: Snake, arena: Arena): SimpleDirectionContainer {
-        val headCoordinate = snake.getHeadCoordinate()
-        val freeDirections = freeDirectionsProcessor.getDirections(arena, headCoordinate)
-        val closedDirections = closedDirectionsProcessor.getDirections(arena, headCoordinate)
+        val freeDirections = freeDirectionsProcessor.getDirections(snake, arena)
+        val closedDirections = closedDirectionsProcessor.getDirections(snake, arena, freeDirections)
         val filteredDirections = freeDirections.getElementsInANewInstance()
         filteredDirections.removeAll(closedDirections)
         LOG.info("Filtered Directions: $filteredDirections")

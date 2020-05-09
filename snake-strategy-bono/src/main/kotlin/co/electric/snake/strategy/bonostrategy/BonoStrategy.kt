@@ -18,9 +18,9 @@ class BonoStrategy(private val filteredDirectionsProcessor: FilteredDirectionsPr
 
     override fun nextMove(snake: Snake, arena: Arena): Direction {
         LOG.info("--- BEGIN ${snake.name} ---")
-        LOG.info("Food: ${arena.getFoodInNewList()[0].coordinate}")
         LOG.info("Head: ${snake.getHeadCoordinate()}")
         LOG.info("Length: ${snake.getLength()}")
+        LOG.info("Food: ${arena.getFoodInNewList()[0].coordinate}")
         val newDirection = process(snake, arena)
         LOG.info("--- END ${snake.name} ---")
         return newDirection

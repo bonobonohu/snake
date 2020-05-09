@@ -20,7 +20,10 @@ class ArenaView(private val arena: Arena) : JPanel() {
         private const val SNAKE_NAME_X_COORDINATE = 30
         private const val SNAKE_NAME_Y_COORDINATE = 30
         private const val SNAKE_NAME_Y_OFFSET = 20
-        private val AVAILABLE_COLORS = arrayOf(Color.BLUE, Color.MAGENTA, Color.YELLOW)
+        private val AVAILABLE_COLORS = arrayOf(
+                Color.BLUE, Color.MAGENTA, Color.GREEN, Color.CYAN, Color.GRAY,
+                Color.PINK, Color.ORANGE, Color.LIGHT_GRAY, Color.YELLOW
+        )
 
     }
 

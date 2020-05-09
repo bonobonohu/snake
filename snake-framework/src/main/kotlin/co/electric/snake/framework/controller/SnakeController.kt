@@ -66,9 +66,7 @@ class SnakeController(private val modifiableArena: ModifiableArena, private val 
     private fun checkIfMaxRoundReached() {
         if (round == maxRound) {
             LOG.info(MAX_ROUND_REACHED_LOG_MESSAGE, maxRound)
-            modifiableArena.getSnakesInNewList().forEach {
-                LOG.info("${it.name}: ${it.getLength()}")
-            }
+            modifiableArena.logSnakeLengths()
             if (stopWhenReachedMaxRound) {
                 throw MaxRoundReachedException()
             }

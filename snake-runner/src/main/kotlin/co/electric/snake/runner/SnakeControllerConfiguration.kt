@@ -12,6 +12,11 @@ import org.springframework.context.annotation.Configuration
 class SnakeControllerConfiguration(private val snakeConfigurationProperties: SnakeConfigurationProperties) {
 
     @Bean
+    fun modifiableArena(): ModifiableArena {
+        return ModifiableArena(snakeConfigurationProperties.stopWhenASnakeDies)
+    }
+
+    @Bean
     fun snakeController(modifiableArena: ModifiableArena, modifiableSnakes: Set<ModifiableSnake>): SnakeController {
         modifiableSnakes.forEach {
             modifiableArena.addSnake(it)

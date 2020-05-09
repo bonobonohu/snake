@@ -57,6 +57,42 @@ class BlockingDirectionContainer {
         }
     }
 
+    private fun directionHasDistance(direction: Direction): Boolean {
+        return distanceToDirection.containsKey(direction)
+    }
+
+    private fun coordinateHasDirection(coordinate: Coordinate): Boolean {
+        return coordinateToDirection.containsValue(coordinate)
+    }
+
+    private fun getDistanceByDirection(direction: Direction): Int {
+        return Optional.ofNullable(distanceToDirection[direction]).orElse(Int.MAX_VALUE)
+    }
+
+    private fun getDistanceByCoordinate(coordinate: Coordinate): Int {
+        return Optional.ofNullable(distanceToCoordinate[coordinate]).orElse(Int.MAX_VALUE)
+    }
+
+    private fun getDirectionByCoordinate(coordinate: Coordinate): Direction? {
+        return directionToCoordinate[coordinate]
+    }
+
+    private fun putDistanceToDirection(direction: Direction, distance: Int) {
+        distanceToDirection[direction] = distance
+    }
+
+    private fun putCoordinateToDirection(direction: Direction, coordinate: Coordinate) {
+        coordinateToDirection[direction] = coordinate
+    }
+
+    private fun putDistanceToCoordinate(coordinate: Coordinate, distance: Int) {
+        distanceToCoordinate[coordinate] = distance
+    }
+
+    private fun putDirectionToCoordinate(coordinate: Coordinate, direction: Direction) {
+        directionToCoordinate[coordinate] = direction
+    }
+
     private fun removeDataByCoordinate(coordinate: Coordinate) {
         val directionToCoordinate = getDirectionByCoordinate(coordinate)
         removeFromDistanceToDirection(directionToCoordinate)
@@ -79,42 +115,6 @@ class BlockingDirectionContainer {
 
     private fun removeFromDirectionToCoordinate(coordinate: Coordinate) {
         directionToCoordinate.remove(coordinate)
-    }
-
-    private fun putDistanceToDirection(direction: Direction, distance: Int) {
-        distanceToDirection[direction] = distance
-    }
-
-    private fun putCoordinateToDirection(direction: Direction, coordinate: Coordinate) {
-        coordinateToDirection[direction] = coordinate
-    }
-
-    private fun putDistanceToCoordinate(coordinate: Coordinate, distance: Int) {
-        distanceToCoordinate[coordinate] = distance
-    }
-
-    private fun putDirectionToCoordinate(coordinate: Coordinate, direction: Direction) {
-        directionToCoordinate[coordinate] = direction
-    }
-
-    private fun getDistanceByDirection(direction: Direction): Int {
-        return distanceToDirection[direction]!!
-    }
-
-    private fun getDistanceByCoordinate(coordinate: Coordinate): Int {
-        return distanceToCoordinate[coordinate]!!
-    }
-
-    private fun getDirectionByCoordinate(coordinate: Coordinate): Direction? {
-        return directionToCoordinate[coordinate]
-    }
-
-    private fun directionHasDistance(direction: Direction): Boolean {
-        return distanceToDirection.containsKey(direction)
-    }
-
-    private fun coordinateHasDirection(coordinate: Coordinate): Boolean {
-        return coordinateToDirection.containsValue(coordinate)
     }
 
     override fun toString(): String {

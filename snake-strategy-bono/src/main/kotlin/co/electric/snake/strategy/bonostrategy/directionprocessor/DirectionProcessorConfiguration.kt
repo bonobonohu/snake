@@ -40,8 +40,8 @@ class DirectionProcessorConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
-    fun filteredDirectionsProcessor(freeDirectionsProcessor: FreeDirectionsProcessor, closedDirectionsProcessor: ClosedDirectionsProcessor): FilteredDirectionsProcessor {
-        return FilteredDirectionsProcessor(freeDirectionsProcessor, closedDirectionsProcessor)
+    fun filteredDirectionsProcessor(): FilteredDirectionsProcessor {
+        return FilteredDirectionsProcessor()
     }
 
     @ConditionalOnMissingBean

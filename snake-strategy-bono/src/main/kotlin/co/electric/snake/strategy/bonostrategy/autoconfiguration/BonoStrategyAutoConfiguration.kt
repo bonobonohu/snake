@@ -3,10 +3,8 @@ package co.electric.snake.strategy.bonostrategy.autoconfiguration
 import co.electric.snake.framework.model.ModifiableArena
 import co.electric.snake.framework.model.ModifiableSnake
 import co.electric.snake.strategy.bonostrategy.BonoStrategy
-import co.electric.snake.strategy.bonostrategy.directionprocessor.BlockingDirectionsProcessor
-import co.electric.snake.strategy.bonostrategy.directionprocessor.DirectionProcessorConfiguration
-import co.electric.snake.strategy.bonostrategy.directionprocessor.EquivalentBestDirectionsProcessor
-import co.electric.snake.strategy.bonostrategy.directionprocessor.FilteredDirectionsProcessor
+import co.electric.snake.strategy.bonostrategy.directionprocessor.*
+import co.electric.snake.strategy.bonostrategy.directionprocessor.closeddirections.ClosedDirectionsProcessor
 import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorChain
 import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
@@ -25,13 +23,16 @@ class BonoStrategyAutoConfiguration {
     @ConditionalOnMissingBean
     @Bean
     fun bonoStrategy(
+            freeDirectionsProcessor: FreeDirectionsProcessor,
+            closedDirectionsProcessor: ClosedDirectionsProcessor,
             filteredDirectionsProcessor: FilteredDirectionsProcessor,
             equivalentBestDirectionsProcessor: EquivalentBestDirectionsProcessor,
             blockingDirectionsProcessor: BlockingDirectionsProcessor,
             newDirectionProcessorChain: NewDirectionProcessorChain
     ): BonoStrategy {
         return BonoStrategy(
-                filteredDirectionsProcessor, equivalentBestDirectionsProcessor, blockingDirectionsProcessor,
+                freeDirectionsProcessor, closedDirectionsProcessor, filteredDirectionsProcessor,
+                equivalentBestDirectionsProcessor, blockingDirectionsProcessor,
                 newDirectionProcessorChain
         )
     }

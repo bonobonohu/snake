@@ -6,7 +6,7 @@ import co.electric.snake.framework.model.Snake
 import co.electric.snake.framework.strategy.SnakeStrategy
 import co.electric.snake.strategy.bonostrategy.directionprocessor.BlockingDirectionsProcessor
 import co.electric.snake.strategy.bonostrategy.directionprocessor.EquivalentBestDirectionsProcessor
-import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.FilteredDirectionsProcessor
+import co.electric.snake.strategy.bonostrategy.directionprocessor.FilteredDirectionsProcessor
 import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorChain
 import org.slf4j.LoggerFactory
 

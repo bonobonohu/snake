@@ -1,4 +1,4 @@
-package co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections
+package co.electric.snake.strategy.bonostrategy.directionprocessor
 
 import co.electric.snake.framework.model.Arena
 import co.electric.snake.framework.model.Direction

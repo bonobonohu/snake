@@ -1,14 +1,18 @@
-package co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections
+package co.electric.snake.strategy.bonostrategy.directionprocessor
 
-import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.closeddirections.ClosedDirectionsCollector
-import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.closeddirections.ClosedDirectionsProcessor
-import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.closeddirections.FreeCoordinateCountsProcessor
+import co.electric.snake.strategy.bonostrategy.directionprocessor.closeddirections.ClosedDirectionsCollector
+import co.electric.snake.strategy.bonostrategy.directionprocessor.closeddirections.ClosedDirectionsProcessor
+import co.electric.snake.strategy.bonostrategy.directionprocessor.closeddirections.FreeCoordinateCountsProcessor
+import co.electric.snake.strategy.bonostrategy.directionprocessor.distanceprocessor.DistanceProcessorChain
+import co.electric.snake.strategy.bonostrategy.directionprocessor.distanceprocessor.DistanceProcessorConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 
 @Configuration
-class FilteredDirectionsProcessorConfiguration {
+@Import(DistanceProcessorConfiguration::class)
+class DirectionProcessorConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
@@ -38,6 +42,18 @@ class FilteredDirectionsProcessorConfiguration {
     @Bean
     fun filteredDirectionsProcessor(freeDirectionsProcessor: FreeDirectionsProcessor, closedDirectionsProcessor: ClosedDirectionsProcessor): FilteredDirectionsProcessor {
         return FilteredDirectionsProcessor(freeDirectionsProcessor, closedDirectionsProcessor)
+    }
+
+    @ConditionalOnMissingBean
+    @Bean
+    fun equivalentBestDirectionsProcessor(): EquivalentBestDirectionsProcessor {
+        return EquivalentBestDirectionsProcessor()
+    }
+
+    @ConditionalOnMissingBean
+    @Bean
+    fun blockingDirectionsProcessor(distanceProcessorChain: DistanceProcessorChain): BlockingDirectionsProcessor {
+        return BlockingDirectionsProcessor(distanceProcessorChain)
     }
 
 }

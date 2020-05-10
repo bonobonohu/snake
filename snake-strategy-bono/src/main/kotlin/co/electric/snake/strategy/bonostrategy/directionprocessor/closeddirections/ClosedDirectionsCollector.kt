@@ -1,4 +1,4 @@
-package co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.closeddirections
+package co.electric.snake.strategy.bonostrategy.directionprocessor.closeddirections
 
 import co.electric.snake.framework.model.Direction
 import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer

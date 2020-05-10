@@ -1,9 +1,9 @@
-package co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections
+package co.electric.snake.strategy.bonostrategy.directionprocessor
 
 import co.electric.snake.framework.model.Arena
 import co.electric.snake.framework.model.Snake
 import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer
-import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.closeddirections.ClosedDirectionsProcessor
+import co.electric.snake.strategy.bonostrategy.directionprocessor.closeddirections.ClosedDirectionsProcessor
 import org.slf4j.LoggerFactory
 
 class FilteredDirectionsProcessor(private val freeDirectionsProcessor: FreeDirectionsProcessor, private val closedDirectionsProcessor: ClosedDirectionsProcessor) {

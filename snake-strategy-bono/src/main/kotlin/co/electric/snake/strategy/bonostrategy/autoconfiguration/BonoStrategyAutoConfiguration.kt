@@ -4,12 +4,9 @@ import co.electric.snake.framework.model.ModifiableArena
 import co.electric.snake.framework.model.ModifiableSnake
 import co.electric.snake.strategy.bonostrategy.BonoStrategy
 import co.electric.snake.strategy.bonostrategy.directionprocessor.BlockingDirectionsProcessor
-import co.electric.snake.strategy.bonostrategy.directionprocessor.BlockingDirectionsProcessorConfiguration
+import co.electric.snake.strategy.bonostrategy.directionprocessor.DirectionProcessorConfiguration
 import co.electric.snake.strategy.bonostrategy.directionprocessor.EquivalentBestDirectionsProcessor
-import co.electric.snake.strategy.bonostrategy.directionprocessor.EquivalentBestDirectionsProcessorConfiguration
-import co.electric.snake.strategy.bonostrategy.directionprocessor.distanceprocessor.DistanceProcessorConfiguration
-import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.FilteredDirectionsProcessor
-import co.electric.snake.strategy.bonostrategy.directionprocessor.filtereddirections.FilteredDirectionsProcessorConfiguration
+import co.electric.snake.strategy.bonostrategy.directionprocessor.FilteredDirectionsProcessor
 import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorChain
 import co.electric.snake.strategy.bonostrategy.newdirectionprocessor.NewDirectionProcessorConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
@@ -20,10 +17,7 @@ import org.springframework.context.annotation.Import
 
 @Configuration
 @Import(
-        FilteredDirectionsProcessorConfiguration::class,
-        EquivalentBestDirectionsProcessorConfiguration::class,
-        BlockingDirectionsProcessorConfiguration::class,
-        DistanceProcessorConfiguration::class,
+        DirectionProcessorConfiguration::class,
         NewDirectionProcessorConfiguration::class
 )
 class BonoStrategyAutoConfiguration {

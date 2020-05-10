@@ -7,13 +7,19 @@ import java.util.*
 
 class NewDirectionProcessorChain(private val newDirectionProcessors: Set<NewDirectionProcessor>) {
 
+    companion object {
+
+        private val FALLBACK_DIRECTION = Direction.SOUTH
+
+    }
+
     fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Direction {
         return Optional.ofNullable(newDirectionProcessors).orElse(emptySet()).stream()
                 .sorted()
                 .map { it.process(filteredDirections, equivalentBestDirections, blockingDirections) }
                 .filter(Optional<Direction>::isPresent)
                 .findFirst().map(Optional<Direction>::get)
-                .orElse(Direction.SOUTH)
+                .orElse(FALLBACK_DIRECTION)
     }
 
 }

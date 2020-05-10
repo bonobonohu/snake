@@ -46,33 +46,8 @@ class BlockingDirectionsProcessor(private val distanceProcessorChain: DistancePr
         }
     }
 
-    private fun getBlockingSnake(arena: Arena, blockingCoordinate: Coordinate): Snake {
-        return arena.getSnakesInNewList().stream()
-                .filter { snake -> snake.getBodyItemsInNewList().stream().anyMatch { it == blockingCoordinate } }
-                .findAny()
-                .orElse(null)
-    }
-
-    private fun getBlockingTailLength(blockingSnake: Snake, blockingCoordinate: Coordinate): Int {
-        var blockingTailLength = 0
-        var reachedTheBlockingPart = false
-        blockingSnake.getBodyItemsInNewList().forEach {
-            if (it == blockingCoordinate) {
-                reachedTheBlockingPart = true
-            }
-            if (reachedTheBlockingPart) {
-                blockingTailLength++
-            }
-        }
-        return blockingTailLength
-    }
-
     private fun getDistanceToBlock(direction: Direction, headCoordinate: Coordinate, blockingCoordinate: Coordinate, maxCoordinate: Coordinate): Int {
         return distanceProcessorChain.getDistance(direction, headCoordinate, blockingCoordinate, maxCoordinate)
-    }
-
-    private fun isBlockingRisk(blockingTailLength: Int, distanceToBlock: Int): Boolean {
-        return blockingTailLength >= distanceToBlock
     }
 
 }

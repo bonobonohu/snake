@@ -12,9 +12,9 @@ class ByKispalEsABorz : NewDirectionProcessor {
         private val LOG = LoggerFactory.getLogger(ByKispalEsABorz::class.java)
     }
 
-    override val order = 6
+    override val order = 10
 
-    override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
+    override fun process(filteredSafeDirections: SimpleDirectionContainer, equivalentSafeBestDirections: SimpleDirectionContainer, filteredFreeDirections: SimpleDirectionContainer, equivalentFreeBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
         val kispalDirections = SimpleDirectionContainer()
         kispalDirections.add(Direction.SOUTH)
         return processFinalDirection(kispalDirections, LOG)

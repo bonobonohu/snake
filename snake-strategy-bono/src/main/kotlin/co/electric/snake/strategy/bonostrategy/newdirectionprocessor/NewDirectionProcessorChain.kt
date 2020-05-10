@@ -13,10 +13,10 @@ class NewDirectionProcessorChain(private val newDirectionProcessors: Set<NewDire
 
     }
 
-    fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Direction {
+    fun process(filteredSafeDirections: SimpleDirectionContainer, equivalentSafeBestDirections: SimpleDirectionContainer, filteredFreeDirections: SimpleDirectionContainer, equivalentFreeBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Direction {
         return Optional.ofNullable(newDirectionProcessors).orElse(emptySet()).stream()
                 .sorted()
-                .map { it.process(filteredDirections, equivalentBestDirections, blockingDirections) }
+                .map { it.process(filteredSafeDirections, equivalentSafeBestDirections, filteredFreeDirections, equivalentFreeBestDirections, blockingDirections) }
                 .filter(Optional<Direction>::isPresent)
                 .findFirst().map(Optional<Direction>::get)
                 .orElse(FALLBACK_DIRECTION)

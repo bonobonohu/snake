@@ -9,14 +9,14 @@ class NewDirectionProcessorConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
-    fun byFreeEquivalentBestDirections(): ByFreeEquivalentBestDirections {
-        return ByFreeEquivalentBestDirections()
+    fun byFreeEquivalentSafeBestDirections(): ByFreeEquivalentSafeBestDirections {
+        return ByFreeEquivalentSafeBestDirections()
     }
 
     @ConditionalOnMissingBean
     @Bean
-    fun byFreeFilteredDirections(): ByFreeFilteredDirections {
-        return ByFreeFilteredDirections()
+    fun byFreeFilteredSafeDirections(): ByFreeFilteredSafeDirections {
+        return ByFreeFilteredSafeDirections()
     }
 
     @ConditionalOnMissingBean
@@ -27,15 +27,39 @@ class NewDirectionProcessorConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
-    fun byEquivalentBestDirections(): ByEquivalentBestDirections {
-        return ByEquivalentBestDirections()
+    fun byEquivalentSafeBestDirections(): ByEquivalentSafeBestDirections {
+        return ByEquivalentSafeBestDirections()
     }
 
     @ConditionalOnMissingBean
     @Bean
-    fun byFilteredDirections(): ByFilteredDirections {
-        return ByFilteredDirections()
+    fun byFilteredSafeDirections(): ByFilteredSafeDirections {
+        return ByFilteredSafeDirections()
     }
+
+    // @ConditionalOnMissingBean
+    // @Bean
+    // fun byFreeEquivalentFreeBestDirections(): ByFreeEquivalentFreeBestDirections {
+    //     return ByFreeEquivalentFreeBestDirections()
+    // }
+    //
+    // @ConditionalOnMissingBean
+    // @Bean
+    // fun byFreeFilteredFreeDirections(): ByFreeFilteredFreeDirections {
+    //     return ByFreeFilteredFreeDirections()
+    // }
+    //
+    // @ConditionalOnMissingBean
+    // @Bean
+    // fun byEquivalentFreeBestDirections(): ByEquivalentFreeBestDirections {
+    //     return ByEquivalentFreeBestDirections()
+    // }
+    //
+    // @ConditionalOnMissingBean
+    // @Bean
+    // fun byFilteredFreeDirections(): ByFilteredFreeDirections {
+    //     return ByFilteredFreeDirections()
+    // }
 
     @ConditionalOnMissingBean
     @Bean

@@ -23,6 +23,7 @@ class BonoStrategyAutoConfiguration {
     @ConditionalOnMissingBean
     @Bean
     fun bonoStrategy(
+            safeDirectionsProcessor: SafeDirectionsProcessor,
             freeDirectionsProcessor: FreeDirectionsProcessor,
             closedDirectionsProcessor: ClosedDirectionsProcessor,
             filteredDirectionsProcessor: FilteredDirectionsProcessor,
@@ -31,7 +32,7 @@ class BonoStrategyAutoConfiguration {
             newDirectionProcessorChain: NewDirectionProcessorChain
     ): BonoStrategy {
         return BonoStrategy(
-                freeDirectionsProcessor, closedDirectionsProcessor, filteredDirectionsProcessor,
+                safeDirectionsProcessor, freeDirectionsProcessor, closedDirectionsProcessor, filteredDirectionsProcessor,
                 equivalentBestDirectionsProcessor, blockingDirectionsProcessor,
                 newDirectionProcessorChain
         )

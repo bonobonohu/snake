@@ -10,7 +10,7 @@ interface NewDirectionProcessor : Comparable<NewDirectionProcessor> {
 
     val order: Int
 
-    fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction>
+    fun process(filteredSafeDirections: SimpleDirectionContainer, equivalentSafeBestDirections: SimpleDirectionContainer, filteredFreeDirections: SimpleDirectionContainer, equivalentFreeBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction>
 
     fun processFinalDirection(directionContainer: SimpleDirectionContainer, log: Logger): Optional<Direction> {
         val direction = directionContainer.getRandomElement()

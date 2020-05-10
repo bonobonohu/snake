@@ -6,17 +6,18 @@ import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer
 import org.slf4j.LoggerFactory
 import java.util.*
 
-class ByFarthestBlockingDirections : NewDirectionProcessor {
+class ByFreeFilteredSafeDirections : NewDirectionProcessor {
 
     companion object {
-        private val LOG = LoggerFactory.getLogger(ByFarthestBlockingDirections::class.java)
+        private val LOG = LoggerFactory.getLogger(ByFreeFilteredSafeDirections::class.java)
     }
 
-    override val order = 3
+    override val order = 2
 
     override fun process(filteredSafeDirections: SimpleDirectionContainer, equivalentSafeBestDirections: SimpleDirectionContainer, filteredFreeDirections: SimpleDirectionContainer, equivalentFreeBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
-        val farthestBlockingDirections = blockingDirections.getFarthestBlockingDirections()
-        return processFinalDirection(farthestBlockingDirections, LOG)
+        val freeFilteredSafeDirections = filteredSafeDirections.getElementsInANewInstance()
+        freeFilteredSafeDirections.removeAll(blockingDirections.getDirections())
+        return processFinalDirection(freeFilteredSafeDirections, LOG)
     }
 
 }

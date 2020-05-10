@@ -16,6 +16,12 @@ class DirectionProcessorConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
+    fun safeDirectionsProcessor(): SafeDirectionsProcessor {
+        return SafeDirectionsProcessor()
+    }
+
+    @ConditionalOnMissingBean
+    @Bean
     fun freeDirectionsProcessor(): FreeDirectionsProcessor {
         return FreeDirectionsProcessor()
     }

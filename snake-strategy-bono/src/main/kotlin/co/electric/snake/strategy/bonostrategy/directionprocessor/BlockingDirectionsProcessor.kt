@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory
 class BlockingDirectionsProcessor(private val distanceProcessorChain: DistanceProcessorChain) {
 
     companion object {
+        private const val SAFE_THRESHOLD = 25
+
         private val LOG = LoggerFactory.getLogger(BlockingDirectionsProcessor::class.java)
     }
 
@@ -28,7 +30,7 @@ class BlockingDirectionsProcessor(private val distanceProcessorChain: DistancePr
                     val blockingSnake = getBlockingSnake(arena, coordinateToInvestigate)
                     val blockingTailLength = getBlockingTailLength(blockingSnake, coordinateToInvestigate)
                     val distanceToBlock = getDistanceToBlock(it, headCoordinate, coordinateToInvestigate, maxCoordinate)
-                    if (isBlockingRisk(blockingTailLength, distanceToBlock)) {
+                    if (distanceToBlock <= SAFE_THRESHOLD && isBlockingRisk(blockingTailLength, distanceToBlock)) {
                         blockingDirections.putData(it, coordinateToInvestigate, distanceToBlock)
                     }
                 }

@@ -13,9 +13,9 @@ class EquivalentBestDirectionsProcessor {
         private val LOG = LoggerFactory.getLogger(EquivalentBestDirectionsProcessor::class.java)
     }
 
-    fun getDirections(snake: Snake, arena: Arena, filteredDirections: SimpleDirectionContainer): SimpleDirectionContainer {
+    fun getDirections(snake: Snake, arena: Arena, directionsToUse: SimpleDirectionContainer): SimpleDirectionContainer {
         val headCoordinate = snake.getHeadCoordinate()
-        val distancesToFood = getDistancesToFood(arena, headCoordinate, filteredDirections)
+        val distancesToFood = getDistancesToFood(arena, headCoordinate, directionsToUse)
         val equivalentBestDirections = distancesToFood.values.stream()
                 .findFirst()
                 .orElse(SimpleDirectionContainer())
@@ -23,11 +23,11 @@ class EquivalentBestDirectionsProcessor {
         return equivalentBestDirections
     }
 
-    private fun getDistancesToFood(arena: Arena, headCoordinate: Coordinate, filteredDirections: SimpleDirectionContainer): Map<Int, SimpleDirectionContainer> {
+    private fun getDistancesToFood(arena: Arena, headCoordinate: Coordinate, directionsToUse: SimpleDirectionContainer): Map<Int, SimpleDirectionContainer> {
         val distancesToFood: MutableMap<Int, SimpleDirectionContainer> = TreeMap()
         val foodCoordinate = arena.getFoodInNewList()[0].coordinate
         val maxCoordinate = arena.maxCoordinate
-        filteredDirections.forEach {
+        directionsToUse.forEach {
             val nextCoordinate = arena.nextCoordinate(headCoordinate, it)
             val distanceToFood = nextCoordinate.minDistance(foodCoordinate, maxCoordinate)
             val directions = Optional.ofNullable(distancesToFood[distanceToFood]).orElse(SimpleDirectionContainer())

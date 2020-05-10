@@ -15,11 +15,11 @@ class BlockingDirectionsProcessor(private val distanceProcessorChain: DistancePr
         private val LOG = LoggerFactory.getLogger(BlockingDirectionsProcessor::class.java)
     }
 
-    fun getDirections(snake: Snake, arena: Arena, filteredDirections: SimpleDirectionContainer): BlockingDirectionContainer {
+    fun getDirections(snake: Snake, arena: Arena, directionsToUse: SimpleDirectionContainer): BlockingDirectionContainer {
         val blockingDirections = BlockingDirectionContainer()
         val headCoordinate = snake.getHeadCoordinate()
         val maxCoordinate = arena.maxCoordinate
-        filteredDirections.forEach {
+        directionsToUse.forEach {
             var coordinateToInvestigate = headCoordinate
             val maxCoordinateForDirection = getMaxCoordinateForDirection(maxCoordinate, it)
             for (i in 0 until maxCoordinateForDirection) {

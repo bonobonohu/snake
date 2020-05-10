@@ -9,8 +9,8 @@ class FilteredDirectionsProcessor {
         private val LOG = LoggerFactory.getLogger(FilteredDirectionsProcessor::class.java)
     }
 
-    fun getDirections(freeDirections: SimpleDirectionContainer, closedDirections: SimpleDirectionContainer): SimpleDirectionContainer {
-        val filteredDirections = freeDirections.getElementsInANewInstance()
+    fun getDirections(directionsToUse: SimpleDirectionContainer, closedDirections: SimpleDirectionContainer): SimpleDirectionContainer {
+        val filteredDirections = directionsToUse.getElementsInANewInstance()
         filteredDirections.removeAll(closedDirections)
         LOG.info("Filtered Directions: $filteredDirections")
         return filteredDirections

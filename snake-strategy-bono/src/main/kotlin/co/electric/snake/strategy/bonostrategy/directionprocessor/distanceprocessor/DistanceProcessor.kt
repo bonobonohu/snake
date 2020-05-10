@@ -8,12 +8,12 @@ interface DistanceProcessor {
 
     fun getDistance(direction: Direction, headCoordinate: Coordinate, blockingCoordinate: Coordinate, maxCoordinate: Coordinate): Optional<Int>
 
-}
+    fun getDistanceDirectly(biggerCoordinateFactor: Int, smallerCoordinateFactor: Int): Int {
+        return biggerCoordinateFactor - smallerCoordinateFactor
+    }
 
-fun getDistanceDirectly(biggerCoordinateFactor: Int, smallerCoordinateFactor: Int): Int {
-    return biggerCoordinateFactor - smallerCoordinateFactor
-}
+    fun getDistanceClipped(directCoordinateFactor: Int, clipperCoordinateFactor: Int, maxCoordinateFactor: Int): Int {
+        return (directCoordinateFactor + (maxCoordinateFactor - clipperCoordinateFactor))
+    }
 
-fun getDistanceClipped(directCoordinateFactor: Int, clipperCoordinateFactor: Int, maxCoordinateFactor: Int): Int {
-    return (directCoordinateFactor + (maxCoordinateFactor - clipperCoordinateFactor))
 }

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory
 class BlockingDirectionsProcessor(private val distanceProcessorChain: DistanceProcessorChain) {
 
     companion object {
-        private const val SAFE_THRESHOLD = 25
+        private const val SAFE_THRESHOLD = Int.MAX_VALUE
 
         private val LOG = LoggerFactory.getLogger(BlockingDirectionsProcessor::class.java)
     }

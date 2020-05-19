@@ -11,3 +11,11 @@ Your job
 - You can use any JVM language you want
 
 Good luck!
+
+
+How to build/run the game
+```
+$ mvn clean install
+$ cd snake-runner
+$ mvn spring-boot:run
+```

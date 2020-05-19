@@ -11,22 +11,22 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class DefaultStrategyAutoConfiguration {
 
-    @ConditionalOnMissingBean
-    @Bean
-    fun defaultStrategy(): DefaultStrategy {
-        return DefaultStrategy()
-    }
+    // @ConditionalOnMissingBean
+    // @Bean
+    // fun defaultStrategy(): DefaultStrategy {
+    //     return DefaultStrategy()
+    // }
 
-    @ConditionalOnBean(name = ["modifiableArena"])
-    @Bean
-    fun stoneJack(modifiableArena: ModifiableArena, defaultStrategy: DefaultStrategy): ModifiableSnake {
-        return ModifiableSnake(modifiableArena, defaultStrategy, "StoneJack")
-    }
+    // @ConditionalOnBean(name = ["modifiableArena"])
+    // @Bean
+    // fun stoneJack(modifiableArena: ModifiableArena, defaultStrategy: DefaultStrategy): ModifiableSnake {
+    //     return ModifiableSnake(modifiableArena, defaultStrategy, "StoneJack")
+    // }
 
-    @ConditionalOnBean(name = ["modifiableArena"])
-    @Bean
-    fun stoneJill(modifiableArena: ModifiableArena, defaultStrategy: DefaultStrategy): ModifiableSnake {
-        return ModifiableSnake(modifiableArena, defaultStrategy, "StoneJill")
-    }
+    // @ConditionalOnBean(name = ["modifiableArena"])
+    // @Bean
+    // fun stoneJill(modifiableArena: ModifiableArena, defaultStrategy: DefaultStrategy): ModifiableSnake {
+    //     return ModifiableSnake(modifiableArena, defaultStrategy, "StoneJill")
+    // }
 
 }

@@ -10,12 +10,11 @@ Your job
 - Set up your solution to auto-configure a ModifiableSnake Spring Bean with your SnakeStrategy in it
 - You can use any JVM language you want
 
-Good luck!
-
-
 How to build/run the game
 ```
 $ mvn clean install
 $ cd snake-runner
 $ mvn spring-boot:run
 ```
+
+Good luck!

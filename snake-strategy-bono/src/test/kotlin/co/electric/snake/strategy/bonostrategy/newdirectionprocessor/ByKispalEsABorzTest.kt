@@ -3,7 +3,7 @@ package co.electric.snake.strategy.bonostrategy.newdirectionprocessor
 import co.electric.snake.framework.model.Direction
 import co.electric.snake.strategy.bonostrategy.BlockingDirectionContainer
 import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -21,7 +21,7 @@ internal class ByKispalEsABorzTest {
         // WHEN
         val actual = underTest.process(filteredDirections, equivalentBestDirections, blockingDirections)
         // THEN
-        assertEquals(expected, actual)
+        assertThat(actual).isEqualTo(expected)
     }
 
 }

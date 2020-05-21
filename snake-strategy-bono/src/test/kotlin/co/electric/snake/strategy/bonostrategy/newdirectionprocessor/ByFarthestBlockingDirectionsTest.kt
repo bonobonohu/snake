@@ -16,7 +16,7 @@ internal class ByFarthestBlockingDirectionsTest {
         // GIVEN
         val expecteds = setOf(Direction.SOUTH, Direction.WEST)
         val filteredDirections = SimpleDirectionContainer()
-        val equivalentBestDirections = SimpleDirectionContainer(setOf(Direction.SOUTH, Direction.WEST))
+        val equivalentBestDirections = SimpleDirectionContainer()
         val blockingDirections = BlockingDirectionContainer()
         blockingDirections.putData(Direction.NORTH, Coordinate(12, 3), 2)
         blockingDirections.putData(Direction.SOUTH, Coordinate(12, 40), 11)

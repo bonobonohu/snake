@@ -16,7 +16,7 @@ internal class ByFreeFilteredDirectionsTest {
         // GIVEN
         val expecteds = setOf(Direction.NORTH, Direction.SOUTH)
         val filteredDirections = SimpleDirectionContainer(setOf(Direction.NORTH, Direction.SOUTH, Direction.WEST))
-        val equivalentBestDirections = SimpleDirectionContainer(setOf(Direction.NORTH, Direction.SOUTH))
+        val equivalentBestDirections = SimpleDirectionContainer()
         val blockingDirections = BlockingDirectionContainer()
         blockingDirections.putData(Direction.WEST, Coordinate(1, 1), 11)
         // WHEN

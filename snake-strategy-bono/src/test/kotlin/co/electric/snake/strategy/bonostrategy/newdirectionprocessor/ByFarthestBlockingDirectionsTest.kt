@@ -20,8 +20,8 @@ internal class ByFarthestBlockingDirectionsTest {
         val blockingDirections = BlockingDirectionContainer()
         blockingDirections.putData(Direction.WEST, Coordinate(1, 1), 11)
         blockingDirections.putData(Direction.EAST, Coordinate(23, 1), 11)
-        blockingDirections.putData(Direction.NORTH, Coordinate(11, 3), 2)
-        blockingDirections.putData(Direction.SOUTH, Coordinate(11, 49), 2)
+        blockingDirections.putData(Direction.NORTH, Coordinate(12, 3), 2)
+        blockingDirections.putData(Direction.SOUTH, Coordinate(12, 49), 2)
         // WHEN
         val actual = underTest.process(filteredDirections, equivalentBestDirections, blockingDirections)
         // THEN
@@ -37,8 +37,8 @@ internal class ByFarthestBlockingDirectionsTest {
         val blockingDirections = BlockingDirectionContainer()
         blockingDirections.putData(expected, Coordinate(1, 1), 11)
         blockingDirections.putData(Direction.EAST, Coordinate(22, 1), 10)
-        blockingDirections.putData(Direction.NORTH, Coordinate(11, 3), 2)
-        blockingDirections.putData(Direction.SOUTH, Coordinate(11, 49), 2)
+        blockingDirections.putData(Direction.NORTH, Coordinate(12, 3), 2)
+        blockingDirections.putData(Direction.SOUTH, Coordinate(12, 49), 2)
         // WHEN
         val actual = underTest.process(filteredDirections, equivalentBestDirections, blockingDirections)
         // THEN

@@ -14,10 +14,10 @@ internal class ByKispalEsABorzTest {
     @Test
     fun testProcessShouldReturnSouthDirectionOptionalWhenCalled() {
         // GIVEN
+        val expected = Optional.of(Direction.SOUTH)
         val filteredDirections = SimpleDirectionContainer()
         val equivalentBestDirections = SimpleDirectionContainer()
         val blockingDirections = BlockingDirectionContainer()
-        val expected = Optional.of(Direction.SOUTH)
         // WHEN
         val actual = underTest.process(filteredDirections, equivalentBestDirections, blockingDirections)
         // THEN

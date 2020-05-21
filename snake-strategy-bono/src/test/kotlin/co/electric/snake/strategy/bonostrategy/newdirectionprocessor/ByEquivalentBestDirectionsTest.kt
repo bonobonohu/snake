@@ -28,7 +28,7 @@ internal class ByEquivalentBestDirectionsTest {
         // GIVEN
         val expected = Direction.WEST
         val filteredDirections = SimpleDirectionContainer()
-        val equivalentBestDirections = SimpleDirectionContainer(setOf(expected))
+        val equivalentBestDirections = SimpleDirectionContainer(setOf(Direction.WEST))
         val blockingDirections = BlockingDirectionContainer()
         // WHEN
         val actual = underTest.process(filteredDirections, equivalentBestDirections, blockingDirections)

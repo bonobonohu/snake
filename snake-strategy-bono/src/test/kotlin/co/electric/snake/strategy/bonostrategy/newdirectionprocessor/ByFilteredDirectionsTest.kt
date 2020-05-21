@@ -27,7 +27,7 @@ internal class ByFilteredDirectionsTest {
     fun testProcessShouldReturnTheContainedElementFromFilteredDirectionsWhenItContainsExactlyOneSingleElement() {
         // GIVEN
         val expected = Direction.WEST
-        val filteredDirections = SimpleDirectionContainer(setOf(expected))
+        val filteredDirections = SimpleDirectionContainer(setOf(Direction.WEST))
         val equivalentBestDirections = SimpleDirectionContainer()
         val blockingDirections = BlockingDirectionContainer()
         // WHEN

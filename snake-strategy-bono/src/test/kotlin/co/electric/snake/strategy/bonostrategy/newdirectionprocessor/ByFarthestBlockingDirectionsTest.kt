@@ -14,14 +14,14 @@ internal class ByFarthestBlockingDirectionsTest {
     @Test
     fun testProcessShouldReturnARandomFarthestBlockingDirectionWhenThereAreMultipleFarthestElements() {
         // GIVEN
-        val expecteds = setOf(Direction.WEST, Direction.EAST)
+        val expecteds = setOf(Direction.SOUTH, Direction.WEST)
         val filteredDirections = SimpleDirectionContainer()
         val equivalentBestDirections = SimpleDirectionContainer(expecteds)
         val blockingDirections = BlockingDirectionContainer()
-        blockingDirections.putData(Direction.WEST, Coordinate(1, 1), 11)
-        blockingDirections.putData(Direction.EAST, Coordinate(23, 1), 11)
         blockingDirections.putData(Direction.NORTH, Coordinate(12, 3), 2)
-        blockingDirections.putData(Direction.SOUTH, Coordinate(12, 49), 2)
+        blockingDirections.putData(Direction.SOUTH, Coordinate(12, 40), 11)
+        blockingDirections.putData(Direction.WEST, Coordinate(1, 1), 11)
+        blockingDirections.putData(Direction.EAST, Coordinate(14, 1), 2)
         // WHEN
         val actual = underTest.process(filteredDirections, equivalentBestDirections, blockingDirections)
         // THEN
@@ -35,10 +35,10 @@ internal class ByFarthestBlockingDirectionsTest {
         val filteredDirections = SimpleDirectionContainer()
         val equivalentBestDirections = SimpleDirectionContainer()
         val blockingDirections = BlockingDirectionContainer()
-        blockingDirections.putData(expected, Coordinate(1, 1), 11)
-        blockingDirections.putData(Direction.EAST, Coordinate(22, 1), 10)
         blockingDirections.putData(Direction.NORTH, Coordinate(12, 3), 2)
         blockingDirections.putData(Direction.SOUTH, Coordinate(12, 49), 2)
+        blockingDirections.putData(Direction.WEST, Coordinate(1, 1), 11)
+        blockingDirections.putData(Direction.EAST, Coordinate(14, 1), 2)
         // WHEN
         val actual = underTest.process(filteredDirections, equivalentBestDirections, blockingDirections)
         // THEN

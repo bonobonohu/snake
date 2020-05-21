@@ -14,7 +14,7 @@ internal class ByFilteredDirectionsTest {
     fun testProcessShouldReturnRandomElementFromFilteredDirectionsWhenItContainsMultipleElements() {
         // GIVEN
         val expecteds = setOf(Direction.SOUTH, Direction.WEST)
-        val filteredDirections = SimpleDirectionContainer(expecteds)
+        val filteredDirections = SimpleDirectionContainer(setOf(Direction.SOUTH, Direction.WEST))
         val equivalentBestDirections = SimpleDirectionContainer()
         val blockingDirections = BlockingDirectionContainer()
         // WHEN

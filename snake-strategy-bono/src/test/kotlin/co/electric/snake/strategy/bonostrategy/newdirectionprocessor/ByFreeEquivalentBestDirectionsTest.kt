@@ -4,7 +4,7 @@ import co.electric.snake.framework.model.Coordinate
 import co.electric.snake.framework.model.Direction
 import co.electric.snake.strategy.bonostrategy.BlockingDirectionContainer
 import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class ByFreeEquivalentBestDirectionsTest {
@@ -22,7 +22,7 @@ internal class ByFreeEquivalentBestDirectionsTest {
         // WHEN
         val actual = underTest.process(filteredDirections, equivalentBestDirections, blockingDirections)
         // THEN
-        Assertions.assertThat(actual.get()).isIn(expecteds)
+        assertThat(actual.get()).isIn(expecteds)
     }
 
     @Test
@@ -37,7 +37,7 @@ internal class ByFreeEquivalentBestDirectionsTest {
         // WHEN
         val actual = underTest.process(filteredDirections, equivalentBestDirections, blockingDirections)
         // THEN
-        Assertions.assertThat(actual.get()).isEqualTo(expected)
+        assertThat(actual.get()).isEqualTo(expected)
     }
 
 }

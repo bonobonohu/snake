@@ -19,9 +19,9 @@ internal class NewDirectionProcessorChainTest {
 
     }
 
-    private val firstChainItem = Mockito.mock(ChainItem::class.java)
-    private val secondChainItem = Mockito.mock(ChainItem::class.java)
-    private val thirdChainItem = Mockito.mock(ChainItem::class.java)
+    private val firstChainItem = Mockito.mock(MockableChainItem::class.java)
+    private val secondChainItem = Mockito.mock(MockableChainItem::class.java)
+    private val thirdChainItem = Mockito.mock(MockableChainItem::class.java)
     private val underTest = NewDirectionProcessorChain(setOf(firstChainItem, secondChainItem, thirdChainItem))
 
     @Test
@@ -62,7 +62,7 @@ internal class NewDirectionProcessorChainTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-    open class ChainItem : NewDirectionProcessor {
+    open class MockableChainItem : NewDirectionProcessor {
 
         override val order: Int
             get() = 0

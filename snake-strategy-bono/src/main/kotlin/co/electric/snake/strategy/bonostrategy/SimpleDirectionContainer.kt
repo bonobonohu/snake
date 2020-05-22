@@ -5,12 +5,12 @@ import java.util.*
 
 class SimpleDirectionContainer : HashSet<Direction> {
 
-    constructor() : super()
-    constructor(collection: Collection<Direction>) : super(collection)
-
     companion object {
         private val RANDOM = Random()
     }
+
+    constructor() : super()
+    constructor(collection: Collection<Direction>) : super(collection)
 
     fun getElementsInANewInstance(): SimpleDirectionContainer {
         return SimpleDirectionContainer(this)

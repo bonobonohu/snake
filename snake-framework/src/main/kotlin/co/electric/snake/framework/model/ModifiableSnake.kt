@@ -5,13 +5,13 @@ import org.slf4j.LoggerFactory
 
 class ModifiableSnake(private val modifiableArena: ModifiableArena, private val snakeStrategy: SnakeStrategy, name: String) : Snake(modifiableArena, snakeStrategy, name) {
 
-    private var isAlive: Boolean = true
-
     companion object {
         private val LOG = LoggerFactory.getLogger(ModifiableSnake::class.java)
 
         private const val SNAKE_DIED_LOG_MESSAGE = "Snake died: {}"
     }
+
+    private var isAlive: Boolean = true
 
     internal fun move(stopWhenASnakeDies: Boolean) {
         if (isAlive) {

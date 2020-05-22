@@ -64,7 +64,7 @@ internal class NewDirectionProcessorChainTest {
     open class ChainItem : NewDirectionProcessor {
 
         override val order: Int
-            get() = 1
+            get() = 0
 
         override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
             return Optional.of(Direction.EAST)

@@ -2,7 +2,6 @@ package co.electric.snake.strategy.bonostrategy.directionprocessor.distanceproce
 
 import co.electric.snake.framework.model.Coordinate
 import co.electric.snake.framework.model.Direction
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.util.*

@@ -9,11 +9,10 @@ class NorthLookingDistanceProcessor : DistanceProcessor {
     override fun getDistance(direction: Direction, headCoordinate: Coordinate, blockingCoordinate: Coordinate, maxCoordinate: Coordinate): Optional<Int> {
         var distance: Optional<Int> = Optional.empty()
         if (direction == Direction.NORTH) {
-            val calculatedDistance: Int
-            if (headCoordinate.y <= blockingCoordinate.y) {
-                calculatedDistance = getDistanceDirectly(blockingCoordinate.y, headCoordinate.y)
+            val calculatedDistance = if (headCoordinate.y <= blockingCoordinate.y) {
+                getDistanceDirectly(blockingCoordinate.y, headCoordinate.y)
             } else {
-                calculatedDistance = getDistanceClipped(blockingCoordinate.y, headCoordinate.y, maxCoordinate.y)
+                getDistanceClipped(blockingCoordinate.y, headCoordinate.y, maxCoordinate.y)
             }
             distance = Optional.of(calculatedDistance)
         }

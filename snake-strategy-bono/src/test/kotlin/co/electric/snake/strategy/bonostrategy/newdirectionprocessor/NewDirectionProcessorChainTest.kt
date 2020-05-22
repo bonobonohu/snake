@@ -25,7 +25,7 @@ internal class NewDirectionProcessorChainTest {
     private val underTest = NewDirectionProcessorChain(setOf(firstChainItem, secondChainItem, thirdChainItem))
 
     @Test
-    fun testProcessShouldReturnFirstInOrderResultsFromChain() {
+    fun testProcessShouldReturnFirstInOrderResultsFromChainWhenThereAreCorrespondingChainItems() {
         // GIVEN
         val expected = Direction.NORTH
         `when`(firstChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))

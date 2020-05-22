@@ -61,15 +61,15 @@ internal class NewDirectionProcessorChainTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-}
+    open class ChainItem : NewDirectionProcessor {
 
-internal open class ChainItem : NewDirectionProcessor {
+        override val order: Int
+            get() = 1
 
-    override val order: Int
-        get() = 1
+        override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
+            return Optional.of(Direction.EAST)
+        }
 
-    override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
-        return Optional.of(Direction.EAST)
     }
 
 }

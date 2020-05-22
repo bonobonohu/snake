@@ -6,6 +6,7 @@ import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import java.util.*
 
 internal class NewDirectionProcessorChainTest {
@@ -27,15 +28,15 @@ internal class NewDirectionProcessorChainTest {
     fun testProcessShouldReturnFirstInOrderResultsFromChain() {
         // GIVEN
         val expected = Direction.NORTH
-        Mockito.`when`(firstChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
+        `when`(firstChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.empty())
-        Mockito.`when`(firstChainItem.order).thenReturn(1)
-        Mockito.`when`(secondChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
+        `when`(firstChainItem.order).thenReturn(1)
+        `when`(secondChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.of(Direction.NORTH))
-        Mockito.`when`(secondChainItem.order).thenReturn(2)
-        Mockito.`when`(thirdChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
+        `when`(secondChainItem.order).thenReturn(2)
+        `when`(thirdChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.of(Direction.WEST))
-        Mockito.`when`(thirdChainItem.order).thenReturn(3)
+        `when`(thirdChainItem.order).thenReturn(3)
         // WHEN
         val actual = underTest.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS)
         // THEN
@@ -46,15 +47,15 @@ internal class NewDirectionProcessorChainTest {
     fun testProcessShouldReturnFallbackDirectionWhenChainGivenNoResults() {
         // GIVEN
         val expected = Direction.SOUTH
-        Mockito.`when`(firstChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
+        `when`(firstChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.empty())
-        Mockito.`when`(firstChainItem.order).thenReturn(1)
-        Mockito.`when`(secondChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
+        `when`(firstChainItem.order).thenReturn(1)
+        `when`(secondChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.empty())
-        Mockito.`when`(secondChainItem.order).thenReturn(2)
-        Mockito.`when`(thirdChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
+        `when`(secondChainItem.order).thenReturn(2)
+        `when`(thirdChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.empty())
-        Mockito.`when`(thirdChainItem.order).thenReturn(3)
+        `when`(thirdChainItem.order).thenReturn(3)
         // WHEN
         val actual = underTest.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS)
         // THEN

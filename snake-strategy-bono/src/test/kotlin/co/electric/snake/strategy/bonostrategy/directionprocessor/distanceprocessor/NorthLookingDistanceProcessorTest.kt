@@ -2,7 +2,7 @@ package co.electric.snake.strategy.bonostrategy.directionprocessor.distanceproce
 
 import co.electric.snake.framework.model.Coordinate
 import co.electric.snake.framework.model.Direction
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -23,7 +23,7 @@ internal class NorthLookingDistanceProcessorTest {
         // WHEN
         val actual = underTest.getDistance(Direction.SOUTH, Coordinate(1, 1), Coordinate(1, 11), MAX_COORDINATE)
         // THEN
-        Assertions.assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
@@ -33,7 +33,7 @@ internal class NorthLookingDistanceProcessorTest {
         // WHEN
         val actual = underTest.getDistance(Direction.NORTH, Coordinate(1, 1), Coordinate(1, 11), MAX_COORDINATE)
         // THEN
-        Assertions.assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
@@ -43,7 +43,7 @@ internal class NorthLookingDistanceProcessorTest {
         // WHEN
         val actual = underTest.getDistance(Direction.NORTH, Coordinate(1, 41), Coordinate(1, 1), MAX_COORDINATE)
         // THEN
-        Assertions.assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(expected)
     }
 
 }

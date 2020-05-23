@@ -8,9 +8,7 @@ import java.util.*
 class NewDirectionProcessorChain(private val newDirectionProcessors: Set<NewDirectionProcessor>) {
 
     companion object {
-
         private val FALLBACK_DIRECTION = Direction.SOUTH
-
     }
 
     fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Direction {

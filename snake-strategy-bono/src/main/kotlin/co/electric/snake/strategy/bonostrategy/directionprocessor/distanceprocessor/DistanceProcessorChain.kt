@@ -7,9 +7,7 @@ import java.util.*
 class DistanceProcessorChain(private val distanceProcessors: Set<DistanceProcessor>) {
 
     companion object {
-
         private const val FALLBACK_DISTANCE = 0
-
     }
 
     fun getDistance(direction: Direction, headCoordinate: Coordinate, blockingCoordinate: Coordinate, maxCoordinate: Coordinate): Int {

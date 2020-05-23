@@ -5,9 +5,7 @@ import java.util.*
 open class Arena {
 
     companion object {
-
         private val MAX_COORDINATE = Coordinate(50, 50)
-
     }
 
     val maxCoordinate = MAX_COORDINATE

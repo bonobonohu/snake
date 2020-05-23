@@ -5,7 +5,6 @@ enum class Direction(val diffX: Int, val diffY: Int) {
     NORTH(0, 1), EAST(1, 0), SOUTH(0, -1), WEST(-1, 0);
 
     companion object {
-
         fun getDirection(start: Coordinate, end: Coordinate, maxCoordinate: Coordinate): Direction {
             var result: Direction? = null
             var i = 0
@@ -33,7 +32,6 @@ enum class Direction(val diffX: Int, val diffY: Int) {
                     || diff - maxCoordinate == directionDiff
                     || maxCoordinate + diff == directionDiff
         }
-
     }
 
 }

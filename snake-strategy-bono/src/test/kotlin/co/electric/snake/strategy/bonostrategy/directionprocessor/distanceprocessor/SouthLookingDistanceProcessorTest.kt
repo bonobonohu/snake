@@ -9,9 +9,7 @@ import java.util.*
 internal class SouthLookingDistanceProcessorTest {
 
     companion object {
-
         private val MAX_COORDINATE = Coordinate(50, 50)
-
     }
 
     private val underTest = SouthLookingDistanceProcessor()

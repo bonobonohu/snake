@@ -12,7 +12,6 @@ import javax.swing.Timer
 class SnakeController(private val modifiableArena: ModifiableArena, private val maxRound: Int, private val stopWhenReachedMaxRound: Boolean) {
 
     companion object {
-
         private val LOG = LoggerFactory.getLogger(SnakeController::class.java)
 
         private const val MAX_ROUND_REACHED_LOG_MESSAGE = "Max round reached: {}"
@@ -23,7 +22,6 @@ class SnakeController(private val modifiableArena: ModifiableArena, private val 
         private const val DELAY_BETWEEN_STEPS = 1
 
         private val FRAME_SIZE = Dimension(WIDTH, HEIGHT)
-
     }
 
     private val frame = JFrame(TITLE)

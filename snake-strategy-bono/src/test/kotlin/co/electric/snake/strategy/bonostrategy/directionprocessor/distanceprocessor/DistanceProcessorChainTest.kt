@@ -11,12 +11,10 @@ import java.util.*
 internal class DistanceProcessorChainTest {
 
     companion object {
-
         private val DIRECTION = Direction.NORTH
         private val HEAD_COORDINATE = Coordinate(1, 1)
         private val BLOCKING_COORDINATE = Coordinate(1, 3)
         private val MAX_COORDINATE = Coordinate(50, 50)
-
     }
 
     private val chainItem = Mockito.mock(MockableChainItem::class.java)

@@ -5,11 +5,9 @@ import org.slf4j.LoggerFactory
 class ModifiableArena(private val stopWhenASnakeDies: Boolean) : Arena() {
 
     companion object {
-
         private val LOG = LoggerFactory.getLogger(ModifiableArena::class.java)
 
         private const val ALL_SNAKES_ARE_DEAD_LOG_MESSAGE = "All Snakes are dead!"
-
     }
 
     fun addSnake(modifiableSnake: ModifiableSnake) {

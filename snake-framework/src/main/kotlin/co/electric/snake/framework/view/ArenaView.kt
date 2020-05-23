@@ -11,7 +11,6 @@ import javax.swing.JPanel
 class ArenaView(private val arena: Arena) : JPanel() {
 
     companion object {
-
         const val PADDING = 10
         const val POINT_SIZE = 10
 
@@ -24,7 +23,6 @@ class ArenaView(private val arena: Arena) : JPanel() {
                 Color.BLUE, Color.MAGENTA, Color.GREEN, Color.CYAN, Color.GRAY,
                 Color.PINK, Color.ORANGE, Color.LIGHT_GRAY, Color.YELLOW
         )
-
     }
 
     private val snakeViews: MutableList<SnakeView> = ArrayList()

@@ -12,11 +12,9 @@ import java.util.*
 internal class NewDirectionProcessorChainTest {
 
     companion object {
-
         private val FILTERED_DIRECTIONS = SimpleDirectionContainer()
         private val EQUIVALENT_BEST_DIRECTIONS = SimpleDirectionContainer()
         private val BLOCKING_DIRECTIONS = BlockingDirectionContainer()
-
     }
 
     private val firstChainItem = Mockito.mock(MockableChainItem::class.java)

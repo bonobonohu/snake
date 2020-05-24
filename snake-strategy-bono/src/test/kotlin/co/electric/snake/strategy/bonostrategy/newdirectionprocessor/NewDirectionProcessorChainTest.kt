@@ -4,9 +4,9 @@ import co.electric.snake.framework.model.Direction
 import co.electric.snake.strategy.bonostrategy.BlockingDirectionContainer
 import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
+import org.mockito.Mockito.*
 import java.util.*
 
 internal class NewDirectionProcessorChainTest {
@@ -17,10 +17,15 @@ internal class NewDirectionProcessorChainTest {
         private val BLOCKING_DIRECTIONS = BlockingDirectionContainer()
     }
 
-    private val firstChainItem = mock(MockableChainItem::class.java)
-    private val secondChainItem = mock(MockableChainItem::class.java)
-    private val thirdChainItem = mock(MockableChainItem::class.java)
+    private val firstChainItem = mock(NewDirectionProcessor::class.java)
+    private val secondChainItem = mock(NewDirectionProcessor::class.java)
+    private val thirdChainItem = mock(NewDirectionProcessor::class.java)
     private val underTest = NewDirectionProcessorChain(setOf(firstChainItem, secondChainItem, thirdChainItem))
+
+    @BeforeEach
+    fun beforeEach() {
+        reset(firstChainItem, secondChainItem, thirdChainItem)
+    }
 
     @Test
     fun testProcessShouldReturnFirstInOrderResultsFromChainWhenThereAreCorrespondingChainItems() {
@@ -28,13 +33,16 @@ internal class NewDirectionProcessorChainTest {
         val expected = Direction.NORTH
         `when`(firstChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.empty())
-        `when`(firstChainItem.order).thenReturn(1)
+        `when`(firstChainItem.order)
+                .thenReturn(1)
         `when`(secondChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.of(Direction.NORTH))
-        `when`(secondChainItem.order).thenReturn(2)
+        `when`(secondChainItem.order)
+                .thenReturn(2)
         `when`(thirdChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.of(Direction.WEST))
-        `when`(thirdChainItem.order).thenReturn(3)
+        `when`(thirdChainItem.order)
+                .thenReturn(3)
         // WHEN
         val actual = underTest.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS)
         // THEN
@@ -47,28 +55,20 @@ internal class NewDirectionProcessorChainTest {
         val expected = Direction.SOUTH
         `when`(firstChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.empty())
-        `when`(firstChainItem.order).thenReturn(1)
+        `when`(firstChainItem.order)
+                .thenReturn(1)
         `when`(secondChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.empty())
-        `when`(secondChainItem.order).thenReturn(2)
+        `when`(secondChainItem.order)
+                .thenReturn(2)
         `when`(thirdChainItem.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS))
                 .thenReturn(Optional.empty())
-        `when`(thirdChainItem.order).thenReturn(3)
+        `when`(thirdChainItem.order)
+                .thenReturn(3)
         // WHEN
         val actual = underTest.process(FILTERED_DIRECTIONS, EQUIVALENT_BEST_DIRECTIONS, BLOCKING_DIRECTIONS)
         // THEN
         assertThat(actual).isEqualTo(expected)
-    }
-
-    open class MockableChainItem : NewDirectionProcessor {
-
-        override val order: Int
-            get() = 0
-
-        override fun process(filteredDirections: SimpleDirectionContainer, equivalentBestDirections: SimpleDirectionContainer, blockingDirections: BlockingDirectionContainer): Optional<Direction> {
-            return Optional.of(Direction.EAST)
-        }
-
     }
 
 }

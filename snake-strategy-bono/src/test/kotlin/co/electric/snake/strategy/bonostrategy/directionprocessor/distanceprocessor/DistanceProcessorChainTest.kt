@@ -3,9 +3,9 @@ package co.electric.snake.strategy.bonostrategy.directionprocessor.distanceproce
 import co.electric.snake.framework.model.Coordinate
 import co.electric.snake.framework.model.Direction
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
+import org.mockito.Mockito.*
 import java.util.*
 
 internal class DistanceProcessorChainTest {
@@ -17,8 +17,13 @@ internal class DistanceProcessorChainTest {
         private val MAX_COORDINATE = Coordinate(50, 50)
     }
 
-    private val chainItem = mock(MockableChainItem::class.java)
+    private val chainItem = mock(DistanceProcessor::class.java)
     private val underTest = DistanceProcessorChain(setOf(chainItem))
+
+    @BeforeEach
+    fun beforeEach() {
+        reset(chainItem)
+    }
 
     @Test
     fun testProcessShouldReturnDistanceFromChainWhenThereIsCorrespondingChainItem() {
@@ -42,14 +47,6 @@ internal class DistanceProcessorChainTest {
         val actual = underTest.getDistance(DIRECTION, HEAD_COORDINATE, BLOCKING_COORDINATE, MAX_COORDINATE)
         // THEN
         assertThat(actual).isEqualTo(expected)
-    }
-
-    open class MockableChainItem : DistanceProcessor {
-
-        override fun getDistance(direction: Direction, headCoordinate: Coordinate, blockingCoordinate: Coordinate, maxCoordinate: Coordinate): Optional<Int> {
-            return Optional.of(1)
-        }
-
     }
 
 }

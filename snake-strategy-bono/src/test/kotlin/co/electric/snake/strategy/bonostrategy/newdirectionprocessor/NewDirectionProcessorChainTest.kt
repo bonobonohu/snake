@@ -5,8 +5,8 @@ import co.electric.snake.strategy.bonostrategy.BlockingDirectionContainer
 import co.electric.snake.strategy.bonostrategy.SimpleDirectionContainer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 import java.util.*
 
 internal class NewDirectionProcessorChainTest {
@@ -17,9 +17,9 @@ internal class NewDirectionProcessorChainTest {
         private val BLOCKING_DIRECTIONS = BlockingDirectionContainer()
     }
 
-    private val firstChainItem = Mockito.mock(MockableChainItem::class.java)
-    private val secondChainItem = Mockito.mock(MockableChainItem::class.java)
-    private val thirdChainItem = Mockito.mock(MockableChainItem::class.java)
+    private val firstChainItem = mock(MockableChainItem::class.java)
+    private val secondChainItem = mock(MockableChainItem::class.java)
+    private val thirdChainItem = mock(MockableChainItem::class.java)
     private val underTest = NewDirectionProcessorChain(setOf(firstChainItem, secondChainItem, thirdChainItem))
 
     @Test

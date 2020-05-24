@@ -4,8 +4,8 @@ import co.electric.snake.framework.model.Coordinate
 import co.electric.snake.framework.model.Direction
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 import java.util.*
 
 internal class DistanceProcessorChainTest {
@@ -17,7 +17,7 @@ internal class DistanceProcessorChainTest {
         private val MAX_COORDINATE = Coordinate(50, 50)
     }
 
-    private val chainItem = Mockito.mock(MockableChainItem::class.java)
+    private val chainItem = mock(MockableChainItem::class.java)
     private val underTest = DistanceProcessorChain(setOf(chainItem))
 
     @Test

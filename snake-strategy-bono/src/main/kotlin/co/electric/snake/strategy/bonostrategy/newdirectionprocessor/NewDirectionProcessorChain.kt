@@ -16,7 +16,7 @@ class NewDirectionProcessorChain(private val newDirectionProcessors: Set<NewDire
                 .sorted()
                 .map { it.process(filteredDirections, equivalentBestDirections, blockingDirections) }
                 .filter(Optional<Direction>::isPresent)
-                .findFirst().map(Optional<Direction>::get)
+                .findAny().map(Optional<Direction>::get)
                 .orElse(FALLBACK_DIRECTION)
     }
 

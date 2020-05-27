@@ -6,7 +6,7 @@ import org.springframework.test.context.ContextConfiguration
 
 @SpringBootTest
 @ContextConfiguration(loader = (HeadlessSpringBootContextLoader::class))
-class KotlinApplicationTest {
+class ApplicationTest {
 
     @Test
     fun contextLoads() {
